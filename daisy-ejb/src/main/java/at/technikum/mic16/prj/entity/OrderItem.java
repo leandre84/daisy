@@ -5,12 +5,13 @@
  */
 package at.technikum.mic16.prj.entity;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -18,37 +19,31 @@ import javax.persistence.Table;
  * @author leandros
  */
 @Entity
-@Table(name = "product")
-public class Product implements Serializable {
-
+@Table(name = "order_item")
+public class OrderItem {
+    
     private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(unique = true, nullable = false)
-    private String name;
-    
-    @Column
+    @Column(nullable = false)
     private float price;
     
-    @Column
-    private String description;
+    @Column(nullable = false)
+    private int count;
     
-    @Column(name = "img_path")
-    private String imagePath;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "product_fk")
+    private Product product;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "order_fk")
+    private PlacedOrder order;
 
     public Long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public float getPrice() {
@@ -59,20 +54,28 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public String getDescription() {
-        return description;
+    public int getCount() {
+        return count;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCount(int count) {
+        this.count = count;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public PlacedOrder getOrder() {
+        return order;
+    }
+
+    public void setOrder(PlacedOrder order) {
+        this.order = order;
     }
     
     
