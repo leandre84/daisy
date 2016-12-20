@@ -30,7 +30,7 @@ public class Product implements Serializable {
     @Column(unique = true, nullable = false)
     private String name;
     
-    @Column
+    @Column(nullable = false)
     private float price;
     
     @Column

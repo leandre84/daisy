@@ -34,7 +34,7 @@ public class Recension implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column
+    @Column(nullable = false)
     private String text;
     
     @Column(nullable = false)
@@ -42,7 +42,7 @@ public class Recension implements Serializable {
     @Max(5)
     private int rating;
     
-    @Column(name = "creation_date")
+    @Column(name = "creation_date", nullable = false)
     private LocalDate creationDate;
     
     @Column(name = "img_path")

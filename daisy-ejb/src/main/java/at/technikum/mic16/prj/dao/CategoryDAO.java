@@ -8,6 +8,7 @@ package at.technikum.mic16.prj.dao;
 import at.technikum.mic16.prj.entity.Category;
 import javax.enterprise.inject.Model;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -39,13 +40,13 @@ public class CategoryDAO {
         em.merge(category);
     }
 
-    public void delete(Category category) {
+    public void delete(Category category) throws EntityNotFoundException {
         // attach and delete it...
         Category attached = em.find(Category.class, category.getId());
         if (attached != null) {
             em.remove(attached);
         } else {
-            // oopsie
+            throw new EntityNotFoundException("Category not found with id: " + category.getId());
         }
 
     }

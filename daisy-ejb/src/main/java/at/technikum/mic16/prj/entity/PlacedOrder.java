@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,6 +32,10 @@ public class PlacedOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_fk")
+    private User placedBy;
+    
     @Column(name = "order_date", nullable = false)
     private LocalDate orderDate;
     
@@ -43,7 +49,15 @@ public class PlacedOrder implements Serializable {
     public Long getId() {
         return id;
     }
+    
+    public User getPlacedBy() {
+        return placedBy;
+    }
 
+    public void setPlacedBy(User placedBy) {
+        this.placedBy = placedBy;
+    }
+    
     public LocalDate getOrderDate() {
         return orderDate;
     }
@@ -76,6 +90,7 @@ public class PlacedOrder implements Serializable {
         }
         total = newTotal;
     }
+
             
     
 }
