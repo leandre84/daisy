@@ -24,7 +24,7 @@ import javax.validation.constraints.Min;
  * @author leandros
  */
 @Entity
-@Table(name = "product", uniqueConstraints =
+@Table(name = "recension", uniqueConstraints =
         @UniqueConstraint(columnNames = {"product_fk", "user_fk"}))
 public class Recension implements Serializable {
 
