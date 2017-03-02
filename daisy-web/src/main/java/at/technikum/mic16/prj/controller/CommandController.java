@@ -12,6 +12,8 @@ import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -20,8 +22,11 @@ import javax.enterprise.context.SessionScoped;
 @Named(value = "commandController")
 @SessionScoped
 public class CommandController implements Serializable {
+        
+    private static final Logger LOG = LoggerFactory.getLogger(CommandController.class.getName());
     
-    private final static int WAIT_SECONDS = 3;
+    // seconds
+    private final static int CMD_WAIT_FOR = 3;
 
     private String cmdInput;
     private String output = "";
@@ -57,7 +62,7 @@ public class CommandController implements Serializable {
         Process p;
         try {
             p = rt.exec(cmd);
-            p.waitFor(WAIT_SECONDS, TimeUnit.SECONDS);
+            p.waitFor(CMD_WAIT_FOR, TimeUnit.SECONDS);
         } catch (IOException | InterruptedException | IllegalArgumentException e) {
             output = "Error executing command: " + e.getMessage();
             return;
@@ -82,14 +87,16 @@ public class CommandController implements Serializable {
         try {
             returnValue = p.exitValue();
         } catch (IllegalThreadStateException e) {
-            output = "Command did not return after " + WAIT_SECONDS + " seconds.";
+            output = "Command did not return after " + CMD_WAIT_FOR + " seconds.";
             return;
         }
         output = cmdOutput;
         
+        LOG.info("Executed command: {}", cmd);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Output: {}", output);      
+        }
         
-        System.out.println("Output from command: " + cmd);
-        System.out.println(output);
 
     }
     
