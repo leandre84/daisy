@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -38,6 +40,20 @@ public class Product implements Serializable {
     
     @Column(name = "img_path")
     private String imagePath;
+    
+    @ManyToOne
+    @JoinColumn(name = "category_fk")
+    private Category category;
+    
+    public Product() { 
+    }
+    
+    public Product(String name, float price, String description, Category category) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.category = category;
+    }
 
     public Long getId() {
         return id;
