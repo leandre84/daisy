@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition>
+            <h:form>
+                <p:growl autoUpdate="true"/>
+
+                <p:panelMenu style="width:300px">
+                    <p:submenu label="Categories">
+                        
+                        <p:submenu label="Hardware">
+                            <p:menuitem value="Notebooks" actionListener="#{webController.test()}" icon="ui-icon-disk" />
+                            <p:menuitem value="Tablets" actionListener="#{webController.test()}" icon="ui-icon-disk" />
+                        </p:submenu>
+                        
+                        <p:submenu label="Software">
+                            <p:menuitem value="Windows" actionListener="#{webController.test()}" icon="ui-icon-disk" />
+                            <p:menuitem value="Mac" actionListener="#{webController.test()}" icon="ui-icon-disk" />
+                        </p:submenu>
+                        
+                        <p:submenu label="Zubehör">
+                            <p:menuitem value="Kabel" actionListener="#{webController.test()}" icon="ui-icon-disk" />
+                            <p:menuitem value="Adapter" actionListener="#{webController.test()}" icon="ui-icon-disk" />
+                        </p:submenu>
+                    </p:submenu>
+                    <p:submenu label="Non-Ajax Menuitem">
+                        <p:menuitem value="Delete" actionListener="#{webController.test()}"  ajax="false" icon="ui-icon-close"/>
+                    </p:submenu>
+                    <p:separator />
+                </p:panelMenu>
+            </h:form>
+
+
+        </ui:composition>
+    </body>
+</html>

@@ -6,6 +6,7 @@
 package at.technikum.mic16.prj.dao;
 
 import at.technikum.mic16.prj.entity.Category;
+import java.util.List;
 import javax.enterprise.inject.Model;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -32,6 +33,11 @@ public class CategoryDAO {
         return (Category) q.getSingleResult();
     }
     
+    public List<Category> findAll() {
+        Query q = em.createQuery("SELECT c FROM Category ", Category.class);
+        return q.getResultList();
+    }
+    
     public void persist(Category category) {
         em.persist(category);
     }
@@ -39,6 +45,8 @@ public class CategoryDAO {
     public void merge(Category category) {
         em.merge(category);
     }
+    
+    
 
     public void delete(Category category) throws EntityNotFoundException {
         // attach and delete it...

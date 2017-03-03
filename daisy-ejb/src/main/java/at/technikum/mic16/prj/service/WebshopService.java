@@ -13,6 +13,7 @@ import at.technikum.mic16.prj.dao.UserDAO;
 import at.technikum.mic16.prj.dao.UserRoleDAO;
 import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -52,7 +53,9 @@ public class WebshopService {
     public void persistanceTest() { 
     }
     
-    
+    public List<Category> getAllCategories() {
+       return categoryDAO.findAll();
+    }
    
 
 }

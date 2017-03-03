@@ -6,10 +6,12 @@ package at.technikum.mic16.prj.controller;
  * and open the template in the editor.
  */
 
+import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.service.WebshopService;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -24,9 +26,21 @@ public class WebController implements Serializable {
     
     @Inject
     WebshopService backend;
+    
+    private List<Category> categories = backend.getAllCategories();
 
     public WebController() {
     }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+    
+    
     
     public String backendTest() {
         return backend.getTest();
@@ -35,6 +49,7 @@ public class WebController implements Serializable {
     public String test() {
         return "yo!";
     }
+    
     
     public void persistanceTest() {
         backend.persistanceTest();
