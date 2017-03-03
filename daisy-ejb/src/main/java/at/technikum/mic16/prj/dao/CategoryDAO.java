@@ -34,7 +34,7 @@ public class CategoryDAO {
     }
     
     public List<Category> findAll() {
-        Query q = em.createQuery("SELECT c FROM Category ", Category.class);
+        Query q = em.createQuery("SELECT c FROM Category c", Category.class);
         return q.getResultList();
     }
     

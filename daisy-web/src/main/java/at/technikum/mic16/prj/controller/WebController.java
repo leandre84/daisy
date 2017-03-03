@@ -12,9 +12,10 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 
 /**
  *
@@ -24,10 +25,10 @@ import javax.inject.Inject;
 @SessionScoped
 public class WebController implements Serializable {
     
-    @Inject
+    @EJB
     WebshopService backend;
     
-    private List<Category> categories = backend.getAllCategories();
+    private List<Category> categories;
 
     public WebController() {
     }
@@ -55,6 +56,11 @@ public class WebController implements Serializable {
         backend.persistanceTest();
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "gemacht, siehe JBoss log",  null);
         FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
+    @PostConstruct
+    public void init() {
+        categories = backend.getAllCategories();
     }
     
 }
