@@ -5,15 +5,13 @@
  */
 package at.technikum.mic16.prj.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import at.technikum.mic16.prj.data.CommandResult;
+import at.technikum.mic16.prj.exception.CommandExecutionException;
+import at.technikum.mic16.prj.service.CommandService;
 import java.io.Serializable;
-import java.util.concurrent.TimeUnit;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,24 +21,22 @@ import org.slf4j.LoggerFactory;
 @SessionScoped
 public class CommandController implements Serializable {
         
-    private static final Logger LOG = LoggerFactory.getLogger(CommandController.class.getName());
-    
-    // seconds
-    private final static int CMD_WAIT_FOR = 3;
+    @EJB
+    CommandService commandService;
 
-    private String cmdInput;
+    private String cmd;
     private String output = "";
     private int returnValue;
 
     public CommandController() {
     }
 
-    public String getCmdInput() {
-        return cmdInput;
+    public String getCmd() {
+        return cmd;
     }
 
-    public void setCmdInput(String cmdInput) {
-        this.cmdInput = cmdInput;
+    public void setCmd(String cmdInput) {
+        this.cmd = cmdInput;
     }
 
     public String getOutput() {
@@ -55,53 +51,18 @@ public class CommandController implements Serializable {
         output = "";
         returnValue = -1;
     }
-   
-    public void runArbitraryCommand(String cmd) {
-        clear();
-        Runtime rt = Runtime.getRuntime();
-        Process p;
-        try {
-            p = rt.exec(cmd);
-            p.waitFor(CMD_WAIT_FOR, TimeUnit.SECONDS);
-        } catch (IOException | InterruptedException | IllegalArgumentException e) {
-            output = "Error executing command: " + e.getMessage();
-            return;
-        }
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String cmdOutput = "";
-        String line;
-        try {
-            while ((line = br.readLine()) != null) {
-                cmdOutput = cmdOutput.concat(line).concat(System.lineSeparator());
-            }
-        } catch (IOException e) {
-            output = "Error reading output from command: " + e.getMessage();
-        } finally {
-            try {
-                br.close();
-            } catch (IOException ignore) {
-            }
-        }
-
-        try {
-            returnValue = p.exitValue();
-        } catch (IllegalThreadStateException e) {
-            output = "Command did not return after " + CMD_WAIT_FOR + " seconds.";
-            return;
-        }
-        output = cmdOutput;
-        
-        LOG.info("Executed command: {}", cmd);
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Output: {}", output);      
-        }
-        
-
-    }
     
     public void runCommand() {
-        runArbitraryCommand(cmdInput);
+        try {
+            CommandResult result = null;
+            result = commandService.runArbitraryCommand(cmd);
+            output = result.getStdOut();
+            // TODO: what to do with stderr?
+            returnValue = result.getExitCode();
+        } catch (CommandExecutionException e) {
+            output = e.getMessage();
+        }
+        
     }
 
 }

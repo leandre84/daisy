@@ -14,12 +14,8 @@
         <h:panelGrid columns="1">
             <h:panelGroup>
                 <h:form>
-                    <!--
-                    <p:inputText value="#{commandController.cmdInput}" />
+                    <p:inputText value="#{commandController.cmd}" />
                     <p:commandButton value="Execute" id="cmdButtonExecute" actionListener="#{commandController.runCommand()}" />
-                    -->
-                    <p:inputText binding="#{cmdInput}" />
-                    <p:commandButton value="Execute" id="cmdButtonExecute" actionListener="#{commandController.runArbitraryCommand(cmdInput.value)}" />
                 </h:form>
             </h:panelGroup>
         </h:panelGrid>
