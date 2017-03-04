@@ -6,12 +6,17 @@
 package at.technikum.mic16.prj.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -33,6 +38,9 @@ public class Category implements Serializable {
     
     @ManyToOne(optional = true)
     private Category parent;
+    
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Category> children = new ArrayList();
 
     public Category() {
     }
@@ -59,13 +67,21 @@ public class Category implements Serializable {
 
     public void setParent(Category parent) {
         this.parent = parent;
+        parent.getChildren().add(this);
+    }
+
+    public List<Category> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Category> children) {
+        this.children = children;
     }
 
     @Override
     public String toString() {
-        return "Category{" + "id=" + id + ", name=" + name + ", parent=" + parent + '}';
+        return "Category{" + "id=" + id + ", name=" + name + ", parent=" + (parent != null ? parent.getName() : "null") + ", children=" + children.toString() + '}';
     }
-    
-    
+  
     
 }

@@ -87,26 +87,41 @@ public class WebController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
     
+    
+    /**
+     * Do some initialization stuff
+     */
     @PostConstruct
     public void init() {
         categories = backend.getAllCategories();
+        constructCategoryMenu();
         
+        
+    }
+    
+    /**
+     * Construct the category menu
+     * TODO: implement hierarchical model
+     */
+    private void constructCategoryMenu() {
         menumodel = new DefaultMenuModel();
-        
+
         DefaultSubMenu submenu = new DefaultSubMenu();
-        submenu.setLabel("Foo");
-        
-        DefaultMenuItem item1 = new DefaultMenuItem();
-        item1.setValue(categories.get(0).getName());
-        item1.setCommand("#{webController.setSelectedCategoryId(" + categories.get(0).getId() + ")}");
-        submenu.addElement(item1);
-        
-        DefaultMenuItem item2 = new DefaultMenuItem();
-        item2.setValue(categories.get(1).getName());
-        item2.setCommand("#{webController.setSelectedCategoryId(" + categories.get(1).getId() + ")}");
-        submenu.addElement(item2);
+        submenu.setLabel("Categories");
+
+        for (Category c : categories) {
+            if (!c.getChildren().isEmpty()) {
+                // skip parent categories for now, see TODO
+                continue;
+            }
+            DefaultMenuItem item = new DefaultMenuItem();
+            item.setValue(c.getName());
+            item.setCommand("#{webController.setSelectedCategoryId(" + c.getId() + ")}");
+            submenu.addElement(item);
+        }
         
         menumodel.addElement(submenu);
+
     }
     
 }
