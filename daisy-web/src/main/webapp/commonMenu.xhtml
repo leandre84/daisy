@@ -10,34 +10,8 @@
     <body>
         <ui:composition>
             <h:form>
-                <p:growl autoUpdate="true"/>
-
-                <p:panelMenu style="width:300px">
-                    <p:submenu label="Categories">
-                        
-                        <p:submenu label="Hardware">
-                            <p:menuitem value="Notebooks" actionListener="#{webController.test()}" icon="ui-icon-disk" />
-                            <p:menuitem value="Tablets" actionListener="#{webController.test()}" icon="ui-icon-disk" />
-                        </p:submenu>
-                        
-                        <p:submenu label="Software">
-                            <p:menuitem value="Windows" actionListener="#{webController.test()}" icon="ui-icon-disk" />
-                            <p:menuitem value="Mac" actionListener="#{webController.test()}" icon="ui-icon-disk" />
-                        </p:submenu>
-                        
-                        <p:submenu label="Zubehör">
-                            <p:menuitem value="Kabel" actionListener="#{webController.test()}" icon="ui-icon-disk" />
-                            <p:menuitem value="Adapter" actionListener="#{webController.test()}" icon="ui-icon-disk" />
-                        </p:submenu>
-                    </p:submenu>
-                    <p:submenu label="Non-Ajax Menuitem">
-                        <p:menuitem value="Delete" actionListener="#{webController.test()}"  ajax="false" icon="ui-icon-close"/>
-                    </p:submenu>
-                    <p:separator />
-                </p:panelMenu>
+                <p:panelMenu style="width:300px" model="#{webController.menumodel}"/>
             </h:form>
-
-
         </ui:composition>
     </body>
 </html>

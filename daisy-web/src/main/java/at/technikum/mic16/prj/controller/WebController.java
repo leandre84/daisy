@@ -16,6 +16,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuModel;
 
 /**
  *
@@ -29,6 +33,10 @@ public class WebController implements Serializable {
     WebshopService backend;
     
     private List<Category> categories;
+    private MenuModel menumodel;
+    
+    private Long selectedCategoryId;
+    private Category selectedCategory;
 
     public WebController() {
     }
@@ -37,12 +45,33 @@ public class WebController implements Serializable {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public MenuModel getMenumodel() {
+        return menumodel;
     }
-    
-    
-    
+
+    public Long getSelectedCategoryId() {
+        return selectedCategoryId;
+    }
+
+    public void setSelectedCategoryId(Long selectedCategoryId) {
+        System.out.println("Setting selected category to: " + selectedCategoryId);
+        this.selectedCategoryId = selectedCategoryId;
+        for (Category c : categories) {
+            if (c.getId().compareTo(selectedCategoryId) == 0) {
+                selectedCategory = c;
+            }
+        }
+    }
+
+    public Category getSelectedCategory() {
+        return selectedCategory;
+    }
+
+    public void setSelectedCategory(Category selectedCategory) {
+        this.selectedCategory = selectedCategory;
+    }
+
+
     public String backendTest() {
         return backend.getTest();
     }
@@ -61,6 +90,23 @@ public class WebController implements Serializable {
     @PostConstruct
     public void init() {
         categories = backend.getAllCategories();
+        
+        menumodel = new DefaultMenuModel();
+        
+        DefaultSubMenu submenu = new DefaultSubMenu();
+        submenu.setLabel("Foo");
+        
+        DefaultMenuItem item1 = new DefaultMenuItem();
+        item1.setValue(categories.get(0).getName());
+        item1.setCommand("#{webController.setSelectedCategoryId(" + categories.get(0).getId() + ")}");
+        submenu.addElement(item1);
+        
+        DefaultMenuItem item2 = new DefaultMenuItem();
+        item2.setValue(categories.get(1).getName());
+        item2.setCommand("#{webController.setSelectedCategoryId(" + categories.get(1).getId() + ")}");
+        submenu.addElement(item2);
+        
+        menumodel.addElement(submenu);
     }
     
 }
