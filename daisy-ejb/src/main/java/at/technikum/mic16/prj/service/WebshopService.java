@@ -12,6 +12,7 @@ import at.technikum.mic16.prj.dao.RecensionDAO;
 import at.technikum.mic16.prj.dao.UserDAO;
 import at.technikum.mic16.prj.dao.UserRoleDAO;
 import at.technikum.mic16.prj.entity.Category;
+import at.technikum.mic16.prj.entity.Product;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -46,6 +47,9 @@ public class WebshopService {
     public List<Category> getAllCategories() {
        return categoryDAO.findAll();
     }
-   
-
+    
+    public List<Product> getAllProductsPaginated(int pagesize, int index) {
+        return productDAO.findAllPaginated(index*pagesize, pagesize);
+    }
+    
 }

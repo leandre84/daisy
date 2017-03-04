@@ -7,21 +7,20 @@ package at.technikum.mic16.prj.controller;
  */
 
 import at.technikum.mic16.prj.entity.Category;
+import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.service.WebshopService;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
-import org.primefaces.model.menu.MenuElement;
 import org.primefaces.model.menu.MenuModel;
 
 /**
@@ -32,14 +31,18 @@ import org.primefaces.model.menu.MenuModel;
 @SessionScoped
 public class WebController implements Serializable {
     
+    public static final int DEFAULT_PAGE_SIZE = 10;
+    
     @EJB
     WebshopService backend;
     
-    private List<Category> categories;
+    private List<Category> categories = new ArrayList<>();
     private MenuModel menumodel;
     
     private Long selectedCategoryId;
     private Category selectedCategory;
+    
+    private List<Product> displayedProducts = new ArrayList<>();
 
     public WebController() {
     }
@@ -77,6 +80,14 @@ public class WebController implements Serializable {
         this.selectedCategory = selectedCategory;
     }
 
+    public List<Product> getDisplayedProducts() {
+        return displayedProducts;
+    }
+
+    public void setDisplayedProducts(List<Product> displayedProducts) {
+        this.displayedProducts = displayedProducts;
+    }
+
     
     /**
      * Do some initialization stuff
@@ -84,6 +95,7 @@ public class WebController implements Serializable {
     @PostConstruct
     public void init() {
         categories = backend.getAllCategories();
+        displayedProducts = backend.getAllProductsPaginated(DEFAULT_PAGE_SIZE, 0);
         constructCategoryMenu();        
     }
     
