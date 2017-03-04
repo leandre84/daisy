@@ -97,7 +97,7 @@ public class WebController implements Serializable {
         Map<String,DefaultSubMenu> createdSubMenus = new HashMap<>();
         
         for (Category c : categories) {
-            if (c.isRoot()) {
+            if (c.isRoot() && ! c.isLeaf()) {
                 // Root - create submenu
                 DefaultSubMenu sub = new DefaultSubMenu();
                 sub.setLabel(c.getName());
@@ -108,7 +108,7 @@ public class WebController implements Serializable {
                 DefaultSubMenu parent = createdSubMenus.get(c.getParent().getName());
                 DefaultSubMenu sub = new DefaultSubMenu();
                 sub.setLabel(c.getName());
-                menumodel.addElement(sub);
+                parent.addElement(sub);
                 createdSubMenus.put(c.getName(), sub);
             } else if (c.isLeaf()) {
                 // Leaf - find parent and register as child menu item

@@ -54,6 +54,15 @@ public class InitBean {
         Category clothes = new Category("Clothes");
         categoryDAO.persist(clothes);
         
+        Category men = new Category("Men");
+        men.setParent(clothes);
+        categoryDAO.persist(men);
+        
+        Category trousersMen = new Category("Trousers");
+        trousersMen.setParent(men);
+        categoryDAO.persist(trousersMen);
+                
+        
         Category electro = new Category("Electro");
         categoryDAO.persist(electro);
         
