@@ -11,12 +11,17 @@ import at.technikum.mic16.prj.service.WebshopService;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuElement;
 import org.primefaces.model.menu.MenuModel;
 
 /**
@@ -84,26 +89,36 @@ public class WebController implements Serializable {
     
     /**
      * Construct the category menu
-     * TODO: implement hierarchical model
+     * methodology relies on sub-categories being returned by database first
      */
     private void constructCategoryMenu() {
         menumodel = new DefaultMenuModel();
-
-        DefaultSubMenu submenu = new DefaultSubMenu();
-        submenu.setLabel("Categories");
-
-        for (Category c : categories) {
-            if (!c.getChildren().isEmpty()) {
-                // skip parent categories for now, see TODO
-                continue;
-            }
-            DefaultMenuItem item = new DefaultMenuItem();
-            item.setValue(c.getName());
-            item.setCommand("#{webController.setSelectedCategoryId(" + c.getId() + ")}");
-            submenu.addElement(item);
-        }
         
-        menumodel.addElement(submenu);
+        Map<String,DefaultSubMenu> createdSubMenus = new HashMap<>();
+        
+        for (Category c : categories) {
+            if (c.isRoot()) {
+                // Root - create submenu
+                DefaultSubMenu sub = new DefaultSubMenu();
+                sub.setLabel(c.getName());
+                menumodel.addElement(sub);
+                createdSubMenus.put(c.getName(), sub);
+            } else if (! c.isLeaf()) {
+                // Intermediate - create submenu and find parent to register as child category
+                DefaultSubMenu parent = createdSubMenus.get(c.getParent().getName());
+                DefaultSubMenu sub = new DefaultSubMenu();
+                sub.setLabel(c.getName());
+                menumodel.addElement(sub);
+                createdSubMenus.put(c.getName(), sub);
+            } else if (c.isLeaf()) {
+                // Leaf - find parent and register as child menu item
+                DefaultSubMenu parent = createdSubMenus.get(c.getParent().getName());
+                DefaultMenuItem item = new DefaultMenuItem();
+                item.setValue(c.getName());
+                item.setCommand("#{webController.setSelectedCategoryId(" + c.getId() + ")}");
+                parent.addElement(item);
+            }
+        }
 
     }
     

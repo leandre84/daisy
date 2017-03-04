@@ -103,7 +103,7 @@ public class Category implements Serializable {
      * Gets the category's depth
      * @return the number of parent categories
      */
-    public int getDepth() {
+    public int depth() {
         int depth = 0;
         
         Category c = this;

@@ -50,6 +50,10 @@ public class InitBean {
     }
     
     private void insertSampleData() {
+        
+        Category clothes = new Category("Clothes");
+        categoryDAO.persist(clothes);
+        
         Category electro = new Category("Electro");
         categoryDAO.persist(electro);
         
@@ -60,6 +64,11 @@ public class InitBean {
         Category hoover = new Category("Hoover");
         hoover.setParent(electro);
         categoryDAO.persist(hoover);
+        
+        Category smartphone = new Category("Smartphone");
+        smartphone.setParent(electro);
+        categoryDAO.persist(smartphone);
+        
         
         Product lg1 = new Product("LG VT100X60", 1999.99f, "This new LG is superb...", telly);
         Product lg2 = new Product("LG VT020F20", 1199.99f, "This new LG is not as good...", telly);
