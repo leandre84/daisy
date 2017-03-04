@@ -12,9 +12,7 @@ import at.technikum.mic16.prj.dao.RecensionDAO;
 import at.technikum.mic16.prj.dao.UserDAO;
 import at.technikum.mic16.prj.dao.UserRoleDAO;
 import at.technikum.mic16.prj.entity.Category;
-import at.technikum.mic16.prj.entity.Product;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.inject.Inject;
@@ -44,14 +42,6 @@ public class WebshopService {
     @Inject
     private UserRoleDAO userRoleDAO;
     
-    private String test = "test";
-
-    public String getTest() {
-        return test;
-    }
-    
-    public void persistanceTest() { 
-    }
     
     public List<Category> getAllCategories() {
        return categoryDAO.findAll();

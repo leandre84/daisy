@@ -14,8 +14,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -53,8 +51,11 @@ public class WebController implements Serializable {
         return selectedCategoryId;
     }
 
+    /**
+     * Sets the selectedCategoryId and updates selectedCategory by passed id
+     * @param selectedCategoryId 
+     */
     public void setSelectedCategoryId(Long selectedCategoryId) {
-        System.out.println("Setting selected category to: " + selectedCategoryId);
         this.selectedCategoryId = selectedCategoryId;
         for (Category c : categories) {
             if (c.getId().compareTo(selectedCategoryId) == 0) {
@@ -71,22 +72,6 @@ public class WebController implements Serializable {
         this.selectedCategory = selectedCategory;
     }
 
-
-    public String backendTest() {
-        return backend.getTest();
-    }
-    
-    public String test() {
-        return "yo!";
-    }
-    
-    
-    public void persistanceTest() {
-        backend.persistanceTest();
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "gemacht, siehe JBoss log",  null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-    
     
     /**
      * Do some initialization stuff
@@ -94,9 +79,7 @@ public class WebController implements Serializable {
     @PostConstruct
     public void init() {
         categories = backend.getAllCategories();
-        constructCategoryMenu();
-        
-        
+        constructCategoryMenu();        
     }
     
     /**
