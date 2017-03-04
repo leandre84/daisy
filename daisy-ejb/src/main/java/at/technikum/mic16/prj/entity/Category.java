@@ -65,6 +65,10 @@ public class Category implements Serializable {
         return parent;
     }
 
+    /**
+     * Sets parent also updating the parent's child
+     * @param parent 
+     */
     public void setParent(Category parent) {
         this.parent = parent;
         parent.getChildren().add(this);

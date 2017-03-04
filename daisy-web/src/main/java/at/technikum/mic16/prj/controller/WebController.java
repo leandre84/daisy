@@ -92,8 +92,7 @@ public class WebController implements Serializable {
      * methodology relies on sub-categories being returned by database first
      */
     private void constructCategoryMenu() {
-        menumodel = new DefaultMenuModel();
-        
+        menumodel = new DefaultMenuModel();        
         Map<String,DefaultSubMenu> createdSubMenus = new HashMap<>();
         
         for (Category c : categories) {
