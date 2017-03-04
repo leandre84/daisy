@@ -82,6 +82,37 @@ public class Category implements Serializable {
     public String toString() {
         return "Category{" + "id=" + id + ", name=" + name + ", parent=" + (parent != null ? parent.getName() : "null") + ", children=" + children.toString() + '}';
     }
+    
+    /**
+     * Check if category is leaf node
+     * @return true if there are no child categories in this category, otherwise false
+     */
+    public boolean isLeaf() {
+        return children.isEmpty();
+    }
+    
+    /**
+     * Check if category is root node
+     * @return  true if this category has no parent
+     */
+    public boolean isRoot() {
+        return (parent == null);
+    }
+    
+    /**
+     * Gets the category's depth
+     * @return the number of parent categories
+     */
+    public int getDepth() {
+        int depth = 0;
+        
+        Category c = this;
+        while ((c = c.getParent()) != null) {
+            depth++;
+        }
+        
+        return depth;    
+    }
   
     
 }
