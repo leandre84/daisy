@@ -19,6 +19,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
+    <repositories>
+        <repository>
+            <id>prime-repo</id>
+            <name>Prime Repo</name>
+            <url>http://repository.primefaces.org</url>
+        </repository>
+    </repositories>
+    
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -31,6 +39,12 @@
             <artifactId>primefaces</artifactId>
             <version>6.0</version>
         </dependency>
+        <!-- use the all themes packages for now, select specific one later -->
+        <dependency>  
+            <groupId>org.primefaces.themes</groupId>  
+            <artifactId>all-themes</artifactId>  
+            <version>1.0.10</version>  
+        </dependency> 
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
