@@ -141,8 +141,9 @@ public class WebController implements Serializable {
                 DefaultSubMenu parent = createdSubMenus.get(c.getParent().getName());
                 DefaultMenuItem item = new DefaultMenuItem();
                 item.setValue(c.getName());
+                // Invoke selectedCategoryId - this also updates displayedProducts
                 item.setCommand("#{webController.setSelectedCategoryId(" + c.getId() + ")}");
-                // update products datagrid on change of category
+                // Update products datagrid on change of category as displayedProducts may be modified by command
                 item.setUpdate("dg_products");
                 parent.addElement(item);
             }
