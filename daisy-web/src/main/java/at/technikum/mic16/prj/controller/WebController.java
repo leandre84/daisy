@@ -38,11 +38,10 @@ public class WebController implements Serializable {
     
     private List<Category> categories = new ArrayList<>();
     private MenuModel menumodel;
-    
     private Long selectedCategoryId;
     private Category selectedCategory;
-    
     private List<Product> displayedProducts = new ArrayList<>();
+    private String searchText = "";
 
     public WebController() {
     }
@@ -88,6 +87,16 @@ public class WebController implements Serializable {
         this.displayedProducts = displayedProducts;
     }
 
+    public String getSearchText() {
+        return searchText;
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
+    }
+    
+    
+
     
     /**
      * Do some initialization stuff
@@ -131,6 +140,14 @@ public class WebController implements Serializable {
             }
         }
 
+    }
+    
+    public void searchForProducts() {
+        if (searchText == null || searchText.isEmpty()) {
+            // TODO: handle search without criteria
+            return;
+        }
+        displayedProducts = backend.getProductsByNameOrDescription(searchText);
     }
     
 }

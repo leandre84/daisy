@@ -21,10 +21,12 @@
             
             <h:panelGrid columns="1" width="100%">
                 <h:panelGroup>
-                    <p:dataGrid var="product" value="#{webController.displayedProducts}" columns="3" layout="grid" rows="4">
+                    <p:dataGrid id="dg_products" var="product" value="#{webController.displayedProducts}" columns="3" layout="grid" rows="4">
+                        <!--
                         <f:facet name="header">
                             Featured products
                         </f:facet>
+                        -->
                         <p:panel header="#{product.name}" style="text-align:center">
                             #{product.description}
                         </p:panel>  

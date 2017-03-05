@@ -37,7 +37,7 @@ public class ProductDAO {
     
     public List<Product> findByNameOrDescription(String substring) {
         Query q = em.createQuery("FROM Product p WHERE name like :substring or description like :substring", Product.class);
-        q.setParameter("substring", substring);
+        q.setParameter("substring", "%" + substring + "%");
         return q.getResultList();
     }
     

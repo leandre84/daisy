@@ -52,4 +52,8 @@ public class WebshopService {
         return productDAO.findAllPaginated(index*pagesize, pagesize);
     }
     
+    public List<Product> getProductsByNameOrDescription(String queryString) {
+        return productDAO.findByNameOrDescription(queryString);
+    }
+    
 }

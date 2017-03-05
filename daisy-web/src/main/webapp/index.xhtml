@@ -3,28 +3,58 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">    
 
     <h:head>
     </h:head>
 
     <h:body>
+        
+        <!--
+        <div id="page">
 
-        <ui:insert name="header" >
-            <ui:include src="commonHeader.xhtml" />
-        </ui:insert>
+            <div id="header">
+                <ui:insert name="header" >
+                    <ui:include src="commonHeader.xhtml" />
+                </ui:insert>
+            </div>
+            <div id="menu">
+                <ui:insert name="menu" >
+                    <ui:include src="commonMenu.xhtml" />
+                </ui:insert>
+            </div>
 
-        <ui:insert name="menu" >
-            <ui:include src="commonMenu.xhtml" />
-        </ui:insert>
+            <div id="content">
+                <ui:insert name="content" >
+                    <ui:include src="commonContent.xhtml" />
+                </ui:insert>
+            </div>
 
-        <ui:insert name="content" >
-            <ui:include src="commonContent.xhtml" />
-        </ui:insert>
+            <div id="footer">
+                <ui:insert name="footer" >
+                    <ui:include src="commonFooter.xhtml" />
+                </ui:insert>
+            </div>
 
-        <ui:insert name="footer" >
-            <ui:include src="commonFooter.xhtml" />
-        </ui:insert>
+        </div>
+        -->
+        
+        <!-- style="border-style:none" to remove border -->
+        <p:layout fullPage="true">    
+            <p:layoutUnit position="north" style="overflow: visible !important">
+                <ui:include src="commonHeader.xhtml" />
+            </p:layoutUnit>
+            <p:layoutUnit position="west">
+                <ui:include src="commonMenu.xhtml" />
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <ui:include src="commonContent.xhtml" />
+            </p:layoutUnit>
+            <p:layoutUnit position="south">
+                <ui:include src="commonFooter.xhtml" />
+            </p:layoutUnit>
+        </p:layout>
 
     </h:body>
 </html>

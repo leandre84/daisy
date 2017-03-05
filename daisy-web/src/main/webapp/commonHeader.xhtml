@@ -8,15 +8,14 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition>
-
+            
             <h:form>  
-                <p:growl id="messages"/>
-
                 <p:menubar style="background-color: #3D3E3F !important;">
-                    <f:facet name="options" >
-                        <p:inputText style="margin-right:10px" placeholder="Search" />
+                    <f:facet name="options">
+                        <p:inputText placeholder="Search for products" value="#{webController.searchText}" />
+                        <p:commandButton value="Go!" actionListener="#{webController.searchForProducts()}" update="dg_products"/>
                     </f:facet>
-                    <p:submenu label="Benutzer" icon="ui-icon-person" style="float: right; color: white;">
+                    <p:submenu label="Benutzer" icon="ui-icon-person" style="float:right">
                         <p:menuitem value="Meine Bestellungen" url="#" icon="ui-icon-folder-collapsed" />
                         <p:menuitem value="Logout" url="#" icon="ui-icon-locked" />
                     </p:submenu>
