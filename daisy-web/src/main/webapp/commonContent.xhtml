@@ -10,15 +10,6 @@
     <h:body>
         <ui:composition>
             
-            <h:panelGrid columns="1">
-                <h:panelGroup>
-                    <p:outputPanel autoUpdate="true">
-                        <h:outputText value="Selected menu item: "/>
-                        <h:outputText id="unescaped" value="#{webController.selectedCategory.name}" rendered="#{not empty webController.selectedCategory}" />
-                    </p:outputPanel>
-                </h:panelGroup>
-            </h:panelGrid>
-            
             <h:panelGrid columns="1" width="100%">
                 <h:panelGroup>
                     <p:dataGrid id="dg_products" var="product" value="#{webController.displayedProducts}" columns="3" layout="grid" rows="4">

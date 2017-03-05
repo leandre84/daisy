@@ -64,10 +64,16 @@ public class WebController implements Serializable {
      */
     public void setSelectedCategoryId(Long selectedCategoryId) {
         this.selectedCategoryId = selectedCategoryId;
+        boolean modified = false;
         for (Category c : categories) {
             if (c.getId().compareTo(selectedCategoryId) == 0) {
                 selectedCategory = c;
+                modified = true;
             }
+        }
+        // Fetch products based on selected category
+        if (modified) {
+            displayedProducts = backend.getProductsByCategory(selectedCategory);
         }
     }
 
@@ -136,6 +142,8 @@ public class WebController implements Serializable {
                 DefaultMenuItem item = new DefaultMenuItem();
                 item.setValue(c.getName());
                 item.setCommand("#{webController.setSelectedCategoryId(" + c.getId() + ")}");
+                // update products datagrid on change of category
+                item.setUpdate("dg_products");
                 parent.addElement(item);
             }
         }

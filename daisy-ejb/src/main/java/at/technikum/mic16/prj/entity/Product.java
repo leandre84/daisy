@@ -90,6 +90,16 @@ public class Product implements Serializable {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    
+    
     
     
     

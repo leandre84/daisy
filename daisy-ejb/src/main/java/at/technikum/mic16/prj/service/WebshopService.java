@@ -49,11 +49,15 @@ public class WebshopService {
     }
     
     public List<Product> getAllProductsPaginated(int pagesize, int index) {
-        return productDAO.findAllPaginated(index*pagesize, pagesize);
+        return productDAO.findAll(index*pagesize, pagesize);
     }
     
     public List<Product> getProductsByNameOrDescription(String queryString) {
-        return productDAO.findByNameOrDescription(queryString);
+        return productDAO.findByNameOrDescription(queryString, -1, -1);
+    }
+    
+    public List<Product> getProductsByCategory(Category category) {
+        return productDAO.findByCategory(category, -1, -1);
     }
     
 }

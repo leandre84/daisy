@@ -5,8 +5,10 @@
  */
 package at.technikum.mic16.prj.dao;
 
+import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.entity.Recension;
+import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.inject.Model;
 import javax.persistence.EntityManager;
@@ -28,16 +30,53 @@ public class ProductDAO {
         return em.find(Product.class, id);
     }
     
-    public List<Product> findAllPaginated(int offset, int count) {
+    /**
+     * Find all products, optionally paginated
+     * @param offset Offset to result set
+     * @param count Number of rows to return, a value <= 0 will result in pagination being disabled
+     * @return 
+     */
+    public List<Product> findAll(int offset, int count) {
         Query q = em.createQuery("FROM Product p", Product.class);
-        q.setFirstResult(offset);
-        q.setMaxResults(count);
+        if (count > 0) {
+            q.setFirstResult(offset);
+            q.setMaxResults(count);
+        }
         return q.getResultList();
     }
     
-    public List<Product> findByNameOrDescription(String substring) {
+     /**
+     * Find all products matching substring in name or description
+     * @param substring Substring to match
+     * @param offset Offset to result set
+     * @param count Number of rows to return, a value <= 0 will result in pagination being disabled
+     * @return 
+     */
+    public List<Product> findByNameOrDescription(String substring, int offset, int count) {
         Query q = em.createQuery("FROM Product p WHERE name like :substring or description like :substring", Product.class);
         q.setParameter("substring", "%" + substring + "%");
+        if (count > 0) {
+            q.setFirstResult(offset);
+            q.setMaxResults(count);
+        }
+        
+        return q.getResultList();
+    }
+    
+     /**
+     * Find all products matching specific category
+     * @param category Category to match
+     * @param offset Offset to result set
+     * @param count Number of rows to return, a value <= 0 will result in pagination being disabled
+     * @return 
+     */
+    public List<Product> findByCategory(Category category, int offset, int count) {
+        Query q = em.createQuery("FROM Product p WHERE category_fk = :category", Product.class);
+        q.setParameter("category", category);
+        if (count > 0) {
+            q.setFirstResult(offset);
+            q.setMaxResults(count);
+        }
         return q.getResultList();
     }
     
