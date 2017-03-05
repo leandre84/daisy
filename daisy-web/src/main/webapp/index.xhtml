@@ -15,7 +15,12 @@
 
             .ui-layout-north .ui-layout-unit-content {
                 overflow:visible !important;
-            } 
+            }
+            
+            .ui-widget, .ui-widget .ui-widget {
+                font-size: 90% !important;
+            }
+
         </style>
     </h:head>
 
@@ -31,9 +36,11 @@
             <p:layoutUnit position="center">
                 <ui:include src="commonContent.xhtml" />
             </p:layoutUnit>
+            <!--
             <p:layoutUnit position="south">
                 <ui:include src="commonFooter.xhtml" />
             </p:layoutUnit>
+            -->
         </p:layout>
 
     </h:body>
