@@ -6,8 +6,8 @@
 package at.technikum.mic16.prj.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +40,7 @@ public class Category implements Serializable {
     private Category parent;
     
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Category> children = new ArrayList();
+    private Set<Category> children = new HashSet<>();
 
     public Category() {
     }
@@ -74,12 +74,8 @@ public class Category implements Serializable {
         parent.getChildren().add(this);
     }
 
-    public List<Category> getChildren() {
+    public Set<Category> getChildren() {
         return children;
-    }
-
-    public void setChildren(List<Category> children) {
-        this.children = children;
     }
 
     @Override

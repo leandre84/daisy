@@ -19,7 +19,11 @@
                         </f:facet>
                         -->
                         <p:panel header="#{product.name}" style="text-align:center">
-                            #{product.description}
+                            <p:panelGrid columns="1">
+                                <p:outputLabel value="Description: #{product.description}"/>
+                                <p:outputLabel value="Number of ratings: #{product.ratingCount()}"/>
+                                <p:outputLabel value="Average rating: #{product.averageRating()}"/>
+                            </p:panelGrid>
                         </p:panel>  
                     </p:dataGrid>
                 </h:panelGroup>

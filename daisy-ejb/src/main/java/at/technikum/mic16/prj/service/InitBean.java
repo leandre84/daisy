@@ -14,6 +14,10 @@ import at.technikum.mic16.prj.dao.UserDAO;
 import at.technikum.mic16.prj.dao.UserRoleDAO;
 import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
+import at.technikum.mic16.prj.entity.Recension;
+import at.technikum.mic16.prj.entity.User;
+import at.technikum.mic16.prj.entity.UserRole;
+import java.time.LocalDate;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
@@ -51,6 +55,14 @@ public class InitBean {
     
     private void insertSampleData() {
         
+        UserRole user1Role = new UserRole("user1", UserRole.Role.CUSTOMER);
+        UserRole user2Role = new UserRole("user2", UserRole.Role.CUSTOMER);
+        userRoleDAO.persist(user1Role, user2Role);
+        
+        User user1 = new User("user1", "user1");
+        User user2 = new User("user2", "user2");
+        userDAO.persist(user1, user2);
+        
         Category clothes = new Category("Clothes");
         categoryDAO.persist(clothes);
         
@@ -83,9 +95,18 @@ public class InitBean {
         Product lg2 = new Product("LG VT020F20", 1199.99f, "This new LG is not as good...", telly);
         Product hoover1 = new Product("AEG KL500F", 149.90f, "Brand new and strong...", hoover);
         
-        productDAO.persist(lg1);
-        productDAO.persist(lg2);
-        productDAO.persist(hoover1);
+        productDAO.persist(lg1, lg2, hoover1);
+        
+        Recension recension1 = new Recension();
+        recension1.setCreationDate(LocalDate.now().minusDays(14));
+        recension1.setProduct(lg1);
+        recension1.setRating(3);
+        recension1.setUser(user1);
+        recension1.setText("I like it");
+        
+        recensionDAO.persist(recension1);
+        
+        
     }
 
 }

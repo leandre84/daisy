@@ -24,8 +24,10 @@ public class UserDAO {
         return entityManager.find(User.class, id);
     }
 
-    public void persist(User user) {
-        entityManager.persist(user);
+    public void persist(User...users) {
+        for (User user : users) {
+            entityManager.persist(user);
+        }
     }
 
     public void delete(User user) {

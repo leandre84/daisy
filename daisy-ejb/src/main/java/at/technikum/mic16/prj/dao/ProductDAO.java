@@ -80,8 +80,10 @@ public class ProductDAO {
         return q.getResultList();
     }
     
-    public void persist(Product product) {
-        em.persist(product);
+    public void persist(Product...products) {
+        for (Product product : products) {
+            em.persist(product);
+        }
     }
 
     public void merge(Product product) {

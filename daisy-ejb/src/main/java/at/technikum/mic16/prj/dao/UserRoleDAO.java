@@ -37,8 +37,11 @@ public class UserRoleDAO {
         return q.getResultList();
     }
 
-    public void persist(UserRole userRole) {
-        entityManager.persist(userRole);
+    public void persist(UserRole...userRoles) {
+        for (UserRole userRole : userRoles) {
+            entityManager.persist(userRole);
+        }
+        
     }
 
     public void delete(UserRole userRole) {
