@@ -7,42 +7,22 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">    
 
     <h:head>
+        <style>
+            .ui-layout-north {
+                z-index:20 !important;
+                overflow:visible !important;
+            }
+
+            .ui-layout-north .ui-layout-unit-content {
+                overflow:visible !important;
+            } 
+        </style>
     </h:head>
 
     <h:body>
         
-        <!--
-        <div id="page">
-
-            <div id="header">
-                <ui:insert name="header" >
-                    <ui:include src="commonHeader.xhtml" />
-                </ui:insert>
-            </div>
-            <div id="menu">
-                <ui:insert name="menu" >
-                    <ui:include src="commonMenu.xhtml" />
-                </ui:insert>
-            </div>
-
-            <div id="content">
-                <ui:insert name="content" >
-                    <ui:include src="commonContent.xhtml" />
-                </ui:insert>
-            </div>
-
-            <div id="footer">
-                <ui:insert name="footer" >
-                    <ui:include src="commonFooter.xhtml" />
-                </ui:insert>
-            </div>
-
-        </div>
-        -->
-        
-        <!-- style="border-style:none" to remove border -->
         <p:layout fullPage="true">    
-            <p:layoutUnit position="north" style="overflow: visible !important">
+            <p:layoutUnit position="north">
                 <ui:include src="commonHeader.xhtml" />
             </p:layoutUnit>
             <p:layoutUnit position="west">

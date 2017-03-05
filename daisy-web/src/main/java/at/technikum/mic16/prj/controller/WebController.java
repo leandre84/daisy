@@ -143,7 +143,7 @@ public class WebController implements Serializable {
     }
     
     public void searchForProducts() {
-        if (searchText == null || searchText.isEmpty()) {
+        if (searchText == null || searchText.isEmpty() || searchText.replaceAll(" ", "").isEmpty()) {
             // TODO: handle search without criteria
             return;
         }
