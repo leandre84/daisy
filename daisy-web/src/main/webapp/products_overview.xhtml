@@ -9,7 +9,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
     <h:body>
         <ui:composition>
-            
+
             <h:panelGrid columns="1" width="100%">
                 <h:panelGroup>
                     <p:dataGrid id="dg_products" var="product" value="#{webController.displayedProducts}" columns="3" layout="grid" rows="4" emptyMessage="No product matching selected category or search criteria">
@@ -18,23 +18,27 @@
                             Featured products
                         </f:facet>
                         -->
-                        <p:panel style="text-align:left">
-                            <f:facet name="header">
-                                <p:outputLabel value="#{product.name}"/>
-                                <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>
-                            </f:facet>
-                            <p:panelGrid columns="1" style="width:100%">
-                                <p:outputLabel value="Description: #{product.description}"/>
-                                <p:outputLabel value="Rating: ">
+                        <p:link outcome="product.xhtml">
+                            <p:panel style="text-align:left"  >
+                                <f:facet name="header">
+                                    <p:outputLabel value="#{product.name}" />
                                     <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>
-                                    <p:outputLabel value=" (#{product.ratingCount()} ratings)"/>
-                                </p:outputLabel>
-                            </p:panelGrid>
-                        </p:panel>  
+                                </f:facet>
+                                <p:panelGrid columns="1" style="width:100%">
+                                    <p:outputLabel value="Description: #{product.description}"/>
+                                    <p:outputLabel value="Rating: ">
+                                        <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>
+                                        <p:outputLabel value=" (#{product.ratingCount()} ratings)"/>
+                                    </p:outputLabel>
+                                </p:panelGrid>
+                            </p:panel>
+                        </p:link>
+
+
                     </p:dataGrid>
                 </h:panelGroup>
             </h:panelGrid>
-            
+
         </ui:composition>
     </h:body>
 </html>

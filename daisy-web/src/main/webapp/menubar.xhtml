@@ -13,7 +13,7 @@
                 <p:menubar style="background-color: #3D3E3F !important;">
                     <f:facet name="options">
                         <p:inputText placeholder="Search for products" value="#{webController.searchText}" />
-                        <p:commandButton value="Go!" actionListener="#{webController.searchForProducts()}" update="dg_products"/>
+                        <p:commandButton value="Go!" action="#{webController.searchForProducts()}" update="dg_products"/>
                     </f:facet>
                     <p:submenu label="Guest" icon="ui-icon-person" style="float:right" rendered="#{not sessionInformationController.isLoggedIn()}">
                         <p:menuitem value="Login" icon="ui-icon-person" url="login.xhtml"/>
