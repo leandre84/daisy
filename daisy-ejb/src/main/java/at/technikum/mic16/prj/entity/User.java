@@ -28,13 +28,22 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
     
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+    
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+ 
+    
     public User() {
         
     }
     
-    public User(String id, String passwordHash) {
+    public User(String id, String passwordHash, String firstName, String lastName) {
         this.id = id;
         this.password = passwordHash;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
     
     public String getId() {
@@ -44,6 +53,30 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
+    
+    
+    public String friendlyName() {
+        return firstName + " " + lastName;
+    }
+    
+    
     
 
 }

@@ -66,12 +66,12 @@ public class InitBean {
     
     private void insertSampleData() throws NoSuchAlgorithmException, UnsupportedEncodingException {
         
-        UserRole user1Role = new UserRole("user1", UserRole.Role.CUSTOMER);
-        UserRole user2Role = new UserRole("user2", UserRole.Role.CUSTOMER);
+        UserRole user1Role = new UserRole("user1@foo.at", UserRole.Role.CUSTOMER);
+        UserRole user2Role = new UserRole("user2@foo.at", UserRole.Role.CUSTOMER);
         userRoleDAO.persist(user1Role, user2Role);
         
-        User user1 = new User("user1", JBossPasswordUtil.getPasswordHash("user1"));
-        User user2 = new User("user2", JBossPasswordUtil.getPasswordHash("user2"));
+        User user1 = new User("user1@foo.at", JBossPasswordUtil.getPasswordHash("user1"), "User", "1");
+        User user2 = new User("user2@foo.at", JBossPasswordUtil.getPasswordHash("user2"), "User", "2");
         userDAO.persist(user1, user2);
         
         Category clothes = new Category("Clothes");

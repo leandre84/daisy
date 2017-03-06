@@ -42,6 +42,7 @@ public class WebController implements Serializable {
     private Category selectedCategory;
     private List<Product> displayedProducts = new ArrayList<>();
     private String searchText = "";
+    private Product selectedProduct;
 
     public WebController() {
     }
@@ -99,6 +100,14 @@ public class WebController implements Serializable {
 
     public void setSearchText(String searchText) {
         this.searchText = searchText;
+    }
+
+    public Product getSelectedProduct() {
+        return selectedProduct;
+    }
+
+    public void setSelectedProduct(Product selectedProduct) {
+        this.selectedProduct = selectedProduct;
     }
     
     
@@ -162,6 +171,16 @@ public class WebController implements Serializable {
     public static String getRatingImageForProduct(Product product) {
         // get rating, descard floating part and return URL        
         return "images/daisy_" + Integer.toString((int) product.averageRating()) + ".png";
+    }
+    
+    public String navigateToProduct(Product product) {
+        selectedProduct = product;
+        System.out.println("Navigation called for product: " + product.getName());
+        return "product.xhtml";
+    }
+    
+    public void createNewUser(String userId, String password, String firstName, String lastName) {
+        backend.createNewUser(userId, password, firstName, lastName);
     }
     
 }

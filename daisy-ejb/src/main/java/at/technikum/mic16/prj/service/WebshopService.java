@@ -13,6 +13,8 @@ import at.technikum.mic16.prj.dao.UserDAO;
 import at.technikum.mic16.prj.dao.UserRoleDAO;
 import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
+import at.technikum.mic16.prj.entity.User;
+import at.technikum.mic16.prj.entity.UserRole;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -58,6 +60,13 @@ public class WebshopService {
     
     public List<Product> getProductsByCategory(Category category) {
         return productDAO.findByCategory(category, -1, -1);
+    }
+    
+    public void createNewUser(String userId, String password, String firstName, String lastName) {
+        UserRole newUserRole = new UserRole(userId, UserRole.Role.CUSTOMER);
+        userRoleDAO.persist(newUserRole);
+        User newUser = new User(userId, password, firstName, lastName);
+        userDAO.persist(newUser);
     }
     
 }

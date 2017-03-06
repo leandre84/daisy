@@ -8,11 +8,18 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:body>
+
         <ui:composition>
+
             <!-- This hidden element is used as menubar.xhtml and
-            categories.xhtml want to update the product_overview's datagrid, 
-            which is not existing here -->
+                 categories.xhtml want to update the product_overview's datagrid, 
+                 which is not existing here -->
             <h:outputLabel value="implement_me_nicely" id="dg_products" style="visibility: hidden"/>
+
+            Name: #{webController.selectedProduct.name} <br/>
+            Bewertung: #{webController.selectedProduct.averageRating()} <br/>
+
         </ui:composition>
+
     </h:body>
 </html>

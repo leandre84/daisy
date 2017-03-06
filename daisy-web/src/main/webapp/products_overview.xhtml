@@ -23,6 +23,9 @@
                                 <p:outputLabel value="#{product.name}" />
                                 <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>
                             </f:facet>
+                            <h:form>
+                                <h:commandLink action="#{webController.navigateToProduct(product)}" value = "Click me!" />
+                            </h:form>
                             <p:panelGrid columns="1" style="width:100%">
                                 <p:outputLabel value="Description: #{product.description}"/>
                                 <p:outputLabel value="Rating: ">
@@ -31,9 +34,8 @@
                                 </p:outputLabel>
                             </p:panelGrid>
                         </p:panel>
-
-
                     </p:dataGrid>
+
                 </h:panelGroup>
             </h:panelGrid>
 
