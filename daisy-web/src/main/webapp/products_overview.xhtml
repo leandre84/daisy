@@ -34,9 +34,8 @@
                                     <p:outputLabel value=" (#{product.ratingCount()} ratings)"/>
                                 </p:outputLabel>
                             </p:panelGrid>
-<<<<<<< HEAD
-                        </p:panel>
-=======
+
+
                         </p:panel>-->
                         
                         <p:panelGrid columns="1">
@@ -46,13 +45,11 @@
                                     <p:graphicImage value="#{product.imagePath}" width="150px" height="150px"/>
                                 </h:commandLink>
                             </h:form>
-                                
                             </f:facet>
                             <h:outputText value="#{product.name}" style="font-weight:bold" />
                             <h:outputText value="Description:#{product.description}" />
                             
                             <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>       
-                           
 
                         </p:panelGrid>
 
