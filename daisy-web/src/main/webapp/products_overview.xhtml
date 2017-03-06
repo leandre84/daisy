@@ -37,18 +37,18 @@
 
 
                         </p:panel>-->
-                        
+
                         <p:panelGrid columns="1">
                             <f:facet name="header">
-                                                            <h:form>
-                                <h:commandLink action="#{webController.navigateToProduct(product)}">
-                                    <p:graphicImage value="#{product.imagePath}" width="150px" height="150px"/>
-                                </h:commandLink>
-                            </h:form>
+                                <h:form>
+                                    <h:commandLink action="#{webController.navigateToProduct(product)}">
+                                        <p:graphicImage value="#{product.imagePath}" width="150px" height="150px"/>
+                                    </h:commandLink>
+                                </h:form>
                             </f:facet>
                             <h:outputText value="#{product.name}" style="font-weight:bold" />
                             <h:outputText value="Description:#{product.description}" />
-                            
+
                             <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>       
 
                         </p:panelGrid>
