@@ -18,11 +18,17 @@
                             Featured products
                         </f:facet>
                         -->
-                        <p:panel header="#{product.name}" style="text-align:center">
-                            <p:panelGrid columns="1">
+                        <p:panel style="text-align:left">
+                            <f:facet name="header">
+                                <p:outputLabel value="#{product.name}"/>
+                                <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>
+                            </f:facet>
+                            <p:panelGrid columns="1" style="width:100%">
                                 <p:outputLabel value="Description: #{product.description}"/>
-                                <p:outputLabel value="Number of ratings: #{product.ratingCount()}"/>
-                                <p:outputLabel value="Average rating: #{product.averageRating()}"/>
+                                <p:outputLabel value="Rating: ">
+                                    <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>
+                                    <p:outputLabel value=" (#{product.ratingCount()} ratings)"/>
+                                </p:outputLabel>
                             </p:panelGrid>
                         </p:panel>  
                     </p:dataGrid>

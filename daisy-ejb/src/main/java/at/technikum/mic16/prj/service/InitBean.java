@@ -17,7 +17,12 @@ import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.entity.UserRole;
+import at.technikum.mic16.prj.util.JBossPasswordUtil;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
@@ -50,17 +55,23 @@ public class InitBean {
 
     @PostConstruct
     public void init() {
-        insertSampleData();
+
+        try {
+            insertSampleData();
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+            Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
     
-    private void insertSampleData() {
+    private void insertSampleData() throws NoSuchAlgorithmException, UnsupportedEncodingException {
         
         UserRole user1Role = new UserRole("user1", UserRole.Role.CUSTOMER);
         UserRole user2Role = new UserRole("user2", UserRole.Role.CUSTOMER);
         userRoleDAO.persist(user1Role, user2Role);
         
-        User user1 = new User("user1", "user1");
-        User user2 = new User("user2", "user2");
+        User user1 = new User("user1", JBossPasswordUtil.getPasswordHash("user1"));
+        User user2 = new User("user2", JBossPasswordUtil.getPasswordHash("user2"));
         userDAO.persist(user1, user2);
         
         Category clothes = new Category("Clothes");

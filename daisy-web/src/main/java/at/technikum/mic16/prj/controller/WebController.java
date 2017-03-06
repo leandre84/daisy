@@ -159,4 +159,9 @@ public class WebController implements Serializable {
         displayedProducts = backend.getProductsByNameOrDescription(searchText);
     }
     
+    public static String getRatingImageForProduct(Product product) {
+        // get rating, descard floating part and return URL        
+        return "images/daisy_" + Integer.toString((int) product.averageRating()) + ".png";
+    }
+    
 }
