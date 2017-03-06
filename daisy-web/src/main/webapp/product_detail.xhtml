@@ -9,7 +9,10 @@
 
     <h:body>
         <ui:composition>
-            <h:outputLabel value="Yo!"/>
+            <!-- This hidden element is used as menubar.xhtml and
+            categories.xhtml want to update the product_overview's datagrid, 
+            which is not existing here -->
+            <h:outputLabel value="implement_me_nicely" id="dg_products" style="visibility: hidden"/>
         </ui:composition>
     </h:body>
 </html>
