@@ -102,9 +102,9 @@ public class InitBean {
         categoryDAO.persist(smartphone);
         
         
-        Product lg1 = new Product("LG VT100X60", 1999.99f, "This new LG is superb...", telly);
-        Product lg2 = new Product("LG VT020F20", 1199.99f, "This new LG is not as good...", telly);
-        Product hoover1 = new Product("AEG KL500F", 149.90f, "Brand new and strong...", hoover);
+        Product lg1 = new Product("LG VT100X60", 1999.99f, "This new LG is superb...", "/images/products/vintage-tv.jpg" ,telly);
+        Product lg2 = new Product("LG VT020F20", 1199.99f, "This new LG is not as good...", "",telly);
+        Product hoover1 = new Product("AEG KL500F", 149.90f, "Brand new and strong...", "",hoover);
         
         productDAO.persist(lg1, lg2, hoover1);
         

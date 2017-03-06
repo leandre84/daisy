@@ -18,7 +18,7 @@
                             Featured products
                         </f:facet>
                         -->
-                        <p:panel style="text-align:left"  >
+                        <!--<p:panel style="text-align:left"  >
                             <f:facet name="header">
                                 <p:outputLabel value="#{product.name}" />
                                 <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>
@@ -28,12 +28,34 @@
                             </h:form>
                             <p:panelGrid columns="1" style="width:100%">
                                 <p:outputLabel value="Description: #{product.description}"/>
+                                <h:graphicImage value="#{product.imagePath}" width="60px"/>
                                 <p:outputLabel value="Rating: ">
-                                    <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>
+                                    
                                     <p:outputLabel value=" (#{product.ratingCount()} ratings)"/>
                                 </p:outputLabel>
                             </p:panelGrid>
+<<<<<<< HEAD
                         </p:panel>
+=======
+                        </p:panel>-->
+                        
+                        <p:panelGrid columns="1">
+                            <f:facet name="header">
+                                                            <h:form>
+                                <h:commandLink action="#{webController.navigateToProduct(product)}">
+                                    <p:graphicImage value="#{product.imagePath}" width="150px" height="150px"/>
+                                </h:commandLink>
+                            </h:form>
+                                
+                            </f:facet>
+                            <h:outputText value="#{product.name}" style="font-weight:bold" />
+                            <h:outputText value="Description:#{product.description}" />
+                            
+                            <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>       
+                           
+
+                        </p:panelGrid>
+
                     </p:dataGrid>
 
                 </h:panelGroup>
