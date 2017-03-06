@@ -7,53 +7,55 @@ package at.technikum.mic16.prj.security;
 
 import at.technikum.mic16.prj.entity.UserRole;
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 /**
  *
  * @author leandros
  */
-@ManagedBean
+@Named(value = "sessionInformationController")
 @SessionScoped
 public class SessionInformationController implements Serializable {
-
-    private String userName;
-    private String password;
     // Context of user session
-    private final ExternalContext externalContext = FacesContext.
-            getCurrentInstance().getExternalContext();
-    private final String currentUser = externalContext.getUserPrincipal().
-            getName();
-    private final boolean isEmployee = externalContext.isUserInRole(UserRole.Role.CUSTOMER.name());
+    private ExternalContext externalContext =
+            FacesContext.getCurrentInstance().getExternalContext();
+    
 
-    public String getUserName() {
-        return userName;
+    private void updateExternalContext() {
+        externalContext = FacesContext.getCurrentInstance().getExternalContext();
+    }
+    
+    public boolean isLoggedIn() {
+        updateExternalContext();
+        return (externalContext.getUserPrincipal() != null);
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String currentUserName() {
+        updateExternalContext();
+        if (isLoggedIn()) {
+            return externalContext.getUserPrincipal().getName();
+        }
+        return null;    
+    }
+    
+    public boolean isInRole(String roleName) {
+        updateExternalContext();
+        return externalContext.isUserInRole(roleName);
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getCurrentUser() {
-        return currentUser;
-    }
-
-    public Boolean getIsEmployee() {
-        return isEmployee;
+    public boolean isCustomer() {
+        updateExternalContext();
+        return isInRole(UserRole.Role.CUSTOMER.name());
     }
 
     public String logout() {
         // Invalidate Session
         externalContext.invalidateSession();
         // Redirect browser
-        return "/index.xhtml?faces-redirect=true";
+        return "index.xhtml?faces-redirect=true";
     }
 
 }

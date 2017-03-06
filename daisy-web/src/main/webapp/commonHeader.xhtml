@@ -9,15 +9,18 @@
     <h:body>
         <ui:composition>
             
-            <h:form>  
+            <h:form>
                 <p:menubar style="background-color: #3D3E3F !important;">
                     <f:facet name="options">
                         <p:inputText placeholder="Search for products" value="#{webController.searchText}" />
                         <p:commandButton value="Go!" actionListener="#{webController.searchForProducts()}" update="dg_products"/>
                     </f:facet>
-                    <p:submenu label="Benutzer" icon="ui-icon-person" style="float:right">
-                        <p:menuitem value="Meine Bestellungen" url="#" icon="ui-icon-folder-collapsed" />
-                        <p:menuitem value="Logout" url="#" icon="ui-icon-locked" />
+                    <p:submenu label="Guest" icon="ui-icon-person" style="float:right" rendered="#{not sessionInformationController.isLoggedIn()}">
+                        <p:menuitem value="Login" icon="ui-icon-person" url="login.xhtml"/>
+                    </p:submenu>
+                    <p:submenu label="#{sessionInformationController.currentUserName()}" icon="ui-icon-person" style="float:right" rendered="#{sessionInformationController.isLoggedIn()}">
+                        <p:menuitem value="Meine Bestellungen" icon="ui-icon-folder-collapsed" />
+                        <p:menuitem value="Logout" icon="ui-icon-locked" url="#{sessionInformationController.logout()}"/>
                     </p:submenu>
                 </p:menubar>
             </h:form>
