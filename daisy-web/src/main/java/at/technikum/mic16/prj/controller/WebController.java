@@ -43,6 +43,8 @@ public class WebController implements Serializable {
     private List<Product> displayedProducts = new ArrayList<>();
     private String searchText = "";
     private Product selectedProduct;
+    
+    private boolean viewAbandoned = false;
 
     public WebController() {
     }
@@ -62,8 +64,9 @@ public class WebController implements Serializable {
     /**
      * Sets the selectedCategoryId and updates selectedCategory by passed id
      * @param selectedCategoryId 
+     * @return Where to navigate next
      */
-    public void setSelectedCategoryId(Long selectedCategoryId) {
+    public String setSelectedCategoryId(Long selectedCategoryId) {
         this.selectedCategoryId = selectedCategoryId;
         boolean modified = false;
         for (Category c : categories) {
@@ -76,6 +79,12 @@ public class WebController implements Serializable {
         if (modified) {
             displayedProducts = backend.getProductsByCategory(selectedCategory);
         }
+        
+        if (viewAbandoned) {
+            viewAbandoned = false;
+            return "index.xhtml?faces-redirect=true";
+        }
+        return null;
     }
 
     public Category getSelectedCategory() {
@@ -152,20 +161,23 @@ public class WebController implements Serializable {
                 item.setValue(c.getName());
                 // Invoke selectedCategoryId - this also updates displayedProducts
                 item.setCommand("#{webController.setSelectedCategoryId(" + c.getId() + ")}");
-                // Update products datagrid on change of category as displayedProducts may be modified by command
-                item.setUpdate("dg_products");
                 parent.addElement(item);
             }
         }
 
     }
     
-    public void searchForProducts() {
+    public String searchForProducts() {
         if (searchText == null || searchText.isEmpty() || searchText.replaceAll(" ", "").isEmpty()) {
             // TODO: handle search without criteria
-            return;
+            return null;
         }
         displayedProducts = backend.getProductsByNameOrDescription(searchText);
+        if (viewAbandoned) {
+            viewAbandoned = false;
+            return "index.xhtml?faces-redirect=true";
+        }
+        return null;
     }
     
     public static String getRatingImageForProduct(Product product) {
@@ -173,9 +185,8 @@ public class WebController implements Serializable {
         return "images/daisy_" + Integer.toString((int) product.averageRating()) + ".png";
     }
     
-    public String navigateToProduct(Product product) {
-        selectedProduct = product;
-        System.out.println("Navigation called for product: " + product.getName());
+    public String navigateToProductDetail() {
+        viewAbandoned = true;
         return "product.xhtml";
     }
     
