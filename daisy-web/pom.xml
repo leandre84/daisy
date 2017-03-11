@@ -35,16 +35,27 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>net.bootsfaces</groupId>
+            <artifactId>bootsfaces</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>6.0</version>
         </dependency>
-        <!-- use the all themes packages for now, select specific one later -->
+        <!-- use the all themes packages for now, select specific one later
         <dependency>  
             <groupId>org.primefaces.themes</groupId>  
             <artifactId>all-themes</artifactId>  
             <version>1.0.10</version>  
         </dependency> 
+        -->
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>1.0.10</version>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
