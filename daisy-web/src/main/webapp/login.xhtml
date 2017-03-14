@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">  
 
     <h:body>
-        <center>
-            <form method="post" id="loginForm" action="j_security_check">
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="User"/><br/>
-                    <h:inputText id="j_username"/><br/>
-                    <h:outputLabel value="Password"/><br/>
-                    <h:inputSecret id="j_password"/><br/>
-                    <f:facet name="footer">
-                        <h:panelGroup style="display:block; text-align:center">
-                            <input type="submit" name="submit" value="Login" />
-                        </h:panelGroup>
-                    </f:facet>
+
+        <h:form>
+            <p:panel id="panel" header="Log in">
+                <p:messages id="msgs" />
+
+                <h:panelGrid columns="3">
+
+                    <p:outputLabel for="user" value="User: "/>
+                    <p:inputText id="user" value="#{loginController.inputUser}" required="true" />
+                    <p:message for="user" display="icon"/>
+
+                    <p:outputLabel for="password" value="Password: "/>
+                    <p:password id="password" value="#{loginController.inputPassword}" required="true" />
+                    <p:message for="password" display="icon"/>
+
+                    <p:commandButton value="Login" action="#{loginController.logIn()}" update="panel" />
+                    <p:commandButton value="Cancel" action="index.xhtml" />
+
                 </h:panelGrid>
-                <br/>
-            </form>
-        </center>
+
+                <h:panelGrid columns="1">
+                    <h:outputLabel value="#{loginController.errorMessage}" style="color: red" />
+                </h:panelGrid>
+            </p:panel>
+
+
+        </h:form>
+
     </h:body>
 
-</ui:composition>
+</html>

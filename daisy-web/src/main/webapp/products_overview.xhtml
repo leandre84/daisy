@@ -1,48 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
-    <h:body>
-        <ui:composition>
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-            <h:panelGrid columns="1" width="100%">
-                <h:panelGroup>
-                    <p:outputPanel autoUpdate="true" style="border-style: none">
-                        <p:dataGrid id="dg_products" var="product" value="#{webController.displayedProducts}" columns="3" layout="grid" rows="4" emptyMessage="No product matching selected category or search criteria">
-                            <!--
-                            <f:facet name="header">
-                                Featured products
-                            </f:facet>
-                            -->
-                            <p:panel style="text-align:left">
-                                
-                                <f:facet name="header">
-                                    <p:outputLabel value="#{product.name}" />
-                                    <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>    
-                                </f:facet>
+    <h:panelGrid columns="1" width="100%">
+        <h:panelGroup>
+            <p:outputPanel autoUpdate="true" style="border-style: none">
+                <p:dataGrid id="dg_products" var="product" value="#{webController.displayedProducts}" columns="3" layout="grid" rows="4" emptyMessage="No product matching selected category or search criteria">
+                    <!--
+                    <f:facet name="header">
+                        Featured products
+                    </f:facet>
+                    -->
+                    <p:panel style="text-align:left">
 
-                                <!-- Body-->
-                                <p:panelGrid columns="1" style="width:100%">
-                                    <p:outputLabel value="Description: #{product.description}"/>
-                                    <h:graphicImage value="#{product.imagePath}" width="60px"/>
-                                    <p:outputLabel value="Rating: #{product.ratingCount()} ratings"/>
-                                    <h:form>
-                                        <h:commandLink value="View details" action="#{webController.setSelectedProduct(product)}" />
-                                    </h:form>
-                                </p:panelGrid>
-                                
-                            </p:panel>
-                        </p:dataGrid>
-                    </p:outputPanel>
+                        <f:facet name="header">
+                            <p:outputLabel value="#{product.name}" />
+                            <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px"/>    
+                        </f:facet>
 
-                </h:panelGroup>
-            </h:panelGrid>
+                        <!-- Body-->
+                        <p:panelGrid columns="1" style="width:100%">
+                            <p:outputLabel value="Description: #{product.description}"/>
+                            <h:graphicImage value="#{product.imagePath}" width="60px"/>
+                            <p:outputLabel value="Rating: #{product.ratingCount()} ratings"/>
+                            <h:form>
+                                <h:commandLink value="View details" action="#{webController.setSelectedProduct(product)}" />
+                            </h:form>
+                        </p:panelGrid>
 
-        </ui:composition>
-    </h:body>
-</html>
+                    </p:panel>
+                </p:dataGrid>
+            </p:outputPanel>
+
+        </h:panelGroup>
+    </h:panelGrid>
+
+</ui:composition>

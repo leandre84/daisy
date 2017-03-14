@@ -16,10 +16,12 @@ import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.entity.UserRole;
 import java.util.List;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -62,10 +64,18 @@ public class WebshopService {
         return productDAO.findByCategory(category, -1, -1);
     }
     
-    public void createNewUser(String userId, String password, String firstName, String lastName) {
+    public User authenticateUser(String userId, String passwordHash) {
+        return userDAO.findByIDAndPassword(userId, passwordHash);
+    }
+    
+    public List<UserRole> getUserRoles(User user) {
+        return userRoleDAO.findByUserID(user.getId());
+    }
+    
+    public void createNewUser(String userId, String passwordHash, String firstName, String lastName) {
         UserRole newUserRole = new UserRole(userId, UserRole.Role.CUSTOMER);
         userRoleDAO.persist(newUserRole);
-        User newUser = new User(userId, password, firstName, lastName);
+        User newUser = new User(userId, passwordHash, firstName, lastName);
         userDAO.persist(newUser);
     }
     
