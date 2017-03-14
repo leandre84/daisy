@@ -20,6 +20,7 @@ import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -63,7 +64,13 @@ public class WebshopService {
     }
     
     public User authenticateUser(String userId, String passwordHash) {
-        return userDAO.findByIDAndPassword(userId, passwordHash);
+        User user;
+        try {
+            user = userDAO.findByIDAndPassword(userId, passwordHash);
+        } catch (NoResultException e) {
+            return null;
+        }
+        return user;
     }
     
     public List<UserRole> getUserRoles(User user) {

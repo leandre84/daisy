@@ -83,17 +83,20 @@ public class LoginController implements Serializable {
         try {
             hashedPassword = JBossPasswordUtil.getPasswordHash(inputPassword);
             user = backend.authenticateUser(inputUser, hashedPassword);
+            if (user == null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Login failed, check your credentials!"));
+                return null;
+            }
             roles = backend.getUserRoles(user);
             navigationController.setCurrentPage(navigationController.getPreviousPage());
             return "index.xhtml?faces-redirect=true";
-        } catch (NoResultException e) {
-            // TODO: check why this is never triggered though NoResultException thrown in case of wrong credentials
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Login failed!"));
+
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Login failed: " + e.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during login: " + e.getMessage()));
         }
         
         return null;
+
     }
     
     public String logOut() {
