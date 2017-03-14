@@ -34,7 +34,10 @@
                 <ui:include src="categories.xhtml" />
             </p:layoutUnit>
             <p:layoutUnit position="center">
-                <ui:include src="products_overview.xhtml" />
+                <!-- need this for accurate render condition -->
+                <p:outputPanel autoUpdate="true">
+                    <ui:include src="#{webController.doNav()}" />
+                </p:outputPanel>
             </p:layoutUnit>
             <!--
             <p:layoutUnit position="south">

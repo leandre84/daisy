@@ -32,9 +32,7 @@
                                     <h:graphicImage value="#{product.imagePath}" width="60px"/>
                                     <p:outputLabel value="Rating: #{product.ratingCount()} ratings"/>
                                     <h:form>
-                                        <h:commandLink action="#{webController.navigateToProductDetail()}" value="View details">
-                                            <f:setPropertyActionListener value="#{product}" target="#{webController.selectedProduct}"/>
-                                        </h:commandLink>
+                                        <h:commandLink value="View details" action="#{webController.setSelectedProduct(product)}" />
                                     </h:form>
                                 </p:panelGrid>
                                 

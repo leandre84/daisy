@@ -43,8 +43,6 @@ public class WebController implements Serializable {
     private List<Product> displayedProducts = new ArrayList<>();
     private String searchText = "";
     private Product selectedProduct;
-    
-    private boolean viewAbandoned = false;
 
     public WebController() {
     }
@@ -64,9 +62,8 @@ public class WebController implements Serializable {
     /**
      * Sets the selectedCategoryId and updates selectedCategory by passed id
      * @param selectedCategoryId 
-     * @return Where to navigate next
      */
-    public String setSelectedCategoryId(Long selectedCategoryId) {
+    public void setSelectedCategoryId(Long selectedCategoryId) {
         this.selectedCategoryId = selectedCategoryId;
         boolean modified = false;
         for (Category c : categories) {
@@ -77,14 +74,9 @@ public class WebController implements Serializable {
         }
         // Fetch products based on selected category
         if (modified) {
+            selectedProduct = null;
             displayedProducts = backend.getProductsByCategory(selectedCategory);
         }
-        
-        if (viewAbandoned) {
-            viewAbandoned = false;
-            return "index.xhtml?faces-redirect=true";
-        }
-        return null;
     }
 
     public Category getSelectedCategory() {
@@ -167,17 +159,13 @@ public class WebController implements Serializable {
 
     }
     
-    public String searchForProducts() {
+    public void searchForProducts() {
         if (searchText == null || searchText.isEmpty() || searchText.replaceAll(" ", "").isEmpty()) {
             // TODO: handle search without criteria
-            return null;
+            return;
         }
+        selectedProduct = null;
         displayedProducts = backend.getProductsByNameOrDescription(searchText);
-        if (viewAbandoned) {
-            viewAbandoned = false;
-            return "index.xhtml?faces-redirect=true";
-        }
-        return null;
     }
     
     public static String getRatingImageForProduct(Product product) {
@@ -185,13 +173,16 @@ public class WebController implements Serializable {
         return "images/daisy_" + Integer.toString((int) product.averageRating()) + ".png";
     }
     
-    public String navigateToProductDetail() {
-        viewAbandoned = true;
-        return "product.xhtml";
-    }
-    
     public void createNewUser(String userId, String password, String firstName, String lastName) {
         backend.createNewUser(userId, password, firstName, lastName);
+    }
+    
+    public String doNav() {
+        if (selectedProduct == null) {
+            return "products_overview.xhtml";
+        } else {
+            return "product_detail.xhtml";
+        }
     }
     
 }
