@@ -15,8 +15,10 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.NoResultException;
 
 
 /**
@@ -30,6 +32,9 @@ public class LoginController implements Serializable {
     @EJB
     WebshopService backend;
     
+    @ManagedProperty(value = "#{navigationController}")
+    private NavigationController navigationController;
+    
     private User user;
     private List<UserRole> roles;
     
@@ -37,6 +42,14 @@ public class LoginController implements Serializable {
     private String inputPassword;
     
     public LoginController() {
+    }
+
+    public NavigationController getNavigationController() {
+        return navigationController;
+    }
+
+    public void setNavigationController(NavigationController navigationController) {
+        this.navigationController = navigationController;
     }
 
     public User getUser() {
@@ -71,7 +84,11 @@ public class LoginController implements Serializable {
             hashedPassword = JBossPasswordUtil.getPasswordHash(inputPassword);
             user = backend.authenticateUser(inputUser, hashedPassword);
             roles = backend.getUserRoles(user);
+            navigationController.setCurrentPage(navigationController.getPreviousPage());
             return "index.xhtml?faces-redirect=true";
+        } catch (NoResultException e) {
+            // TODO: check why this is never triggered though NoResultException thrown in case of wrong credentials
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Login failed!"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Login failed: " + e.getMessage()));
         }

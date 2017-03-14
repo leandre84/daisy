@@ -17,9 +17,8 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import org.primefaces.context.RequestContext;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -38,6 +37,9 @@ public class WebController implements Serializable {
     @EJB
     WebshopService backend;
     
+    @ManagedProperty(value = "#{navigationController}")
+    private NavigationController navigationController;
+    
     private List<Category> categories = new ArrayList<>();
     private MenuModel menumodel;
     private Long selectedCategoryId;
@@ -47,6 +49,14 @@ public class WebController implements Serializable {
     private Product selectedProduct;
 
     public WebController() {
+    }
+
+    public NavigationController getNavigationController() {
+        return navigationController;
+    }
+
+    public void setNavigationController(NavigationController navigationController) {
+        this.navigationController = navigationController;
     }
 
     public List<Category> getCategories() {
@@ -83,6 +93,7 @@ public class WebController implements Serializable {
         if (modified) {
             selectedProduct = null;
             displayedProducts = backend.getProductsByCategory(selectedCategory);
+            navigationController.setCurrentPage("products_overview.xhtml");
         }
     }
 
@@ -173,6 +184,7 @@ public class WebController implements Serializable {
         }
         selectedProduct = null;
         displayedProducts = backend.getProductsByNameOrDescription(searchText);
+        navigationController.setCurrentPage("products_overview.xhtml");
     }
     
     public static String getRatingImageForProduct(Product product) {
@@ -182,14 +194,6 @@ public class WebController implements Serializable {
     
     public void createNewUser(String userId, String password, String firstName, String lastName) {
         backend.createNewUser(userId, password, firstName, lastName);
-    }
-    
-    public String doNav() {
-        if (selectedProduct == null) {
-            return "products_overview.xhtml";
-        } else {
-            return "product_detail.xhtml";
-        }
     }
     
 }

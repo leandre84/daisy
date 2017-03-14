@@ -27,7 +27,10 @@
                             <h:graphicImage value="#{product.imagePath}" width="60px"/>
                             <p:outputLabel value="Rating: #{product.ratingCount()} ratings"/>
                             <h:form>
-                                <h:commandLink value="View details" action="#{webController.setSelectedProduct(product)}" />
+                                <p:commandButton value="View details">
+                                    <f:setPropertyActionListener value="#{product}" target="#{webController.selectedProduct}"/>
+                                    <f:setPropertyActionListener value="product_detail.xhtml" target="#{navigationController.currentPage}"/>
+                                </p:commandButton>
                             </h:form>
                         </p:panelGrid>
 
