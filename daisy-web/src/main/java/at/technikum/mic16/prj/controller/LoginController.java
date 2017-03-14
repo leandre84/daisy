@@ -10,20 +10,20 @@ import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.entity.UserRole;
 import at.technikum.mic16.prj.service.WebshopService;
 import at.technikum.mic16.prj.util.JBossPasswordUtil;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.persistence.NoResultException;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 
 /**
  *
  * @author leandros
  */
-@Named(value = "loginController")
+@ManagedBean(name = "loginController")
 @SessionScoped
 public class LoginController implements Serializable {
     
@@ -35,8 +35,6 @@ public class LoginController implements Serializable {
     
     private String inputUser;
     private String inputPassword;
-    
-    private String errorMessage;
     
     public LoginController() {
     }
@@ -64,27 +62,18 @@ public class LoginController implements Serializable {
     public void setInputPassword(String inputPassword) {
         this.inputPassword = inputPassword;
     }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
     
     
     
     public String logIn() {
         String hashedPassword;
         try {
-            errorMessage = "";
             hashedPassword = JBossPasswordUtil.getPasswordHash(inputPassword);
             user = backend.authenticateUser(inputUser, hashedPassword);
             roles = backend.getUserRoles(user);
             return "index.xhtml?faces-redirect=true";
-        } catch (NoResultException e ) {
-            errorMessage = "Login failed!";
-        } catch (UnsupportedEncodingException e) {
-            errorMessage = "Error while logging in: " + e.getMessage();
         } catch (Exception e) {
-            errorMessage = "Exception occured: " + e.getMessage();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Login failed: " + e.getMessage()));
         }
         
         return null;
@@ -98,7 +87,6 @@ public class LoginController implements Serializable {
     public void reset() {
         inputUser = "";
         inputPassword = "";
-        errorMessage = "";
         user = null;
         roles = null;
     }

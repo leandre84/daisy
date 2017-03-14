@@ -9,8 +9,6 @@ package at.technikum.mic16.prj.controller;
 import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.service.WebshopService;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +16,10 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -27,7 +29,7 @@ import org.primefaces.model.menu.MenuModel;
  *
  * @author leandros
  */
-@Named(value = "webController")
+@ManagedBean(name = "webController")
 @SessionScoped
 public class WebController implements Serializable {
     
@@ -65,6 +67,11 @@ public class WebController implements Serializable {
      */
     public void setSelectedCategoryId(Long selectedCategoryId) {
         this.selectedCategoryId = selectedCategoryId;
+        /* programatic update not working in this case
+        searchText = "";
+        RequestContext.getCurrentInstance().update("tv_search");
+        */
+                
         boolean modified = false;
         for (Category c : categories) {
             if (c.getId().compareTo(selectedCategoryId) == 0) {

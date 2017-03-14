@@ -10,15 +10,15 @@ import at.technikum.mic16.prj.exception.CommandExecutionException;
 import at.technikum.mic16.prj.service.CommandService;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author leandros
  */
-@Named(value = "commandController")
-@SessionScoped
+@ManagedBean(name = "commandController")
+@RequestScoped
 public class CommandController implements Serializable {
         
     @EJB

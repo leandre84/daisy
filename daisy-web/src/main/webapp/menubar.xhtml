@@ -8,7 +8,7 @@
     <h:form>
         <p:menubar style="background-color: #3D3E3F !important;">
             <f:facet name="options">
-                <p:inputText placeholder="Search for products" value="#{webController.searchText}" />
+                <p:inputText id="it_search" placeholder="Search for products" value="#{webController.searchText}"/>
                 <p:commandButton value="Go!" action="#{webController.searchForProducts()}"/>
             </f:facet>
             <p:submenu label="Guest" icon="ui-icon-person" style="float:right" rendered="#{empty loginController.user}">
