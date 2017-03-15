@@ -51,6 +51,10 @@ public class WebController implements Serializable {
     public WebController() {
     }
 
+    public WebshopService getBackend() {
+        return backend;
+    }
+
     public NavigationController getNavigationController() {
         return navigationController;
     }

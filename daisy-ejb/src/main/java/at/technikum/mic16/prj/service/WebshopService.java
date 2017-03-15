@@ -73,6 +73,10 @@ public class WebshopService {
         return user;
     }
     
+    public User getUserByID(String userId) {
+        return userDAO.findById(userId);
+    }
+    
     public List<UserRole> getUserRoles(User user) {
         return userRoleDAO.findByUserID(user.getId());
     }

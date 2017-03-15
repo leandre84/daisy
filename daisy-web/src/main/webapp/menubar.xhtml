@@ -17,7 +17,8 @@
                 </p:menuitem>
             </p:submenu>
             <p:submenu label="#{loginController.user.id}" icon="ui-icon-person" style="float:right" rendered="#{not empty loginController.user}">
-                <p:menuitem value="Meine Bestellungen" icon="ui-icon-folder-collapsed" />
+                <p:menuitem value="My profile" icon="fa fa-comment-o" url="show_userprofile.xhtml?id=#{loginController.user.id}" />
+                <p:menuitem value="My orders" icon="ui-icon-folder-collapsed" />
                 <p:menuitem value="Logout" icon="ui-icon-locked" action="#{loginController.logOut()}"/>
             </p:submenu>
         </p:menubar>
