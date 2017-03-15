@@ -111,11 +111,18 @@ public class InitBean {
         Recension recension1 = new Recension();
         recension1.setCreationDate(LocalDate.now().minusDays(14));
         recension1.setProduct(lg1);
-        recension1.setRating(3);
+        recension1.setRating(4);
         recension1.setUser(user1);
         recension1.setText("I like it");
         
-        recensionDAO.persist(recension1);
+        Recension recension2 = new Recension();
+        recension2.setCreationDate(LocalDate.now().minusDays(3));
+        recension2.setProduct(lg1);
+        recension2.setRating(3);
+        recension2.setUser(user2);
+        recension2.setText("It's ok, don't expect too much.");
+        
+        recensionDAO.persist(recension1, recension2);
         
         
     }

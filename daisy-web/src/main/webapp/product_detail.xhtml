@@ -6,4 +6,38 @@
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
     Name: #{webController.selectedProduct.name} <br/>
     Bewertung: #{webController.selectedProduct.averageRating()} <br/>
+
+    <p:dataGrid id="dg_recensions" var="recension" value="#{webController.selectedProduct.recensions}" columns="1" layout="grid" emptyMessage="There are currently no recensions for this product">
+
+
+        <f:facet name="header">
+            <p:outputLabel value="Recensions for #{webController.selectedProduct.name}" />   
+        </f:facet>
+        
+        <p:panel style="text-align:left">
+            
+            <f:facet name="header">
+                <p:outputLabel value="From: #{recension.user.friendlyName()}" />
+                <h:graphicImage value="#{webController.getRatingImageForRecension(recension)}" width="60px" style="float: right"/>
+            </f:facet>
+            
+            
+            <h:panelGrid columns="2">
+                <p:outputLabel value="From: "/>
+                <p:outputLabel value="#{recension.user.friendlyName()}"/>
+
+                <p:outputLabel value="Date: "/>
+                <p:outputLabel value="#{recension.creationDate}"/>
+
+                <p:outputLabel value="Rating: "/>
+                <p:outputLabel value="#{recension.rating}"/>
+
+                <p:outputLabel value="Recension: "/>
+                <p:outputLabel value="#{recension.text}" />
+            </h:panelGrid>
+        </p:panel>
+
+
+
+    </p:dataGrid>
 </ui:composition>

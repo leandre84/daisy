@@ -8,6 +8,7 @@ package at.technikum.mic16.prj.controller;
 
 import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
+import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.service.WebshopService;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -194,6 +195,10 @@ public class WebController implements Serializable {
     public static String getRatingImageForProduct(Product product) {
         // get rating, descard floating part and return URL        
         return "images/daisy_" + Integer.toString((int) product.averageRating()) + ".png";
+    }
+    
+    public static String getRatingImageForRecension(Recension recension) {        
+        return "images/daisy_" + Integer.toString(recension.getRating()) + ".png";
     }
     
     public void createNewUser(String userId, String password, String firstName, String lastName) {

@@ -48,8 +48,10 @@ public class RecensionDAO {
         return (Recension) q.getSingleResult();
     }
     
-    public void persist(Recension recension) {
-        em.persist(recension);
+    public void persist(Recension...recensions) {
+        for (Recension recension : recensions) {
+            em.persist(recension);
+        }
     }
 
     public void merge(Recension recension) {
