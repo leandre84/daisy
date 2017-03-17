@@ -17,7 +17,7 @@
                 <p:inputText id="it_search" placeholder="Search for products" value="#{webController.searchText}"/>
                 <p:commandButton value="Go!" action="#{webController.searchForProducts()}"/>
             </f:facet>
-            <p:submenu label="Guest" icon="ui-icon-person" style="float:right; fon" rendered="#{empty loginController.user}">
+            <p:submenu label="Guest" icon="ui-icon-person" style="float:right;" rendered="#{empty loginController.user}">
                 <p:menuitem value="Login" icon="ui-icon-person">
                     <f:setPropertyActionListener value="login.xhtml" target="#{navigationController.currentPage}"/>
                 </p:menuitem>

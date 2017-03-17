@@ -102,22 +102,25 @@ public class InitBean {
         categoryDAO.persist(smartphone);
         
         
-        Product lg1 = new Product("LG VT100X60", 1999.99f, "This new LG is superb...", "/images/products/vintage-tv.jpg" ,telly);
-        Product lg2 = new Product("LG VT020F20", 1199.99f, "This new LG is not as good...", "",telly);
+        Product phillips1 = new Product("Philips 55PUK4900", 679.99f, "This new Phillips is superb...", "/images/products/Phillips_55PUK4900.jpg" ,telly);
+        Product phillips2 = new Product("Phillips 55PUS6031", 998.99f, "This new Phillips is not as good...", "/images/products/Phillips_55PUS6031.jpg",telly);
+        Product samsung1 = new Product("Samsung UE55JU6470", 850.00f, "This new Samsung is superb...", "/images/products/Samsung_UE55JU6470.jpg" ,telly);
+        Product samsung2 = new Product("Samsung UE55K5660", 1100.00f, "This new Samsung is not as good...", "/images/products/Samsung_UE55K5650.jpg",telly);
+        Product samsung3 = new Product("Samsung UE65JU6070", 1200.99f, "This new Samsung is not as good...", "/images/products/Samsung_UE65JU6070.jpg",telly);
         Product hoover1 = new Product("AEG KL500F", 149.90f, "Brand new and strong...", "",hoover);
         
-        productDAO.persist(lg1, lg2, hoover1);
+        productDAO.persist(phillips1, phillips2,samsung1,samsung2,samsung3, hoover1);
         
         Recension recension1 = new Recension();
         recension1.setCreationDate(LocalDate.now().minusDays(14));
-        recension1.setProduct(lg1);
+        recension1.setProduct(phillips1);
         recension1.setRating(4);
         recension1.setUser(user1);
         recension1.setText("I like it");
         
         Recension recension2 = new Recension();
         recension2.setCreationDate(LocalDate.now().minusDays(3));
-        recension2.setProduct(lg1);
+        recension2.setProduct(phillips1);
         recension2.setRating(3);
         recension2.setUser(user2);
         recension2.setText("It's ok, don't expect too much.");

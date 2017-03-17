@@ -20,22 +20,50 @@
             .ui-widget, .ui-widget .ui-widget {
                 font-size: 90% !important;
             }
-
+            
+            .ui-datagrid-no-border>.ui-datagrid-content {
+            border: none;
+            }	
+            
+            .ui-menubar {
+                background: #1D1D1B !important;
+            }
+            
+            /*.ui-menuitem-text {
+                color: white !important;
+            }
+            
+           .ui-menui-list {
+               background-color:#1D1D1B !important; 
+           }*/
+             .ui-menuitem-text{
+                color:white !important;
+            }
+            
+             .ui-menu-child{
+                background: #1D1D1B !important;
+            }
+            
+            .ui-menuitem-icon{
+                color: white !important;
+            }
+            
+            
         </style>
     </h:head>
 
     <h:body>
         
         <p:layout fullPage="true">    
-            <p:layoutUnit position="north">
+            <p:layoutUnit position="north" style="border: none">
                 <ui:include src="menubar.xhtml" />
             </p:layoutUnit>
-            <p:layoutUnit position="west">
+            <p:layoutUnit position="west" style="border: none">
                 <ui:include src="categories.xhtml" />
             </p:layoutUnit>
-            <p:layoutUnit position="center">
+            <p:layoutUnit position="center" style="border: none">
                 <!-- need this for accurate render condition -->
-                <p:outputPanel autoUpdate="true" style="border-style: none">
+                <p:outputPanel autoUpdate="true" style="border: none">
                     <ui:include src="#{navigationController.currentPage}" />
                 </p:outputPanel>
             </p:layoutUnit>
