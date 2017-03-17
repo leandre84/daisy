@@ -21,6 +21,9 @@
                 <p:menuitem value="Login" icon="ui-icon-person">
                     <f:setPropertyActionListener value="login.xhtml" target="#{navigationController.currentPage}"/>
                 </p:menuitem>
+                <p:menuitem value="Register" icon="ui-icon-person">
+                    <f:setPropertyActionListener value="register.xhtml" target="#{navigationController.currentPage}"/>
+                </p:menuitem>
             </p:submenu>
             <p:submenu label="#{loginController.user.id}" icon="ui-icon-person" style="float:right" rendered="#{not empty loginController.user}">
                 <p:menuitem value="My profile" icon="fa fa-comment-o" url="show_userprofile.xhtml?id=#{loginController.user.id}" />

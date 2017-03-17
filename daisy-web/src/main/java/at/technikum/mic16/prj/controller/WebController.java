@@ -201,8 +201,4 @@ public class WebController implements Serializable {
         return "images/daisy_" + Integer.toString(recension.getRating()) + ".png";
     }
     
-    public void createNewUser(String userId, String password, String firstName, String lastName) {
-        backend.createNewUser(userId, password, firstName, lastName);
-    }
-    
 }

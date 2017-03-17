@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:form>
+        <p:panel id="panel" header="Register">
+            <p:messages id="msgs" showDetail="true" autoUpdate="true" closable="true" />
+
+            <h:panelGrid columns="2">
+
+                <p:outputLabel for="email" value="eMail: "/>
+                <p:inputText id="email" value="#{registerController.email}" required="true">
+                    <f:validateRegex pattern="^[a-zA-Z0-9_\-+.]+[@]{1}[a-zA-Z0-9.\-+]+[\.]{1}[a-zA-Z]+$"/>
+                </p:inputText>
+
+                <p:outputLabel for="firstname" value="Firstname: "/>
+                <p:inputText id="firstname" value="#{registerController.firstName}" required="true" />
+
+                <p:outputLabel for="lastname" value="Lastname: "/>
+                <p:inputText id="lastname" value="#{registerController.lastName}" required="true" />
+
+                <p:outputLabel for="password" value="Password: "/>
+                <p:password id="password" value="#{registerController.password}" required="true" />
+
+                <p:commandButton value="Register" action="#{registerController.doRegister()}" update="panel" />
+
+            </h:panelGrid>
+        </p:panel>
+
+
+    </h:form>
+
+</ui:composition>
