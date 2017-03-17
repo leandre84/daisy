@@ -13,9 +13,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.EJBTransactionRolledbackException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 
 /**
@@ -98,7 +101,10 @@ public class RegisterController implements Serializable {
             navigationController.setCurrentPage("products_overview.xhtml");
             return "index.xhtml?faces-redirect=true";
         } catch (UnsupportedEncodingException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "This should never happen ;-) : " + ex.getMessage()));
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (EJBTransactionRolledbackException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "User already existing: " + ex.getMessage()));
         }
         return null;
     }
