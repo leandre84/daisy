@@ -4,8 +4,17 @@
                  xmlns:h="http://xmlns.jcp.org/jsf/html"
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
-    Name: #{webController.selectedProduct.name} <br/>
-    Bewertung: #{webController.selectedProduct.averageRating()} <br/>
+    
+    <h:panelGrid columns="2">
+        <p:outputLabel value="Product: "/>
+        <p:outputLabel value="#{webController.selectedProduct.name}"/>
+        
+        <p:outputLabel value="Description: "/>
+        <p:outputLabel value="#{webController.selectedProduct.description}"/>
+        
+        <h:graphicImage value="#{webController.selectedProduct.imagePath}" width="300px" />
+        
+    </h:panelGrid>
 
     <p:dataGrid id="dg_recensions" var="recension" value="#{webController.selectedProduct.recensions}" columns="1" layout="grid" emptyMessage="There are currently no recensions for this product">
 
@@ -24,7 +33,7 @@
             
             <h:panelGrid columns="2">
                 <p:outputLabel value="From: "/>
-                <p:outputLabel value="#{recension.user.friendlyName()}"/>
+                <p:outputLabel value="#{recension.user.friendlyName()} (#{recension.user.id}"/>
 
                 <p:outputLabel value="Date: "/>
                 <p:outputLabel value="#{recension.creationDate}"/>

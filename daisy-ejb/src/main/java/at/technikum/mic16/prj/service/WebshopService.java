@@ -13,6 +13,7 @@ import at.technikum.mic16.prj.dao.UserDAO;
 import at.technikum.mic16.prj.dao.UserRoleDAO;
 import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
+import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.entity.UserRole;
 import java.util.List;
@@ -86,6 +87,16 @@ public class WebshopService {
         userRoleDAO.persist(newUserRole);
         User newUser = new User(userId, passwordHash, firstName, lastName);
         userDAO.persist(newUser);
+    }
+    
+    public Recension getRecensionForProductByUser(Product product, User user) {
+        Recension recension;
+        try {
+            recension = recensionDAO.findByUserAndProduct(user, product);
+        } catch (NoResultException e) {
+            return null;
+        }
+        return recension;
     }
     
 }
