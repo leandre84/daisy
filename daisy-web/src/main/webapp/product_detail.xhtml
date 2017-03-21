@@ -3,7 +3,8 @@
                  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                  xmlns:h="http://xmlns.jcp.org/jsf/html"
                  xmlns:p="http://primefaces.org/ui"
-                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <h:panelGrid columns="2">
         <p:outputLabel value="Product: "/>
@@ -20,7 +21,10 @@
 
 
         <f:facet name="header">
-            <p:outputLabel value="Recensions for #{webController.selectedProduct.name}" />   
+            <p:outputLabel value="Recensions for #{webController.selectedProduct.name}" />
+            <p:commandButton value="Add/edit own recension" style="float: right" rendered="#{not empty loginController.user}">
+                <f:setPropertyActionListener value="recension.xhtml" target="#{navigationController.currentPage}"/>
+            </p:commandButton>
         </f:facet>
         
         <p:panel style="text-align:left">

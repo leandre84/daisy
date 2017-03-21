@@ -90,6 +90,7 @@ public class WebshopService {
     }
     
     public Recension getRecensionForProductByUser(Product product, User user) {
+        /*
         Recension recension;
         try {
             recension = recensionDAO.findByUserAndProduct(user, product);
@@ -97,6 +98,8 @@ public class WebshopService {
             return null;
         }
         return recension;
+        */
+        return recensionDAO.findByUserAndProduct(user, product);
     }
     
 }
