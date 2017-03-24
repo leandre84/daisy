@@ -55,6 +55,19 @@ public class Recension implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_fk")
     private User user;
+    
+    public Recension() {
+        
+    }
+
+    public Recension(String text, int rating, LocalDate creationDate, String imagePath, Product product, User user) {
+        this.text = text;
+        this.rating = rating;
+        this.creationDate = creationDate;
+        this.imagePath = imagePath;
+        this.product = product;
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
