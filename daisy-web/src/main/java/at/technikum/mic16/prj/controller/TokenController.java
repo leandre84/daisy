@@ -7,6 +7,8 @@ package at.technikum.mic16.prj.controller;
  */
 
 import at.technikum.mic16.prj.service.WebshopService;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -26,6 +28,7 @@ public class TokenController implements Serializable {
     WebshopService backend;
     
     private String token;
+    private String errorMessage;
 
     public String getToken() {
         return token;
@@ -34,17 +37,50 @@ public class TokenController implements Serializable {
     public void setToken(String token) {
         this.token = token;
     }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
     
     @PostConstruct
     public void init() {
-        token = backend.getToken();
+        try {
+            token = backend.retrieveInstallToken();
+        } catch (FileNotFoundException e) {
+            // Tokenfile not existing yet
+        } catch (IOException e) {
+            // error during read
+            errorMessage = "Error reading token file :-(";
+        }
     }
     
     public String commitToken() {
-        backend.setToken(token);
-        return "index.xhtml?faces-redirect=true";
+        if (token == null || token.isEmpty()) {
+            errorMessage = "Please enter a token!";
+            return null;
+        }
+        errorMessage = null;
+        try {
+            backend.persistInstallToken(token);
+            return "index.xhtml?faces-redirect=true";
+        } catch (IOException ex) {
+            errorMessage = "Error installing token";
+        }
+        return null;
     }
     
-    
+    public void deleteToken() {
+        if (backend.deleteInstallToken()) {
+            errorMessage = null;
+            token = null;
+        } else {
+            errorMessage = "Unable to delete token file";
+        }
+    }
+  
 
 }
