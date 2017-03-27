@@ -4,6 +4,13 @@
                  xmlns:h="http://xmlns.jcp.org/jsf/html"
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <p:panel style="text-align:left">
+         <f:facet name="header">
+            <p:outputLabel value="#{webController.selectedProduct.name}" style="font-size: 130% !important"/>
+                
+        </f:facet>
+        </p:panel>    
     Name: #{webController.selectedProduct.name} <br/>
     Bewertung: #{webController.selectedProduct.averageRating()} <br/>
 
