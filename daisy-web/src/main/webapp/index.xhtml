@@ -7,6 +7,9 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">    
 
     <h:head>
+        <link rel="shortcut icon" type="image/x-icon" href="images/favicon1.png"/>
+        
+
         <style>
             .ui-layout-north {
                 z-index:20 !important;
@@ -27,8 +30,19 @@
             
             .ui-menubar {
                 background: #1D1D1B !important;
+                margin-bottom: -5px;
             }
             
+
+            .ui-panelgrid td, .ui-panelgrid tr
+            {
+                border-style: none !important
+            }
+            
+            .label {
+                font-weight: bold !important;
+                font-size: 20px !important;
+            }
             /*.ui-menuitem-text {
                 color: white !important;
             }
@@ -36,10 +50,20 @@
            .ui-menui-list {
                background-color:#1D1D1B !important; 
            }*/
-             .ui-menuitem-text{
-                color:white !important;
+             
+              .menubar1 .ui-menuitem-text{
+                  color:white;
+                  
+              }
+              
+              .menubar2 .ui-menuitem{
+                  top: .2em !important;
+              }
+              
+            .menubarPosition .ui-menuitem ui-menubar-options{
+                vertical-align: top !important;
             }
-            
+
              .ui-menu-child{
                 background: #1D1D1B !important;
             }
@@ -56,9 +80,11 @@
         
         <p:layout fullPage="true">    
             <p:layoutUnit position="north" style="border: none">
+              
                 <ui:include src="menubar.xhtml" />
+                
             </p:layoutUnit>
-            <p:layoutUnit position="west" style="border: none">
+            <p:layoutUnit position="west" style="border: none;">
                 <ui:include src="categories.xhtml" />
             </p:layoutUnit>
             <p:layoutUnit position="center" style="border: none">

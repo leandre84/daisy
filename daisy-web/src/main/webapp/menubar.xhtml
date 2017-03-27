@@ -6,10 +6,11 @@
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:form>
+       
         <p:menubar>
             <p:menuitem>
                 <h:link outcome="/index.xhmtl">
-                    <h:graphicImage value="/images/daisy_logo.jpg" height="80" />
+                    <h:graphicImage value="/images/daisy_logo_1.JPG" height="70" />
                 </h:link>
             </p:menuitem>
 
@@ -17,15 +18,15 @@
                 <p:inputText id="it_search" placeholder="Search for products" value="#{webController.searchText}"/>
                 <p:commandButton value="Go!" action="#{webController.searchForProducts()}"/>
             </f:facet>
-            <p:submenu label="Guest" icon="ui-icon-person" style="float:right;" rendered="#{empty loginController.user}">
-                <p:menuitem value="Login" icon="ui-icon-person">
+            <p:submenu label="Guest" icon="fa fa-user" style="float:right;" rendered="#{empty loginController.user}" styleClass="menubar1" >
+                <p:menuitem value="Login" icon="fa fa-user">
                     <f:setPropertyActionListener value="login.xhtml" target="#{navigationController.currentPage}"/>
                 </p:menuitem>
-                <p:menuitem value="Register" icon="ui-icon-person">
+                <p:menuitem value="Register" icon="fa fa-user">
                     <f:setPropertyActionListener value="register.xhtml" target="#{navigationController.currentPage}"/>
                 </p:menuitem>
             </p:submenu>
-            <p:submenu label="#{loginController.user.id}" icon="ui-icon-person" style="float:right" rendered="#{not empty loginController.user}">
+            <p:submenu label="#{loginController.user.id}" icon="fa fa-user" style="float:right" rendered="#{not empty loginController.user}">
                 <p:menuitem value="My profile" icon="fa fa-comment-o" url="show_userprofile.xhtml?id=#{loginController.user.id}" />
                 <p:menuitem value="My orders" icon="ui-icon-folder-collapsed" />
                 <p:menuitem value="Logout" icon="ui-icon-locked" action="#{loginController.logOut()}"/>

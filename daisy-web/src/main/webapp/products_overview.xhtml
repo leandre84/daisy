@@ -17,21 +17,46 @@
                     <p:panel style="text-align:left">
 
                         <f:facet name="header">
-                            <p:outputLabel value="#{product.name}"/>
+                            <p:outputLabel value="#{product.name}" style="font-size: 130% !important"/>
                             <h:graphicImage value="#{webController.getRatingImageForProduct(product)}" width="60px" style="float: right"/>    
                         </f:facet>
 
                         <!-- Body-->
-                        <p:panelGrid columns="1" style="width:100%">
-                            <p:outputLabel value="Description: #{product.description}"/>
-                            <h:graphicImage value="#{product.imagePath}" width="300px" height="180" style="display: block; margin: auto;"/>
-                            <p:outputLabel value="Rating: #{product.ratingCount()} ratings"/>
+                        <p:panelGrid columns="1" style="width:100%; border: none;">
+
                             <h:form>
-                                <p:commandButton value="View details">
+                                <h:commandLink>
+                                    <br />
+                                    <br />
+                                    <h:graphicImage value="#{product.imagePath}" width="300px" height="180" style="display: block; margin: auto;"/>
                                     <f:setPropertyActionListener value="#{product}" target="#{webController.selectedProduct}"/>
                                     <f:setPropertyActionListener value="product_detail.xhtml" target="#{navigationController.currentPage}"/>
-                                </p:commandButton>
+                                    <br />
+                                    <br />
+                                </h:commandLink>        
                             </h:form>
+                            <p:row>
+                                <p:outputLabel value="&lt;b&gt;Description:&lt;/b&gt; #{product.description}" escape="false" style="font-size: 110% !important"/>
+
+                                <p:outputLabel value="&lt;b&gt;Preis:&lt;/b&gt; #{product.price}" escape="false" style="float: right; font-size: 120% !important"/>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="&lt;b&gt;Rating:&lt;/b&gt; #{product.ratingCount()} ratings" escape="false" style="font-size: 110% !important"/>
+                                </p:column> 
+                                <p:column>
+                                    <p:commandButton value=" Add to Chart" icon="fa fa-shopping-cart" style="float:right;font-size: 110% !important" type="button">
+                                        
+                                    </p:commandButton>
+                                    
+                                        <p:commandButton value="View details " icon="fa fa-plus-square " style="float:right; font-size: 110% !important">
+                                            <f:setPropertyActionListener value="#{product}" target="#{webController.selectedProduct}"/>
+                                            <f:setPropertyActionListener value="product_detail.xhtml" target="#{navigationController.currentPage}"/>
+                                        </p:commandButton>
+                                    
+                                </p:column>
+
+                            </p:row>
                         </p:panelGrid>
 
                     </p:panel>
