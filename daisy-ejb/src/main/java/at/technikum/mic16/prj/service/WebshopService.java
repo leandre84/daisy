@@ -13,8 +13,16 @@ import at.technikum.mic16.prj.dao.UserDAO;
 import at.technikum.mic16.prj.dao.UserRoleDAO;
 import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
+import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.entity.UserRole;
+import at.technikum.mic16.prj.util.FileUtil;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -30,6 +38,8 @@ import javax.persistence.NoResultException;
 @Stateless
 @LocalBean
 public class WebshopService {
+    
+    public static final String TOKEN_PATH = "daisy.token";
     
     @Inject
     private CategoryDAO categoryDAO;
@@ -63,6 +73,31 @@ public class WebshopService {
         return productDAO.findByCategory(category, -1, -1);
     }
     
+    public void persistInstallToken(String token) throws IOException {
+        BufferedWriter bw = null;
+        try {
+            bw = new BufferedWriter(new FileWriter(new File(TOKEN_PATH)));
+            bw.write(token);
+        } finally {
+            FileUtil.safeClose(bw);
+        }          
+    }
+    
+    public String retrieveInstallToken() throws IOException {
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(new File(TOKEN_PATH)));
+            return br.readLine();
+        } finally {
+            FileUtil.safeClose(br);
+        } 
+    }
+    
+    public boolean deleteInstallToken() {
+        File f = new File(TOKEN_PATH);
+        return f.delete();
+    }
+    
     public User authenticateUser(String userId, String passwordHash) {
         User user;
         try {
@@ -86,6 +121,19 @@ public class WebshopService {
         userRoleDAO.persist(newUserRole);
         User newUser = new User(userId, passwordHash, firstName, lastName);
         userDAO.persist(newUser);
+    }
+    
+    public Recension getRecensionForProductByUser(Product product, User user) {
+        /*
+        Recension recension;
+        try {
+            recension = recensionDAO.findByUserAndProduct(user, product);
+        } catch (NoResultException e) {
+            return null;
+        }
+        return recension;
+        */
+        return recensionDAO.findByUserAndProduct(user, product);
     }
     
 }

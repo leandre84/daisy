@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">    
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">    
 
     <h:head>
         <link rel="shortcut icon" type="image/x-icon" href="images/favicon1.png"/>
@@ -78,7 +79,7 @@
 
     <h:body>
         
-        <p:layout fullPage="true">    
+        <p:layout fullPage="true" rendered="#{not empty tokenController.token}">
             <p:layoutUnit position="north" style="border: none">
               
                 <ui:include src="menubar.xhtml" />
@@ -98,6 +99,12 @@
                 <ui:include src="commonFooter.xhtml" />
             </p:layoutUnit>
             -->
+        </p:layout>
+        
+        <p:layout fullPage="true" rendered="#{empty tokenController.token}">
+            <p:layoutUnit position="center" style="border: none">
+                <ui:include src="token.xhtml" />
+            </p:layoutUnit>
         </p:layout>
 
     </h:body>

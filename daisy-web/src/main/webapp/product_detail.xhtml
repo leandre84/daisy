@@ -3,22 +3,28 @@
                  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                  xmlns:h="http://xmlns.jcp.org/jsf/html"
                  xmlns:p="http://primefaces.org/ui"
-                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
-    <p:panel style="text-align:left">
-         <f:facet name="header">
-            <p:outputLabel value="#{webController.selectedProduct.name}" style="font-size: 130% !important"/>
-                
-        </f:facet>
-        </p:panel>    
-    Name: #{webController.selectedProduct.name} <br/>
-    Bewertung: #{webController.selectedProduct.averageRating()} <br/>
+    <h:panelGrid columns="2">
+        <p:outputLabel value="Product: "/>
+        <p:outputLabel value="#{webController.selectedProduct.name}"/>
+        
+        <p:outputLabel value="Description: "/>
+        <p:outputLabel value="#{webController.selectedProduct.description}"/>
+        
+        <h:graphicImage value="#{webController.selectedProduct.imagePath}" width="300px" />
+        
+    </h:panelGrid>
 
     <p:dataGrid id="dg_recensions" var="recension" value="#{webController.selectedProduct.recensions}" columns="1" layout="grid" emptyMessage="There are currently no recensions for this product">
 
 
         <f:facet name="header">
-            <p:outputLabel value="Recensions for #{webController.selectedProduct.name}" />   
+            <p:outputLabel value="Recensions for #{webController.selectedProduct.name}" />
+            <p:commandButton value="Add/edit own recension" style="float: right" rendered="#{not empty loginController.user}">
+                <f:setPropertyActionListener value="recension.xhtml" target="#{navigationController.currentPage}"/>
+            </p:commandButton>
         </f:facet>
         
         <p:panel style="text-align:left">
@@ -31,7 +37,7 @@
             
             <h:panelGrid columns="2">
                 <p:outputLabel value="From: "/>
-                <p:outputLabel value="#{recension.user.friendlyName()}"/>
+                <p:outputLabel value="#{recension.user.friendlyName()} (#{recension.user.id}"/>
 
                 <p:outputLabel value="Date: "/>
                 <p:outputLabel value="#{recension.creationDate}"/>
