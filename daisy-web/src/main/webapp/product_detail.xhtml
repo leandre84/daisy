@@ -6,16 +6,32 @@
                  xmlns:f="http://xmlns.jcp.org/jsf/core"
                  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
-    <h:panelGrid columns="2">
-        <p:outputLabel value="Product: "/>
-        <p:outputLabel value="#{webController.selectedProduct.name}"/>
-        
-        <p:outputLabel value="Description: "/>
-        <p:outputLabel value="#{webController.selectedProduct.description}"/>
-        
-        <h:graphicImage value="#{webController.selectedProduct.imagePath}" width="300px" />
-        
+    <p:panel>
+
+        <f:facet name="header">
+            <p:outputLabel value="#{webController.selectedProduct.name}" style="font-size: 130% !important"/>
+
+        </f:facet>
+    
+        <h:panelGrid columns="1">
+            <p:row>
+               <h:graphicImage value="#{webController.selectedProduct.imagePath}" width="300px" height="180" style="display: block; margin: auto;"/> 
+            </p:row>
+            <p:row>
+            <p:outputLabel value="Product: "/>
+            <p:outputLabel value="#{webController.selectedProduct.name}"/>
+            </p:row>
+            <p:row>
+            <p:outputLabel value="Description: "/>
+            <p:outputLabel value="#{webController.selectedProduct.description}"/>
+            </p:row>
+            
+
     </h:panelGrid>
+    </p:panel>
+    
+    <br />
+    <br />
 
     <p:dataGrid id="dg_recensions" var="recension" value="#{webController.selectedProduct.recensions}" columns="1" layout="grid" emptyMessage="There are currently no recensions for this product">
 
