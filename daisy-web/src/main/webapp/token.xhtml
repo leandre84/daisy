@@ -6,22 +6,31 @@
                  xmlns:h="http://xmlns.jcp.org/jsf/html"
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+
     <h:form>
-        <p:outputPanel autoUpdate="true" style="border: none">
+        <div align="center">
+        <br />
+        <br />
+        <h:graphicImage value="/images/daisy_banner.JPG"/>
+        
+        <br />
+        <br />
+        <br />
+        <p:outputPanel autoUpdate="true" style="border: none; ">
             <h:panelGrid columns="1">
                 <p:outputLabel value="#{tokenController.errorMessage}" style="color: red"/>
             </h:panelGrid>
-            <h:panelGrid columns="2" rendered="#{empty tokenController.token}">
+            <h:panelGrid columns="3" rendered="#{empty tokenController.token}">
                 <p:outputLabel value="Please enter token to proceed: "/>
                 <p:inputText value="#{tokenController.token}"/>
-                <p:commandButton value="OK" action="#{tokenController.commitToken()}"/>
+                <p:commandButton value="Submit" action="#{tokenController.commitToken()}"/>
             </h:panelGrid>
             <h:panelGrid columns="1" rendered="#{not empty tokenController.token}">
                 <p:outputLabel value="Token is: #{tokenController.token}"/>
                 <p:commandButton value="Delete" action="#{tokenController.deleteToken()}"/>
             </h:panelGrid>
         </p:outputPanel>
+        </div>
     </h:form>                    
 
 </ui:composition>

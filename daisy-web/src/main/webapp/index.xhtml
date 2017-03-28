@@ -44,6 +44,8 @@
                 font-weight: bold !important;
                 font-size: 20px !important;
             }
+            
+            
             /*.ui-menuitem-text {
                 color: white !important;
             }
@@ -102,6 +104,17 @@
         </p:layout>
         
         <p:layout fullPage="true" rendered="#{empty tokenController.token}">
+            <p:layoutUnit position="north" style="border: none">
+                <h:form>
+                <p:menubar>
+                    <p:menuitem>
+                        <h:link outcome="/index.xhmtl">
+                            <h:graphicImage value="/images/daisy_logo_1.JPG" height="70" />
+                        </h:link>
+                    </p:menuitem>
+                </p:menubar>
+                </h:form>
+            </p:layoutUnit>
             <p:layoutUnit position="center" style="border: none">
                 <ui:include src="token.xhtml" />
             </p:layoutUnit>
