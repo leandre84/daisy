@@ -39,7 +39,7 @@ import javax.persistence.NoResultException;
 @LocalBean
 public class WebshopService {
     
-    public static final String TOKEN_PATH = "daisy.token";
+    public static final String TOKEN_FILE = "daisy.token";
     
     @Inject
     private CategoryDAO categoryDAO;
@@ -76,7 +76,7 @@ public class WebshopService {
     public void persistInstallToken(String token) throws IOException {
         BufferedWriter bw = null;
         try {
-            bw = new BufferedWriter(new FileWriter(new File(TOKEN_PATH)));
+            bw = new BufferedWriter(new FileWriter(new File(TOKEN_FILE)));
             bw.write(token);
         } finally {
             FileUtil.safeClose(bw);
@@ -86,7 +86,7 @@ public class WebshopService {
     public String retrieveInstallToken() throws IOException {
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader(new File(TOKEN_PATH)));
+            br = new BufferedReader(new FileReader(new File(TOKEN_FILE)));
             return br.readLine();
         } finally {
             FileUtil.safeClose(br);
@@ -94,7 +94,7 @@ public class WebshopService {
     }
     
     public boolean deleteInstallToken() {
-        File f = new File(TOKEN_PATH);
+        File f = new File(TOKEN_FILE);
         return f.delete();
     }
     

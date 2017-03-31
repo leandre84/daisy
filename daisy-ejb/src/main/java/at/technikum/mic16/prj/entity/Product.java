@@ -39,7 +39,7 @@ public class Product implements Serializable {
     @Column(nullable = false)
     private float price;
     
-    @Column
+    @Column(length = 512) // hibernate default of 255 not sufficient for our flags
     private String description;
     
     @Column(name = "img_path")
@@ -52,6 +52,9 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Recension> recensions;
     
+    @Column
+    private boolean active;
+    
     
     public Product() { 
     }
@@ -62,6 +65,7 @@ public class Product implements Serializable {
         this.description = description;
         this.imagePath = imgPath;
         this.category = category;
+        this.active = true;
     }
 
     public Long getId() {
@@ -112,7 +116,18 @@ public class Product implements Serializable {
         return recensions;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
     
+    
+
+    
+    // Convenience methods
     
     public int ratingCount() {
         return recensions.size();

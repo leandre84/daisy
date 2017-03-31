@@ -5,6 +5,8 @@
  */
 package at.technikum.mic16.prj.service;
 
+import at.technikum.mic16.prj.daisypoints.DaisyPointsCrypter;
+import at.technikum.mic16.prj.daisypoints.DaisyPointsEncryptionException;
 import at.technikum.mic16.prj.dao.CategoryDAO;
 import at.technikum.mic16.prj.dao.OrderItemDAO;
 import at.technikum.mic16.prj.dao.PlacedOrderDAO;
@@ -18,6 +20,7 @@ import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.entity.UserRole;
 import at.technikum.mic16.prj.util.JBossPasswordUtil;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
@@ -37,6 +40,9 @@ import javax.inject.Inject;
 @LocalBean
 @Startup
 public class InitBean {
+    
+    @Inject
+    WebshopService webshopService;
 
     @Inject
     private CategoryDAO categoryDAO;
@@ -55,10 +61,19 @@ public class InitBean {
 
     @PostConstruct
     public void init() {
-
+        
         try {
             insertSampleData();
+            String token = webshopService.retrieveInstallToken();
+            /* if there is no token, retrieving it would fail with FileNotFoundException
+            so just go on inserting vulnerability data...
+            */
+            insertVulnerabilityData(token);
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+            Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DaisyPointsEncryptionException ex) {
             Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -148,8 +163,14 @@ public class InitBean {
         recension2.setText("It's ok, don't expect too much.");
         
         recensionDAO.persist(recension1, recension2);
-        
-        
+
+    }
+    
+    public void insertVulnerabilityData(String installationToken) throws DaisyPointsEncryptionException {
+        Category hoover = categoryDAO.findByName("Hoover");
+        Product prod1 = new Product("You did it!", 666, "Congratulations, here is your token for the points system:\n".concat(DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|1")), "images/thumbs_up.png", hoover);
+        prod1.setActive(false);
+        productDAO.persist(prod1);
     }
 
 }

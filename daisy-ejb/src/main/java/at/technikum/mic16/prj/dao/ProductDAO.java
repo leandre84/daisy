@@ -52,7 +52,7 @@ public class ProductDAO {
      * @return 
      */
     public List<Product> findByNameOrDescription(String substring, int offset, int count) {
-        Query q = em.createQuery("FROM Product p WHERE name like :substring or description like :substring", Product.class);
+        Query q = em.createQuery("FROM Product p WHERE (name like :substring or description like :substring) and active is true", Product.class);
         q.setParameter("substring", "%" + substring + "%");
         if (count > 0) {
             q.setFirstResult(offset);
