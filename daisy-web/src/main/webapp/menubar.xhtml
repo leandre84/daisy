@@ -10,12 +10,16 @@
         <p:menubar>
             <p:menuitem>
                 <h:link outcome="/index.xhmtl">
-                    <h:graphicImage value="/images/daisy_logo_1.JPG" height="70" />
+                    <h:graphicImage value="/images/daisy_logo_1.jpg" height="70" />
                 </h:link>
             </p:menuitem>
 
             <f:facet name="options">
                 <p:inputText id="it_search" placeholder="Search for products" value="#{webController.searchText}"/>
+                <p:selectOneMenu value="#{webController.searchMode}">
+                    <f:selectItem itemLabel="fuzzy" itemValue="fuzzy"/>
+                    <f:selectItem itemLabel="exact" itemValue="exact"/>
+                </p:selectOneMenu>
                 <p:commandButton value="Go!" action="#{webController.searchForProducts()}"/>
             </f:facet>
             <p:submenu label="Guest" icon="fa fa-user" style="float:right;" rendered="#{empty loginController.user}" styleClass="menubar1" >

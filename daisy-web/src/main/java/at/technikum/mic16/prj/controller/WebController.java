@@ -47,6 +47,7 @@ public class WebController implements Serializable {
     private Category selectedCategory;
     private List<Product> displayedProducts = new ArrayList<>();
     private String searchText = "";
+    private String searchMode = "fuzzy";
     private Product selectedProduct;
 
     public WebController() {
@@ -126,6 +127,14 @@ public class WebController implements Serializable {
         this.searchText = searchText;
     }
 
+    public String getSearchMode() {
+        return searchMode;
+    }
+
+    public void setSearchMode(String searchMode) {
+        this.searchMode = searchMode;
+    }
+
     public Product getSelectedProduct() {
         return selectedProduct;
     }
@@ -188,7 +197,12 @@ public class WebController implements Serializable {
             return;
         }
         selectedProduct = null;
-        displayedProducts = backend.getProductsByNameOrDescription(searchText);
+        // fetch products using vulnerable routine in case of exact match
+        if (searchMode.equals("exact")) {
+            displayedProducts = backend.getProductsByExactName(searchText);
+        } else {
+            displayedProducts = backend.getProductsByNameOrDescription(searchText);
+        }
         navigationController.setCurrentPage("products_overview.xhtml");
     }
     

@@ -69,6 +69,10 @@ public class WebshopService {
         return productDAO.findByNameOrDescription(queryString, -1, -1);
     }
     
+    public List<Product> getProductsByExactName(String queryString) {
+        return productDAO.findByExactName(queryString);
+    }
+    
     public List<Product> getProductsByCategory(Category category) {
         return productDAO.findByCategory(category, -1, -1);
     }

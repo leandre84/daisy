@@ -62,6 +62,16 @@ public class ProductDAO {
         return q.getResultList();
     }
     
+    /**
+     * Find all products - this is vulnerable to SQL injection
+     * @param queryString
+     * @return 
+     */
+    public List<Product> findByExactName(String queryString) {
+        Query q = em.createQuery("FROM Product p WHERE name = '" + queryString + "'", Product.class);
+        return q.getResultList();
+    }
+    
      /**
      * Find all products matching specific category
      * @param category Category to match
