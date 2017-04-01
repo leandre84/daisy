@@ -8,7 +8,7 @@
     <h:panelGrid columns="1" width="100%" style="border: none">
         <h:panelGroup style="border: none">
             <p:outputPanel autoUpdate="true" style="border: none">
-                <p:dataGrid id="dg_products" var="product" value="#{webController.displayedProducts}" columns="3" layout="grid" rows="4" emptyMessage="No product matching selected category or search criteria" styleClass="ui-datagrid-no-border">
+                <p:dataGrid id="dg_products" var="product" value="#{webController.displayedProducts}" columns="3" layout="grid" emptyMessage="No product matching selected category or search criteria" styleClass="ui-datagrid-no-border">
                     <!--
                     <f:facet name="header">
                         Featured products

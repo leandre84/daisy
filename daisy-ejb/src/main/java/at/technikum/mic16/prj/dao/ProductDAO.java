@@ -36,7 +36,7 @@ public class ProductDAO {
      * @return 
      */
     public List<Product> findAll(int offset, int count) {
-        Query q = em.createQuery("FROM Product p", Product.class);
+        Query q = em.createQuery("FROM Product p WHERE active is true", Product.class);
         if (count > 0) {
             q.setFirstResult(offset);
             q.setMaxResults(count);
@@ -52,7 +52,7 @@ public class ProductDAO {
      * @return 
      */
     public List<Product> findByNameOrDescription(String substring, int offset, int count) {
-        Query q = em.createQuery("FROM Product p WHERE (name like :substring or description like :substring) and active is true", Product.class);
+        Query q = em.createQuery("FROM Product p WHERE (name like :substring or description like :substring) AND active is true", Product.class);
         q.setParameter("substring", "%" + substring + "%");
         if (count > 0) {
             q.setFirstResult(offset);
@@ -70,7 +70,7 @@ public class ProductDAO {
      * @return 
      */
     public List<Product> findByCategory(Category category, int offset, int count) {
-        Query q = em.createQuery("FROM Product p WHERE category_fk = :category", Product.class);
+        Query q = em.createQuery("FROM Product p WHERE category_fk = :category AND active is true", Product.class);
         q.setParameter("category", category);
         if (count > 0) {
             q.setFirstResult(offset);

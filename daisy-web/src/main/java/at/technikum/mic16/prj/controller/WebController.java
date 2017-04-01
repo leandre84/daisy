@@ -143,7 +143,7 @@ public class WebController implements Serializable {
     @PostConstruct
     public void init() {
         categories = backend.getAllCategories();
-        displayedProducts = backend.getAllProductsPaginated(DEFAULT_PAGE_SIZE, 0);
+        displayedProducts = backend.getAllProductsPaginated(-1, -1);
         constructCategoryMenu();        
     }
     
