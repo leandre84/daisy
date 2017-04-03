@@ -21,6 +21,9 @@
                     <f:selectItem itemLabel="exact" itemValue="exact"/>
                 </p:selectOneMenu>
                 <p:commandButton value="Go!" action="#{webController.searchForProducts()}"/>
+                <p:outputPanel autoUpdate="true">
+                    <p:commandButton icon="fa fa-shopping-cart" value="#{webController.cartItemCount}" />
+                </p:outputPanel>
             </f:facet>
             <p:submenu label="Guest" icon="fa fa-user" style="float:right;" rendered="#{empty loginController.user}" styleClass="menubar1" >
                 <p:menuitem value="Login" icon="fa fa-user">

@@ -49,6 +49,7 @@ public class WebController implements Serializable {
     private String searchText = "";
     private String searchMode = "fuzzy";
     private Product selectedProduct;
+    private Map<Product,Integer> cart = new HashMap<>();
 
     public WebController() {
     }
@@ -142,6 +143,14 @@ public class WebController implements Serializable {
     public void setSelectedProduct(Product selectedProduct) {
         this.selectedProduct = selectedProduct;
     }
+
+    public Map<Product, Integer> getCart() {
+        return cart;
+    }
+
+    public void setCart(Map<Product, Integer> cart) {
+        this.cart = cart;
+    }
     
     
 
@@ -169,6 +178,7 @@ public class WebController implements Serializable {
                 // Root - create submenu
                 DefaultSubMenu sub = new DefaultSubMenu();
                 sub.setLabel(c.getName());
+                sub.setExpanded(true);
                 menumodel.addElement(sub);
                 createdSubMenus.put(c.getName(), sub);
             } else if (! c.isLeaf()) {
@@ -176,6 +186,7 @@ public class WebController implements Serializable {
                 DefaultSubMenu parent = createdSubMenus.get(c.getParent().getName());
                 DefaultSubMenu sub = new DefaultSubMenu();
                 sub.setLabel(c.getName());
+                sub.setExpanded(true);
                 parent.addElement(sub);
                 createdSubMenus.put(c.getName(), sub);
             } else {
@@ -213,6 +224,44 @@ public class WebController implements Serializable {
     
     public static String getRatingImageForRecension(Recension recension) {        
         return "images/daisy_" + Integer.toString(recension.getRating()) + ".png";
+    }
+    
+    /**
+     * Add product to shopping cart
+     * @param product Product to be added
+     */
+    public void addToCart(Product product) {
+        Integer quantity = cart.get(product);
+        if (quantity == null) {
+            cart.put(product, 1);
+        } else {
+            cart.put(product, ++quantity);
+        }
+    }
+    
+    /**
+     * Adjust quantity of product in shopping cart
+     * @param product Product's quantity to adjust
+     * @param quantity New quantity. If value less than one, product is discarded from shopping cart
+     */
+    public void adjustQuantityOfProductInCart(Product product, int quantity) {
+        if (quantity < 1) {
+            cart.remove(product);
+        } else {
+            cart.put(product, quantity);
+        }
+    }
+    
+    /**
+     * Get the number of individual items in shopping cart
+     * @return Number of individual items in shopping cart
+     */
+    public int getCartItemCount() {
+        int count = 0;
+        for (Map.Entry<Product,Integer> entry : cart.entrySet()) {
+            count += entry.getValue();
+        }
+        return count;
     }
     
 }
