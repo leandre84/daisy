@@ -68,7 +68,7 @@ public class ProductDAO {
      * @return 
      */
     public List<Product> findByExactName(String queryString) {
-        Query q = em.createQuery("FROM Product p WHERE name = '" + queryString + "'", Product.class);
+        Query q = em.createQuery("FROM Product p WHERE name = '" + queryString + "' AND active is true", Product.class);
         return q.getResultList();
     }
     
@@ -89,6 +89,15 @@ public class ProductDAO {
         return q.getResultList();
     }
     
+    /**
+     * Find inactive products
+     * @return List of inactive products
+     */
+    public List<Product> findInactive() {
+        Query q = em.createQuery("FROM Product p WHERE active is false", Product.class);
+        return q.getResultList();
+    }
+    
     public void persist(Product...products) {
         for (Product product : products) {
             em.persist(product);
@@ -101,13 +110,12 @@ public class ProductDAO {
 
     public void delete(Product product) throws EntityNotFoundException {
         // attach and delete it...
-        Recension attached = em.find(Recension.class, product.getId());
+        Product attached = em.find(Product.class, product.getId());
         if (attached != null) {
             em.remove(attached);
         } else {
             throw new EntityNotFoundException("Product not found with id: " + product.getId());
         }
-
     }
     
     

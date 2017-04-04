@@ -164,11 +164,26 @@ public class InitBean {
 
     }
 
+    /**
+     * Create reward tokens for exploited vulnerabilities
+     * @param installationToken
+     * @throws DaisyPointsEncryptionException 
+     */
     public void insertVulnerabilityData(String installationToken) throws DaisyPointsEncryptionException {
         Category hoover = categoryDAO.findByName("Hoover");
         Product prod1 = new Product("You did it!", 666, "Congratulations, here is your token for the points system:\n".concat(DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|1")), "images/thumbs_up.png", hoover);
         prod1.setActive(false);
         productDAO.persist(prod1);
+    }
+    
+    
+    /**
+     * Delete reward tokens
+     */
+    public void deleteVulnerabilityData() {
+        for (Product p : productDAO.findInactive()) {
+            productDAO.delete(p);
+        }
     }
 
 }

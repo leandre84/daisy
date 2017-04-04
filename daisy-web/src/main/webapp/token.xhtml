@@ -7,14 +7,15 @@
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:form id="tokenform">
-        <div align="center">
-            <br />
-            <br />
-            <h:graphicImage value="/images/daisy_banner.jpg"/>
-            <br />
-            <br />
-            <br />
+
+    <div align="center">
+        <br />
+        <br />
+        <h:graphicImage value="/images/daisy_banner.jpg"/>
+        <br />
+        <br />
+        <br />
+        <h:form id="tokenform">
             <p:outputPanel autoUpdate="true" style="border: none; ">
                 <p:messages id="msgs" showDetail="true" autoUpdate="true" closable="true" />
                 <h:panelGrid columns="1">
@@ -31,8 +32,9 @@
                     <p:commandButton value="Delete" action="#{tokenController.deleteToken()}"/>
                 </h:panelGrid>
             </p:outputPanel>
-        </div>
-    </h:form>                    
+        </h:form>   
+    </div>
+
 
 </ui:composition>
 
