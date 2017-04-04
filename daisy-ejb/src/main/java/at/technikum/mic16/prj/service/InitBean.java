@@ -20,6 +20,7 @@ import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.entity.UserRole;
 import at.technikum.mic16.prj.util.JBossPasswordUtil;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -69,11 +70,10 @@ public class InitBean {
             so just go on inserting vulnerability data...
              */
             insertVulnerabilityData(token);
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException | DaisyPointsEncryptionException ex) {
             Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ignore) {
         } catch (IOException ex) {
-            Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DaisyPointsEncryptionException ex) {
             Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
