@@ -7,7 +7,42 @@
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <p:panelGrid columns="1" style="margin: 0 auto; text-align: center">
 
+        <f:facet name="header"/>
+
+        <p:graphicImage value="images/daisy_banner.jpg"/>
+
+        <h:form id="tokenform">
+            <p:messages id="msgs" showDetail="true" autoUpdate="true" closable="true" />
+
+            <p:outputPanel autoUpdate="true">
+
+                <h:panelGroup rendered="#{empty tokenController.token}">
+                    <p:inputText id="token" value="#{tokenController.token}" size="32" required="true" placeholder="Please enter your token">
+                        <f:validateLength minimum="32" maximum="32" />
+                    </p:inputText>
+                    <p:commandButton value="Submit" action="#{tokenController.commitToken()}"/>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{not empty tokenController.token}">
+                    <h:outputText value="Token is: #{tokenController.token}"/>
+                    <p:commandButton value="Delete" action="#{tokenController.deleteToken()}"/>
+                </h:panelGroup>
+                
+            </p:outputPanel>
+            
+        </h:form>
+        
+        <h:form>
+            <p:commandButton value="Muuh!" action="#{tokenController.doMuuh()}"/>
+        </h:form>
+        
+    </p:panelGrid>
+
+
+
+    <!--
     <div align="center">
         <br />
         <br />
@@ -34,6 +69,7 @@
             </p:outputPanel>
         </h:form>   
     </div>
+    -->
 
 
 </ui:composition>

@@ -8,6 +8,7 @@ package at.technikum.mic16.prj.controller;
 import at.technikum.mic16.prj.daisypoints.DaisyPointsEncryptionException;
 import at.technikum.mic16.prj.service.InitBean;
 import at.technikum.mic16.prj.service.WebshopService;
+import at.technikum.mic16.prj.util.MessageUtil;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -17,6 +18,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+
+/*
+TODO: display of error messages not working yet
+*/
 
 /**
  *
@@ -33,7 +38,6 @@ public class TokenController implements Serializable {
     InitBean initBean;
 
     private String token;
-    private String errorMessage;
 
     public String getToken() {
         return token;
@@ -41,14 +45,6 @@ public class TokenController implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
     }
 
     @PostConstruct
@@ -59,40 +55,42 @@ public class TokenController implements Serializable {
             // Tokenfile not existing yet
         } catch (IOException e) {
             // error during read
-            errorMessage = "Error reading token file :-(";
+            MessageUtil.putError("Error reading token file", e.getMessage());
         }
     }
-    
+
     public String commitToken() {
-        if (token == null || token.isEmpty()) {
-            errorMessage = "Please enter a token!";
-            return null;
-        }
-        errorMessage = null;
         try {
             backend.persistInstallToken(token);
             initBean.insertVulnerabilityData(token);
             return "index.xhtml?faces-redirect=true";
         } catch (IOException ex) {
-            errorMessage = "Error installing token";
+            MessageUtil.putError("Error saving token", ex.getMessage());
         } catch (DaisyPointsEncryptionException ex) {
-            deleteToken();
-            errorMessage = "Error generating sample data";
-            Logger.getLogger(TokenController.class.getName()).log(Level.SEVERE, null, ex);
+            MessageUtil.putError("Error generating sample data", ex.getMessage());
+        } catch (Exception ex) {
+            MessageUtil.putError("Unknown exception while saving token", ex.getMessage());
+            Logger.getLogger(TokenController.class.getName()).log(Level.SEVERE, "Unknown exception occured:", ex);
         }
+        deleteToken();
         return null;
     }
-    
-    
 
     public void deleteToken() {
-        initBean.deleteVulnerabilityData();
-        if (backend.deleteInstallToken()) {
-            errorMessage = null;
-            token = null;
-        } else {
-            errorMessage = "Unable to delete token file";
+        try {
+            initBean.deleteVulnerabilityData();
+        } finally {
+            if (backend.deleteInstallToken()) {
+                token = null;
+            } else {
+                MessageUtil.putError("Unable to delete token file", "");
+            }
         }
     }
 
+    public void doMuuh() {
+        MessageUtil.putError("Muuh!", "Kuh");
+    }
+    
+    
 }
