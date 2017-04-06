@@ -16,9 +16,7 @@ public class MessageUtil {
     
     public static void putMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext context = FacesContext.getCurrentInstance();
-        if (detail != null) {
-            context.addMessage(null, new FacesMessage(severity, summary, detail));
-        }
+        context.addMessage(null, new FacesMessage(severity, summary, detail));
     }
     
     public static void putInfo(String summary, String detail) {
