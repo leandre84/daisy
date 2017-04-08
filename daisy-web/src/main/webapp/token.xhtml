@@ -21,7 +21,7 @@
                 <h:panelGroup rendered="#{empty tokenController.token}">
                     <!-- Token validation in backend, otherwise messages of exceptions not shown here for whatever reason -->
                     <p:inputText id="token" value="#{tokenController.token}" required="true" placeholder="Please enter your token">
-                        <f:validateLength minimum="8" maximum="32"/>
+                        <f:validateLength minimum="32" maximum="32"/>
                     </p:inputText>
                     <p:commandButton value="Submit" action="#{tokenController.commitToken()}"/>
                 </h:panelGroup>
