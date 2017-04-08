@@ -6,7 +6,7 @@
 package at.technikum.mic16.prj.service;
 
 import at.technikum.mic16.prj.daisypoints.DaisyPointsCrypter;
-import at.technikum.mic16.prj.daisypoints.DaisyPointsEncryptionException;
+import at.technikum.mic16.prj.exception.DaisyPointsEncryptionException;
 import at.technikum.mic16.prj.dao.CategoryDAO;
 import at.technikum.mic16.prj.dao.OrderItemDAO;
 import at.technikum.mic16.prj.dao.PlacedOrderDAO;

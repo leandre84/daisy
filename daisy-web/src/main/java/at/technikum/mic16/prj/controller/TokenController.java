@@ -5,7 +5,7 @@ package at.technikum.mic16.prj.controller;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import at.technikum.mic16.prj.daisypoints.DaisyPointsEncryptionException;
+import at.technikum.mic16.prj.exception.DaisyPointsEncryptionException;
 import at.technikum.mic16.prj.service.InitBean;
 import at.technikum.mic16.prj.service.WebshopService;
 import at.technikum.mic16.prj.util.MessageUtil;
@@ -87,11 +87,6 @@ public class TokenController implements Serializable {
                 MessageUtil.putError("Unable to delete token file", "");
             }
         }
-    }
-
-    public void doMuuh() {
-        MessageUtil.putError("Muuh!", "Kuh");
-    }
-    
+    }  
     
 }

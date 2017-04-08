@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package at.technikum.mic16.prj.daisypoints;
+package at.technikum.mic16.prj.exception;
 
 /**
  *
  * @author leandros
  */
-public class DaisyPointsEncryptionException extends Exception {
-    public DaisyPointsEncryptionException(String message) {
+public class TokenValidationException extends Exception {
+    public TokenValidationException(String message) {
         super(message);
     }
+    
 }

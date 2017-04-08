@@ -5,6 +5,7 @@
  */
 package at.technikum.mic16.prj.daisypoints;
 
+import at.technikum.mic16.prj.exception.DaisyPointsEncryptionException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;

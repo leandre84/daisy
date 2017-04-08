@@ -16,6 +16,7 @@ import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.entity.UserRole;
+import at.technikum.mic16.prj.exception.TokenValidationException;
 import at.technikum.mic16.prj.util.FileUtil;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -40,6 +41,7 @@ import javax.persistence.NoResultException;
 public class WebshopService {
     
     public static final String TOKEN_FILE = "daisy.token";
+    public static final int TOKEN_LENGTH = 32;
     
     @Inject
     private CategoryDAO categoryDAO;
@@ -77,7 +79,11 @@ public class WebshopService {
         return productDAO.findByCategory(category, -1, -1);
     }
     
-    public void persistInstallToken(String token) throws IOException {
+    public void persistInstallToken(String token) throws IOException, TokenValidationException {
+        if (token == null || token.length() != 32) {
+            throw new TokenValidationException("Token must be " + TOKEN_LENGTH + " characters long");
+        }
+        
         BufferedWriter bw = null;
         try {
             bw = new BufferedWriter(new FileWriter(new File(TOKEN_FILE)));

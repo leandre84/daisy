@@ -19,8 +19,9 @@
             <p:outputPanel autoUpdate="true">
 
                 <h:panelGroup rendered="#{empty tokenController.token}">
-                    <p:inputText id="token" value="#{tokenController.token}" size="32" required="true" placeholder="Please enter your token">
-                        <f:validateLength minimum="32" maximum="32" />
+                    <!-- Token validation in backend, otherwise messages of exceptions not shown here for whatever reason -->
+                    <p:inputText id="token" value="#{tokenController.token}" required="true" placeholder="Please enter your token">
+                        <f:validateLength minimum="8" maximum="32"/>
                     </p:inputText>
                     <p:commandButton value="Submit" action="#{tokenController.commitToken()}"/>
                 </h:panelGroup>
@@ -32,10 +33,6 @@
                 
             </p:outputPanel>
             
-        </h:form>
-        
-        <h:form>
-            <p:commandButton value="Muuh!" action="#{tokenController.doMuuh()}"/>
         </h:form>
         
     </p:panelGrid>
