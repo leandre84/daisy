@@ -5,25 +5,24 @@
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:form>
+    <h:form id="form_menubar">
        
         <p:menubar>
             <p:menuitem>
-                <h:link outcome="/index.xhmtl">
-                    <h:graphicImage value="/images/daisy_logo_1.jpg" height="70" />
+                <h:link outcome="index.xhmtl">
+                    <h:graphicImage value="images/daisy_logo_1.jpg" height="70" />
                 </h:link>
             </p:menuitem>
 
             <f:facet name="options">
                 <p:inputText id="it_search" placeholder="Search for products" value="#{webController.searchText}"/>
-                <p:selectOneMenu value="#{webController.searchMode}">
+                <p:selectOneButton value="#{webController.searchMode}">
                     <f:selectItem itemLabel="fuzzy" itemValue="fuzzy"/>
                     <f:selectItem itemLabel="exact" itemValue="exact"/>
-                </p:selectOneMenu>
+                </p:selectOneButton>
                 <p:commandButton value="Go!" action="#{webController.searchForProducts()}"/>
-                <p:outputPanel autoUpdate="true">
-                    <p:commandButton icon="fa fa-shopping-cart" value="#{webController.cartItemCount}" />
-                </p:outputPanel>
+                <!-- autopanel with auto update breaks layout so this component is updated manually -->
+                <p:commandButton id="btn_cart" icon="fa fa-shopping-cart" value="#{webController.cartItemCount}" />
             </f:facet>
             <p:submenu label="Guest" icon="fa fa-user" style="float:right;" rendered="#{empty loginController.user}" styleClass="menubar1" >
                 <p:menuitem value="Login" icon="fa fa-user">

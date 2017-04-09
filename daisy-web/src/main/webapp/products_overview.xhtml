@@ -44,7 +44,7 @@
                                     <p:outputLabel value="&lt;b&gt;Rating:&lt;/b&gt; #{product.ratingCount()} ratings" escape="false" style="font-size: 110% !important"/>
                                 </p:column> 
                                 <p:column>
-                                    <p:commandButton value="Add to Chart" icon="fa fa-shopping-cart" action="#{webController.addToCart(product)}" style="float:right;font-size: 110% !important"/>
+                                    <p:commandButton value="Add to Chart" icon="fa fa-shopping-cart" action="#{webController.addToCart(product)}" update="form_menubar:btn_cart" style="float:right;font-size: 110% !important"/>
 
                                     <p:commandButton value="View details " icon="fa fa-plus-square" style="float:right; font-size: 110% !important">
                                         <f:setPropertyActionListener value="#{product}" target="#{webController.selectedProduct}"/>

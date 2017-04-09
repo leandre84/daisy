@@ -42,9 +42,9 @@ public class RecensionDAO {
     }
     
     public Recension findByUserAndProduct(User user, Product product) {
-        Query q = em.createQuery("SELECT r FROM Recension r WHERE User = :user AND Product = :product", Recension.class);
-        q.setParameter("user", user);
-        q.setParameter("product", product);
+        Query q = em.createQuery("SELECT r FROM Recension r WHERE user_fk = :user AND product_fk = :product", Recension.class);
+        q.setParameter("user", user.getId());
+        q.setParameter("product", product.getId());
         return (Recension) q.getSingleResult();
     }
     

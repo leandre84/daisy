@@ -8,21 +8,19 @@
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:form>
-        <p:panel id="panel" header="Register">
-            <p:messages id="msgs" showDetail="true" autoUpdate="true" closable="true" />
+        <p:messages id="msgs" showDetail="true" autoUpdate="true" closable="true" />
+
+        <p:panel header="Recension">
 
             <h:panelGrid columns="2">
-                
+
                 <p:outputLabel for="text" value="Text: "/>
                 <p:inputText id="text" value="#{recensionController.recension.text}" required="true" />
 
                 <p:outputLabel for="rating" value="Rating: "/>
-                <p:rating value="#{recensionController.recension.rating}" stars="5"/>
+                <p:selectOneButton id="rating" value="#{recensionController.recension.rating}"/>
 
-                <p:outputLabel for="password" value="Password: "/>
-                <p:password id="password" value="#{registerController.password}" required="true" />
-
-                <p:commandButton value="Add/modify" update="panel" />
+                <p:commandButton value="Add/modify"/>
 
             </h:panelGrid>
         </p:panel>

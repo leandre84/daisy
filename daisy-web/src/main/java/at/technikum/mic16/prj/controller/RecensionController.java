@@ -40,8 +40,7 @@ public class RecensionController implements Serializable {
     private Product product;
     private Recension recension;
     
-    private String text;
-    private int rating;
+    private boolean newRecord = false;
 
     public WebController getWebController() {
         return webController;
@@ -83,35 +82,20 @@ public class RecensionController implements Serializable {
         this.recension = recension;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    /*
     @PostConstruct
     public void init() {
         user = loginController.getUser();
-        product = webController.getSelectedProduct();
+        product = webController.getSelectedProduct();       
         
         Recension current = backend.getRecensionForProductByUser(product, user);
         if (current != null) {
-            text = current.getText();
-            rating = current.getRating();
+            recension = current;
+        } else {
+            recension = new Recension();
+            newRecord = true;
         }
     }
-    */
+    
     
     
 }
