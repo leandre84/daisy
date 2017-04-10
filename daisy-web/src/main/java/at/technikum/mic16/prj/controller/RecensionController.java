@@ -110,7 +110,10 @@ public class RecensionController implements Serializable {
     
     public void addOrModifyRecension() {
         backend.addOrModifyRecension(recension);
-        //refresh product in webController, for sure this could be done more ellegantly
+        /*
+        we have updated a single recension but this will not be reflected in the webController's view.
+        for sure refreshing stale entity instances could be done more elegantly than this way...
+        */
         webController.setSelectedProduct(backend.getProductById(product.getId()));
         navigationController.setCurrentPage(navigationController.getPreviousPage());
     }
