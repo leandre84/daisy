@@ -11,6 +11,7 @@ import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.service.WebshopService;
 import java.io.Serializable;
+import java.time.LocalDate;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -35,6 +36,9 @@ public class RecensionController implements Serializable {
     @ManagedProperty(value = "#{loginController}")
     private LoginController loginController;
     
+    @ManagedProperty(value = "#{navigationController}")
+    private NavigationController navigationController;
+    
     /* this may be fetched from other beans but we have theme here as well for convenience */
     private User user;
     private Product product;
@@ -56,6 +60,14 @@ public class RecensionController implements Serializable {
 
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
+    }
+
+    public NavigationController getNavigationController() {
+        return navigationController;
+    }
+
+    public void setNavigationController(NavigationController navigationController) {
+        this.navigationController = navigationController;
     }
 
     public User getUser() {
@@ -92,8 +104,16 @@ public class RecensionController implements Serializable {
             recension = current;
         } else {
             recension = new Recension();
+            recension.setCreationDate(LocalDate.now());
+            recension.setProduct(product);
+            recension.setUser(user);
             newRecord = true;
         }
+    }
+    
+    public void addOrModifyRecension() {
+        backend.addOrModifyRecension(recension);
+        navigationController.setCurrentPage(navigationController.getPreviousPage());
     }
     
     
