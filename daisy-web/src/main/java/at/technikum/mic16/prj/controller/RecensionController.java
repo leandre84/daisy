@@ -43,8 +43,6 @@ public class RecensionController implements Serializable {
     private User user;
     private Product product;
     private Recension recension;
-    
-    private boolean newRecord = false;
 
     public WebController getWebController() {
         return webController;
@@ -107,7 +105,6 @@ public class RecensionController implements Serializable {
             recension.setCreationDate(LocalDate.now());
             recension.setProduct(product);
             recension.setUser(user);
-            newRecord = true;
         }
     }
     
