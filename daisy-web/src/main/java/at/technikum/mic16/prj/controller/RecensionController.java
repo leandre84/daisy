@@ -113,6 +113,8 @@ public class RecensionController implements Serializable {
     
     public void addOrModifyRecension() {
         backend.addOrModifyRecension(recension);
+        //refresh product in webController, for sure this could be done more ellegantly
+        webController.setSelectedProduct(backend.getProductById(product.getId()));
         navigationController.setCurrentPage(navigationController.getPreviousPage());
     }
     

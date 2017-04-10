@@ -79,6 +79,10 @@ public class WebshopService {
         return productDAO.findByCategory(category, -1, -1);
     }
     
+    public Product getProductById(Long id) {
+        return productDAO.findByID(id);
+    }
+    
     public void persistInstallToken(String token) throws IOException, TokenValidationException {
         if (token == null || token.length() != 32) {
             throw new TokenValidationException("Token must be " + TOKEN_LENGTH + " characters long");

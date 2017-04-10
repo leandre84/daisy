@@ -5,71 +5,67 @@
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:f="http://xmlns.jcp.org/jsf/core"
                  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    
+
     <p:panel>
 
         <f:facet name="header">
             <p:outputLabel value="#{webController.selectedProduct.name}" style="font-size: 130% !important"/>
 
         </f:facet>
-    
+
         <h:panelGrid columns="1">
             <p:row>
-               <h:graphicImage value="#{webController.selectedProduct.imagePath}" width="300px" height="180" style="display: block; margin: auto;"/> 
+                <h:graphicImage value="#{webController.selectedProduct.imagePath}" width="300px" height="180" style="display: block; margin: auto;"/> 
             </p:row>
             <p:row>
-            <p:outputLabel value="Product: "/>
-            <p:outputLabel value="#{webController.selectedProduct.name}"/>
+                <p:outputLabel value="Product: "/>
+                <p:outputLabel value="#{webController.selectedProduct.name}"/>
             </p:row>
             <p:row>
-            <p:outputLabel value="Description: "/>
-            <p:outputLabel value="#{webController.selectedProduct.description}"/>
+                <p:outputLabel value="Description: "/>
+                <p:outputLabel value="#{webController.selectedProduct.description}"/>
             </p:row>
-            
 
-    </h:panelGrid>
+
+        </h:panelGrid>
     </p:panel>
-    
+
     <br />
     <br />
 
-    <p:outputPanel autoUpdate="true">
-        <p:dataGrid id="dg_recensions" var="recension" value="#{webController.selectedProduct.recensions}" columns="1" layout="grid" emptyMessage="There are currently no recensions for this product">
+    <p:dataGrid id="dg_recensions" var="recension" value="#{webController.selectedProduct.recensions}" columns="1" layout="grid" emptyMessage="There are currently no recensions for this product">
 
+        <f:facet name="header">
+            <p:outputLabel value="Recensions for #{webController.selectedProduct.name}" />
+            <p:commandButton value="Add/edit own recension" style="float: right" rendered="#{not empty loginController.user}">
+                <f:setPropertyActionListener value="recension.xhtml" target="#{navigationController.currentPage}"/>
+            </p:commandButton>
+        </f:facet>
+
+        <p:panel style="text-align:left">
 
             <f:facet name="header">
-                <p:outputLabel value="Recensions for #{webController.selectedProduct.name}" />
-                <p:commandButton value="Add/edit own recension" style="float: right" rendered="#{not empty loginController.user}">
-                    <f:setPropertyActionListener value="recension.xhtml" target="#{navigationController.currentPage}"/>
-                </p:commandButton>
+                <p:outputLabel value="From: #{recension.user.friendlyName()}" />
+                <h:graphicImage value="#{webController.getRatingImageForRecension(recension)}" width="60px" style="float: right"/>
             </f:facet>
 
-            <p:panel style="text-align:left">
 
-                <f:facet name="header">
-                    <p:outputLabel value="From: #{recension.user.friendlyName()}" />
-                    <h:graphicImage value="#{webController.getRatingImageForRecension(recension)}" width="60px" style="float: right"/>
-                </f:facet>
+            <h:panelGrid columns="2">
+                <p:outputLabel value="From: "/>
+                <p:outputLabel value="#{recension.user.friendlyName()} (#{recension.user.id})"/>
 
+                <p:outputLabel value="Date: "/>
+                <p:outputLabel value="#{recension.creationDate}"/>
 
-                <h:panelGrid columns="2">
-                    <p:outputLabel value="From: "/>
-                    <p:outputLabel value="#{recension.user.friendlyName()} (#{recension.user.id})"/>
+                <p:outputLabel value="Rating: "/>
+                <p:outputLabel value="#{recension.rating}"/>
 
-                    <p:outputLabel value="Date: "/>
-                    <p:outputLabel value="#{recension.creationDate}"/>
+                <p:outputLabel value="Recension: "/>
+                <p:outputLabel value="#{recension.text}" escape="false"/>
+            </h:panelGrid>
+        </p:panel>
 
-                    <p:outputLabel value="Rating: "/>
-                    <p:outputLabel value="#{recension.rating}"/>
+    </p:dataGrid>
 
-                    <p:outputLabel value="Recension: "/>
-                    <p:outputLabel value="#{recension.text}" escape="false"/>
-                </h:panelGrid>
-            </p:panel>
-
-
-
-        </p:dataGrid>
-    </p:outputPanel>        
 
 </ui:composition>
