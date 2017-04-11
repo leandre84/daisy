@@ -22,9 +22,11 @@
                 </p:selectOneButton>
                 <p:commandButton value="Go!" action="#{webController.searchForProducts()}"/>
                 <!-- autopanel with auto update breaks layout so this component is updated manually -->
-                <p:commandButton id="btn_cart" icon="fa fa-shopping-cart" value="#{webController.cartItemCount}" />
+                <p:commandButton id="btn_cart" icon="fa fa-shopping-cart" value="#{webController.cartItemCount}">
+                    <f:setPropertyActionListener value="cart.xhtml" target="#{navigationController.currentPage}"/>
+                </p:commandButton>
             </f:facet>
-            <p:submenu label="Guest" icon="fa fa-user" style="float:right;" rendered="#{empty loginController.user}" styleClass="menubar1" >
+            <p:submenu label="Guest" icon="fa fa-user" style="float:right;" rendered="#{empty loginController.user}" styleClass="menubar1">
                 <p:menuitem value="Login" icon="fa fa-user">
                     <f:setPropertyActionListener value="login.xhtml" target="#{navigationController.currentPage}"/>
                 </p:menuitem>
@@ -32,7 +34,7 @@
                     <f:setPropertyActionListener value="register.xhtml" target="#{navigationController.currentPage}"/>
                 </p:menuitem>
             </p:submenu>
-            <p:submenu label="#{loginController.user.id}" icon="fa fa-user" style="float:right" rendered="#{not empty loginController.user}">
+            <p:submenu label="#{loginController.user.id}" icon="fa fa-user" style="float:right" rendered="#{not empty loginController.user}" styleClass="menubar1">
                 <p:menuitem value="My profile" icon="fa fa-comment-o" url="show_userprofile.xhtml?id=#{loginController.user.id}" />
                 <p:menuitem value="My orders" icon="ui-icon-folder-collapsed" />
                 <p:menuitem value="Logout" icon="ui-icon-locked" action="#{loginController.logOut()}"/>

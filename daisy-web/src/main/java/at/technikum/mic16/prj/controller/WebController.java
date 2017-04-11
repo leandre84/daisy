@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -262,6 +263,22 @@ public class WebController implements Serializable {
             count += entry.getValue();
         }
         return count;
+    }
+    
+    public List<Entry<Product, Integer>> getCartEntries() {
+        return new ArrayList<>(cart.entrySet());
+    }
+    
+    public float getCartTotal() {
+        float total = 0;
+        for (Map.Entry<Product,Integer> entry : cart.entrySet()) {
+            total += entry.getKey().getPrice() * entry.getValue();
+        }
+        return total;
+    }
+    
+    public void emptyCart() {
+        cart = new HashMap<>();
     }
     
 }
