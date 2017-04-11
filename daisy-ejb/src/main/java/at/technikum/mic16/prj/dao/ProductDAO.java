@@ -68,7 +68,7 @@ public class ProductDAO {
      * @return 
      */
     public List<Product> findByExactName(String queryString) {
-        Query q = em.createQuery("FROM Product p WHERE name = '" + queryString + "' AND active is true", Product.class);
+        Query q = em.createQuery("FROM Product p WHERE active is true AND name = '" + queryString + "'", Product.class);
         return q.getResultList();
     }
     
