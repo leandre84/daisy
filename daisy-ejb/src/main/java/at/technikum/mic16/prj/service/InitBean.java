@@ -147,7 +147,7 @@ public class InitBean {
         Product jeans5 = new Product("Diesel", 160.90f, "Brand new and strong...", "images/products/jeans5.jpg", trousersMen);
         Product jeans6 = new Product("Mustang", 55.90f, "Brand new and strong...", "images/products/jeans6.jpg", trousersMen);
 
-        productDAO.persist(phillips1, phillips2, phillips3, samsung1, samsung2, samsung3, panasonic1, panasonic2, panasonic3, /*hoover1, hoover2,*/ hoover3, hoover4, hoover5, hoover6,
+        productDAO.persist(phillips1, phillips2, phillips3, samsung1, samsung2, samsung3, panasonic1, panasonic2, panasonic3, hoover1, hoover2, hoover3, hoover4, hoover5, hoover6,
                 smartphone1, smartphone2, smartphone3, smartphone4, smartphone5, smartphone6, jeans1, jeans2, jeans3, jeans4, jeans5, jeans6);
 
         Recension recension1 = new Recension();
