@@ -11,7 +11,7 @@
         <title>Administrative Interface</title>
     </h:head>
     <h:body>
-        <h:outputText value="Your reward: #{commandController.rewardToken}" rendered="#{not empty commandController.rewardToken}"/>
+        <h:outputText value="Hidden directory found, here is your token for the points system: #{commandController.rewardToken}" rendered="#{not empty commandController.rewardToken}"/>
         <h:panelGrid columns="1">
             <h:panelGroup>
                 <h:form>
