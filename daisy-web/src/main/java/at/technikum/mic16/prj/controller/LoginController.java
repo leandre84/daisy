@@ -29,7 +29,7 @@ import javax.faces.context.FacesContext;
 public class LoginController implements Serializable {
     
     @EJB
-    WebshopService backend;
+    private WebshopService backend;
     
     @ManagedProperty(value = "#{navigationController}")
     private NavigationController navigationController;

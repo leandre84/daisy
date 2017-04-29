@@ -28,7 +28,7 @@ import javax.faces.bean.RequestScoped;
 public class RecensionController implements Serializable {
     
     @EJB
-    WebshopService backend;
+    private WebshopService backend;
     
     @ManagedProperty(value = "#{webController}")
     private WebController webController;

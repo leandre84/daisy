@@ -37,7 +37,7 @@ public class WebController implements Serializable {
     public static final int DEFAULT_PAGE_SIZE = 10;
     
     @EJB
-    WebshopService backend;
+    private WebshopService backend;
     
     @ManagedProperty(value = "#{navigationController}")
     private NavigationController navigationController;

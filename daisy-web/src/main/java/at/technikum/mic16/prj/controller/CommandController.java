@@ -7,7 +7,9 @@ package at.technikum.mic16.prj.controller;
 
 import at.technikum.mic16.prj.data.CommandResult;
 import at.technikum.mic16.prj.exception.CommandExecutionException;
+import at.technikum.mic16.prj.exception.DaisyPointsEncryptionException;
 import at.technikum.mic16.prj.service.CommandService;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -22,7 +24,7 @@ import javax.faces.bean.RequestScoped;
 public class CommandController implements Serializable {
         
     @EJB
-    CommandService commandService;
+    private CommandService commandService;
 
     private String cmd;
     private String output = "";
@@ -63,6 +65,10 @@ public class CommandController implements Serializable {
             output = e.getMessage();
         }
         
+    }
+    
+    public String getRewardToken() {
+        return commandService.getRewardToken();
     }
 
 }

@@ -20,7 +20,10 @@ import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.entity.UserRole;
 import at.technikum.mic16.prj.util.JBossPasswordUtil;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -43,7 +46,7 @@ import javax.inject.Inject;
 public class InitBean {
 
     @Inject
-    WebshopService webshopService;
+    private WebshopService webshopService;
 
     @Inject
     private CategoryDAO categoryDAO;
@@ -73,6 +76,7 @@ public class InitBean {
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException | DaisyPointsEncryptionException ex) {
             Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ignore) {
+            // retrieving installation token failed
         } catch (IOException ex) {
             Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -167,13 +171,30 @@ public class InitBean {
     /**
      * Create reward tokens for exploited vulnerabilities
      * @param installationToken
-     * @throws DaisyPointsEncryptionException 
+     * @throws DaisyPointsEncryptionException
+     * @throws IOException 
      */
-    public void insertVulnerabilityData(String installationToken) throws DaisyPointsEncryptionException {
+    public void insertVulnerabilityData(String installationToken) throws DaisyPointsEncryptionException, IOException {
+        
         Category hoover = categoryDAO.findByName("Hoover");
         Product prod1 = new Product("You did it!", 666, "Congratulations, here is your token for the points system:\n".concat(DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|1")), "images/thumbs_up.png", hoover);
         prod1.setActive(false);
         productDAO.persist(prod1);
+        
+        File f = new File("/tmp/TOKEN_REWARD.TXT");
+        BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+        bw.write("Congratulations, here is your token for the points system:");
+        bw.newLine();
+        bw.write(DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|2"));
+        bw.newLine();
+        bw.flush();
+        try {
+            bw.close();
+        } catch (IOException ignore) {
+            
+        }
+        
+        
     }
     
     

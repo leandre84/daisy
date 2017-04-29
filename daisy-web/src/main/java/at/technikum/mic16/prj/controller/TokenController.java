@@ -32,10 +32,10 @@ TODO: display of error messages not working yet
 public class TokenController implements Serializable {
 
     @EJB
-    WebshopService backend;
+    private WebshopService backend;
 
     @EJB
-    InitBean initBean;
+    private InitBean initBean;
 
     private String token;
 
