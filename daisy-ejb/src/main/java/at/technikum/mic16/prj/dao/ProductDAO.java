@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  *
@@ -63,12 +64,13 @@ public class ProductDAO {
     }
     
     /**
-     * Find all products - this is vulnerable to SQL injection
+     * Find all products - this is vulnerable to SQL injection and also unescapes input by purpose
      * @param queryString
      * @return 
      */
     public List<Product> findByExactName(String queryString) {
-        Query q = em.createQuery("FROM Product p WHERE active is true AND name = '" + queryString + "'", Product.class);
+        String unescaped = StringEscapeUtils.unescapeHtml4(queryString);
+        Query q = em.createQuery("FROM Product p WHERE active is true AND name = '" + unescaped + "'", Product.class);
         return q.getResultList();
     }
     
