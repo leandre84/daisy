@@ -16,13 +16,14 @@
 
             <f:facet name="options">
                 <p:inputText id="it_search" placeholder="Search for products" value="#{webController.searchText}" size="32"/>
-                <p:selectOneButton value="#{webController.searchMode}">
+                <p:selectOneButton value="#{webController.searchMode}" style="margin-right: 0">
                     <f:selectItem itemLabel="fuzzy" itemValue="fuzzy"/>
                     <f:selectItem itemLabel="exact" itemValue="exact"/>
                 </p:selectOneButton>
-                <p:commandButton value="Go!" action="#{webController.searchForProducts()}"/>
+                <p:commandButton value="Go!" action="#{webController.searchForProducts()}" style="margin-right: 10px"/>
+                
                 <!-- autopanel with auto update breaks layout so this component is updated manually -->
-                <p:commandButton id="btn_cart" icon="fa fa-shopping-cart" value="#{webController.cartItemCount}">
+                <p:commandButton id="btn_cart" icon="fa fa-shopping-cart" value="#{webController.cartItemCount}" style="margin-right: 10px">
                     <f:setPropertyActionListener value="cart.xhtml" target="#{navigationController.currentPage}"/>
                 </p:commandButton>
             </f:facet>
