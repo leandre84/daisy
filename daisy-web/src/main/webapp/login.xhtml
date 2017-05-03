@@ -11,12 +11,12 @@
         <p:panel id="panel" header="Log in">
             <p:messages id="msgs" showDetail="true" autoUpdate="true" closable="true" />
 
-            <h:panelGrid columns="2">
+            <h:panelGrid columns="2" cellpadding="3">
 
-                <p:outputLabel for="user" value="User: "/>
+                <p:outputLabel for="user" value="User"/>
                 <p:inputText id="user" value="#{loginController.inputUser}" required="true" />
 
-                <p:outputLabel for="password" value="Password: "/>
+                <p:outputLabel for="password" value="Password"/>
                 <p:password id="password" value="#{loginController.inputPassword}" required="true" />
 
                 <p:commandButton value="Login" action="#{loginController.logIn()}" update="panel" />
