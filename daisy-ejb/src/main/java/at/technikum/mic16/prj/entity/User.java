@@ -33,10 +33,12 @@ public class User implements Serializable {
     
     @Column(name = "last_name", nullable = false)
     private String lastName;
+    
+    @Column
+    private String description;
  
     
     public User() {
-        
     }
     
     public User(String id, String passwordHash, String firstName, String lastName) {
@@ -69,8 +71,14 @@ public class User implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
-    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     
     public String friendlyName() {
         return firstName + " " + lastName;

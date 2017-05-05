@@ -20,6 +20,7 @@ import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.entity.UserRole;
 import at.technikum.mic16.prj.util.JBossPasswordUtil;
+import org.apache.commons.codec.binary.Base64;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,6 +36,7 @@ import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
 import javax.ejb.Startup;
 import javax.inject.Inject;
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  *
@@ -44,6 +46,8 @@ import javax.inject.Inject;
 @LocalBean
 @Startup
 public class InitBean {
+    
+    private static final String XSS_FILE_PATH = "/home/daisy/.config";
 
     @Inject
     private WebshopService webshopService;
@@ -90,7 +94,7 @@ public class InitBean {
         userRoleDAO.persist(user1Role, user2Role);
 
         User user1 = new User("user1@foo.at", JBossPasswordUtil.getPasswordHash("user1"), "User", "1");
-        User user2 = new User("user2@foo.at", JBossPasswordUtil.getPasswordHash("user2"), "User", "2");
+        User user2 = new User("user2@foo.at", JBossPasswordUtil.getPasswordHash(RandomStringUtils.randomAlphanumeric(12)), "User", "2");
         userDAO.persist(user1, user2);
 
         Category clothes = new Category("Clothes");
@@ -176,11 +180,13 @@ public class InitBean {
      */
     public void insertVulnerabilityData(String installationToken) throws DaisyPointsEncryptionException, IOException {
         
+        // hidden product - find via SQL inkection
         Category hoover = categoryDAO.findByName("Hoover");
         Product prod1 = new Product("SQL Injection exploited!", 666, "Congratulations, here is your token for the points system:\n".concat(DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|1")), "images/thumbs_up.png", hoover);
         prod1.setActive(false);
         productDAO.persist(prod1);
         
+        // hidden file - find via hidden directory and CommandService
         File f = new File("/tmp/TOKEN_REWARD.TXT");
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         bw.write("Command execution exploited, here is your token for the points system:");
@@ -190,13 +196,25 @@ public class InitBean {
         bw.flush();
         try {
             bw.close();
-        } catch (IOException ignore) {
-            
+        } catch (IOException ignore) {    
         }
         
+        // hidden user - find via indirect object reference
+        User user2 = userDAO.findById("user2@foo.at");
+        user2.setDescription(DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|3"));
         
+        
+        // prepare phantom JS script
+        f = new File(XSS_FILE_PATH);
+        f.delete();
+        bw = new BufferedWriter(new FileWriter(f));
+        bw.append(preparePhantomJSScript(installationToken));
+        bw.flush();
+        try {
+            bw.close();
+        } catch (IOException ignore) {
+        }
     }
-    
     
     /**
      * Delete reward tokens
@@ -205,6 +223,12 @@ public class InitBean {
         for (Product p : productDAO.findInactive()) {
             productDAO.delete(p);
         }
+    }
+    
+    private String preparePhantomJSScript(String token) throws UnsupportedEncodingException, DaisyPointsEncryptionException {
+        String base64 = "dmFyIHBhZ2UgPSByZXF1aXJlKCd3ZWJwYWdlJykuY3JlYXRlKCk7CgpwYWdlLnNldHRpbmdzLnVzZXJBZ2VudCA9ICdUT0tFTic7CnBhZ2Uudmlld3BvcnRTaXplID0geyB3aWR0aDogMTkyMCwgaGVpZ2h0OiAxMDgwIH07CgpwYWdlLm9wZW4oJ2h0dHA6Ly8xMjcuMC4wLjE6ODA4MC9kYWlzeS13ZWIvJywgZnVuY3Rpb24oKSB7CgogICAgICAgIHBhZ2UuZXZhbHVhdGUoZnVuY3Rpb24oKSB7CiAgICAgICAgICAgICAgICBQcmltZUZhY2VzLmFiKHtzOmRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ1thbHQ9InByb2R1Y3QtMSJdJykuZ2V0QXR0cmlidXRlKCJpZCIpfSk7CiAgICAgICAgfSk7CgogICAgICAgIHNldFRpbWVvdXQoZnVuY3Rpb24oKSB7CiAgICAgICAgICAgICAgICBwYWdlLmV2YWx1YXRlKGZ1bmN0aW9uKCkge30pOwogICAgICAgIH0sIDIwMDApOwoKICAgICAgICBjb25zb2xlLmxvZygiZmluaXNoIik7CgogICAgICAgIHNldFRpbWVvdXQoZnVuY3Rpb24oKSB7CiAgICAgICAgICAgICAgICAvL3BhZ2UucmVuZGVyKCd0ZXN0LnBuZycpOwogICAgICAgICAgICAgICAgcGhhbnRvbS5leGl0KCk7CiAgICAgICAgfSwgMjAwMCk7Cn0pOwo=";
+        String script = new String(Base64.decodeBase64(base64), "UTF-8");
+        return script.replace("TOKEN", DaisyPointsCrypter.encryptMessage(token, "Vulnerability|4"));
     }
 
 }
