@@ -15,7 +15,7 @@
             <h:panelGrid columns="2">
 
                 <p:outputLabel for="text" value="Text: "/>
-                <p:inputText id="text" value="#{recensionController.recension.text}" required="true" />
+                <p:inputTextarea id="text" value="#{recensionController.recension.text}" required="true" cols="150" rows="5" autoResize="true"/>
 
                 <p:outputLabel for="rating" value="Rating: "/>
                 <p:selectOneButton id="rating" value="#{recensionController.recension.rating}">
