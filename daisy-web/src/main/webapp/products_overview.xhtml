@@ -46,7 +46,7 @@
                                 <p:column>
                                     <p:commandButton value="Add to Chart" icon="fa fa-shopping-cart" action="#{webController.addToCart(product)}" update="form_menubar:btn_cart" style="float:right;font-size: 110% !important"/>
 
-                                    <p:commandButton value="View details " icon="fa fa-plus-square" style="float:right; font-size: 110% !important">
+                                    <p:commandButton value="View details " icon="fa fa-plus-square" style="float:right; font-size: 110% !important" alt="product-#{product.id}">
                                         <f:setPropertyActionListener value="#{product}" target="#{webController.selectedProduct}"/>
                                         <f:setPropertyActionListener value="product_detail.xhtml" target="#{navigationController.currentPage}"/>
                                     </p:commandButton>
