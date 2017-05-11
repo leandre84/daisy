@@ -6,11 +6,14 @@ package at.technikum.mic16.prj.service;
 
 import at.technikum.mic16.prj.daisypoints.DaisyPointsCrypter;
 import at.technikum.mic16.prj.data.CommandResult;
+import at.technikum.mic16.prj.data.Vulnerability;
 import at.technikum.mic16.prj.exception.CommandExecutionException;
 import at.technikum.mic16.prj.exception.DaisyPointsEncryptionException;
+import at.technikum.mic16.prj.util.FileUtil;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -34,7 +37,7 @@ public class CommandService {
     private final static int CMD_WAIT_FOR = 3;
 
     @Inject
-    private WebshopService webshopService;
+    private InitBean initBean;
     
     private String rewardToken = null;
 
@@ -61,10 +64,7 @@ public class CommandService {
         } catch (IOException e) {
             throw new CommandExecutionException(e.getMessage());
         } finally {
-            try {
-                br.close();
-            } catch (IOException ignore) {
-            }
+            FileUtil.safeClose(br);
         }
 
         try {
@@ -83,13 +83,11 @@ public class CommandService {
     }
     
     public String getRewardToken() {
-        if (rewardToken == null) {
-            try {
-                String installToken = webshopService.retrieveInstallationToken();
-                rewardToken = DaisyPointsCrypter.encryptMessage(installToken, "Vulnerability|3");
-            } catch (DaisyPointsEncryptionException | IOException ignore) {
-                // bad luck
-            } 
+        Map<Vulnerability,String> tokens = initBean.getRewardTokens();
+        if (tokens != null) {
+            rewardToken = initBean.getRewardTokens().get(Vulnerability.HIDDEN_DIRECTORY);
+        } else {
+            rewardToken = null;
         }
         return rewardToken;
     }

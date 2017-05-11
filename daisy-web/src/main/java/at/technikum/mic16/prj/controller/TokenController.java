@@ -78,6 +78,7 @@ public class TokenController implements Serializable {
     public void deleteToken() {
         try {
             initBean.deleteVulnerabilityData();
+            initBean.setRewardTokens(null);
             installationToken = null;
         } finally {
             if (backend.deleteInstallationToken()) {

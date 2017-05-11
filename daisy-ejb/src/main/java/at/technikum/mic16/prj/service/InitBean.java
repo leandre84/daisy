@@ -84,6 +84,11 @@ public class InitBean {
     public Map<Vulnerability, String> getRewardTokens() {
         return rewardTokens;
     }
+
+    public void setRewardTokens(Map<Vulnerability, String> rewardTokens) {
+        this.rewardTokens = rewardTokens;
+    }
+    
     
 
     @PostConstruct
