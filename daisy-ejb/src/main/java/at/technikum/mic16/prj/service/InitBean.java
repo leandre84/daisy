@@ -14,11 +14,13 @@ import at.technikum.mic16.prj.dao.ProductDAO;
 import at.technikum.mic16.prj.dao.RecensionDAO;
 import at.technikum.mic16.prj.dao.UserDAO;
 import at.technikum.mic16.prj.dao.UserRoleDAO;
+import at.technikum.mic16.prj.data.Vulnerability;
 import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.entity.UserRole;
+import at.technikum.mic16.prj.util.FileUtil;
 import at.technikum.mic16.prj.util.JBossPasswordUtil;
 import org.apache.commons.codec.binary.Base64;
 import java.io.BufferedWriter;
@@ -29,6 +31,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -48,6 +52,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 public class InitBean {
     
     private static final String XSS_FILE_PATH = "/home/daisy/.config";
+    private static final String HIDDEN_FILE_PATH = "/tmp/TOKEN_REWARD.TXT";
+    private static final String USER_WITH_TOKEN = "user2@foo.at";
 
     @Inject
     private WebshopService webshopService;
@@ -66,18 +72,32 @@ public class InitBean {
     private UserDAO userDAO;
     @Inject
     private UserRoleDAO userRoleDAO;
+    
+    private String installationToken;
+    private Map<Vulnerability, String> rewardTokens;
+
+    
+    public void setInstallationToken(String installationToken) {
+        this.installationToken = installationToken;
+    }
+
+    public Map<Vulnerability, String> getRewardTokens() {
+        return rewardTokens;
+    }
+    
 
     @PostConstruct
     public void init() {
 
         try {
             insertSampleData();
-            String token = webshopService.retrieveInstallToken();
+            installationToken = webshopService.retrieveInstallationToken();
             /* if there is no token, retrieving it would fail with FileNotFoundException
             so just go on inserting vulnerability data...
              */
-            insertVulnerabilityData(token);
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException | DaisyPointsEncryptionException ex) {
+            generateRewardTokens();
+            insertVulnerabilityData();
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
             Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ignore) {
             // retrieving installation token failed
@@ -90,11 +110,11 @@ public class InitBean {
     private void insertSampleData() throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
         UserRole user1Role = new UserRole("user1@foo.at", UserRole.Role.CUSTOMER);
-        UserRole user2Role = new UserRole("user2@foo.at", UserRole.Role.CUSTOMER);
+        UserRole user2Role = new UserRole(USER_WITH_TOKEN, UserRole.Role.CUSTOMER);
         userRoleDAO.persist(user1Role, user2Role);
 
         User user1 = new User("user1@foo.at", JBossPasswordUtil.getPasswordHash("user1"), "User", "1");
-        User user2 = new User("user2@foo.at", JBossPasswordUtil.getPasswordHash(RandomStringUtils.randomAlphanumeric(12)), "User", "2");
+        User user2 = new User(USER_WITH_TOKEN, JBossPasswordUtil.getPasswordHash(RandomStringUtils.randomAlphanumeric(12)), "User", "2");
         userDAO.persist(user1, user2);
 
         Category clothes = new Category("Clothes");
@@ -171,49 +191,70 @@ public class InitBean {
         recensionDAO.persist(recension1, recension2);
 
     }
+    
+    private void generateRewardTokens() {
+        rewardTokens = new HashMap<>();
+        for (Vulnerability v : Vulnerability.values()) {
+            try {
+                rewardTokens.put(v, DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|" + v.ordinal()));
+                Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, "Token for: " + v.name() + " : " + rewardTokens.get(v));
+            } catch (DaisyPointsEncryptionException ex) {
+                rewardTokens = null;
+                Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, "Error generating reward tokens", ex);
+            }
+
+        }
+    }
 
     /**
      * Create reward tokens for exploited vulnerabilities
-     * @param installationToken
-     * @throws DaisyPointsEncryptionException
      * @throws IOException 
      */
-    public void insertVulnerabilityData(String installationToken) throws DaisyPointsEncryptionException, IOException {
+    public void insertVulnerabilityData() throws IOException {
         
-        // hidden product - find via SQL inkection
+        /*
+        this should only happen upon invocation via TokenController and not
+        on subsequent restarts, when token is already known
+        */
+        if (rewardTokens == null) {
+            generateRewardTokens();
+        }
+        
+        // hidden product - find via SQL injection
         Category hoover = categoryDAO.findByName("Hoover");
-        Product prod1 = new Product("SQL Injection exploited!", 666, "Congratulations, here is your token for the points system:\n".concat(DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|1")), "images/thumbs_up.png", hoover);
+        Product prod1 = new Product("SQL Injection exploited!", 666, "Congratulations, here is your token for the points system:\n".concat(rewardTokens.get(Vulnerability.SQLI_PRODUCTS)), "images/thumbs_up.png", hoover);
         prod1.setActive(false);
         productDAO.persist(prod1);
         
-        // hidden file - find via hidden directory and CommandService
-        File f = new File("/tmp/TOKEN_REWARD.TXT");
-        BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-        bw.write("Command execution exploited, here is your token for the points system:");
-        bw.newLine();
-        bw.write(DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|2"));
-        bw.newLine();
-        bw.flush();
-        try {
-            bw.close();
-        } catch (IOException ignore) {    
-        }
-        
         // hidden user - find via indirect object reference
-        User user2 = userDAO.findById("user2@foo.at");
-        user2.setDescription(DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|3"));
+        User user2 = userDAO.findById(USER_WITH_TOKEN);
+        user2.setDescription(rewardTokens.get(Vulnerability.INSECURE_DIRECT_OBJECT_REFERENCE));
         
-        
+        // hidden file - find via hidden directory and CommandService
+        File f = new File(HIDDEN_FILE_PATH);
+        BufferedWriter bw = null;
+        try {
+            bw = new BufferedWriter(new FileWriter(f));
+            bw.write("Command execution exploited, here is your token for the points system:");
+            bw.newLine();
+            bw.write(rewardTokens.get(Vulnerability.HIDDEN_FILE));
+            bw.newLine();
+            bw.flush();
+        } finally {
+            FileUtil.safeClose(bw);
+        }
+
         // prepare phantom JS script
         f = new File(XSS_FILE_PATH);
-        f.delete();
-        bw = new BufferedWriter(new FileWriter(f));
-        bw.append(preparePhantomJSScript(installationToken));
-        bw.flush();
+        bw = null;
         try {
-            bw.close();
-        } catch (IOException ignore) {
+            bw = new BufferedWriter(new FileWriter(f));
+            bw.write(preparePhantomJSScript());
+            bw.flush();
+        } finally {
+            FileUtil.safeClose(bw);
         }
+
     }
     
     /**
@@ -223,12 +264,29 @@ public class InitBean {
         for (Product p : productDAO.findInactive()) {
             productDAO.delete(p);
         }
+        
+        User user2 = userDAO.findById(USER_WITH_TOKEN);
+        user2.setDescription("");
+        
+        File f = new File(HIDDEN_FILE_PATH);
+        f.delete();
+        
+        f = new File(XSS_FILE_PATH);
+        f.delete();
+        
     }
     
-    private String preparePhantomJSScript(String token) throws UnsupportedEncodingException, DaisyPointsEncryptionException {
+    /**
+     Writes token in script invoked by phantom JS
+     * @param token
+     * @return
+     * @throws UnsupportedEncodingException
+     * @throws DaisyPointsEncryptionException 
+     */
+    private String preparePhantomJSScript() throws UnsupportedEncodingException {
         String base64 = "dmFyIHBhZ2UgPSByZXF1aXJlKCd3ZWJwYWdlJykuY3JlYXRlKCk7CgpwYWdlLnNldHRpbmdzLnVzZXJBZ2VudCA9ICdUT0tFTic7CnBhZ2Uudmlld3BvcnRTaXplID0geyB3aWR0aDogMTkyMCwgaGVpZ2h0OiAxMDgwIH07CgpwYWdlLm9wZW4oJ2h0dHA6Ly8xMjcuMC4wLjE6ODA4MC9kYWlzeS13ZWIvJywgZnVuY3Rpb24oKSB7CgogICAgICAgIHBhZ2UuZXZhbHVhdGUoZnVuY3Rpb24oKSB7CiAgICAgICAgICAgICAgICBQcmltZUZhY2VzLmFiKHtzOmRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ1thbHQ9InByb2R1Y3QtMSJdJykuZ2V0QXR0cmlidXRlKCJpZCIpfSk7CiAgICAgICAgfSk7CgogICAgICAgIHNldFRpbWVvdXQoZnVuY3Rpb24oKSB7CiAgICAgICAgICAgICAgICBwYWdlLmV2YWx1YXRlKGZ1bmN0aW9uKCkge30pOwogICAgICAgIH0sIDIwMDApOwoKICAgICAgICBjb25zb2xlLmxvZygiZmluaXNoIik7CgogICAgICAgIHNldFRpbWVvdXQoZnVuY3Rpb24oKSB7CiAgICAgICAgICAgICAgICAvL3BhZ2UucmVuZGVyKCd0ZXN0LnBuZycpOwogICAgICAgICAgICAgICAgcGhhbnRvbS5leGl0KCk7CiAgICAgICAgfSwgMjAwMCk7Cn0pOwo=";
         String script = new String(Base64.decodeBase64(base64), "UTF-8");
-        return script.replace("TOKEN", DaisyPointsCrypter.encryptMessage(token, "Vulnerability|4"));
+        return script.replace("TOKEN", rewardTokens.get(Vulnerability.XSS_REMOTE_SCRIPT));
     }
 
 }

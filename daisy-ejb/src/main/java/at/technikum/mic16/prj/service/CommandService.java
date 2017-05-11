@@ -12,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.inject.Inject;
@@ -86,7 +85,7 @@ public class CommandService {
     public String getRewardToken() {
         if (rewardToken == null) {
             try {
-                String installToken = webshopService.retrieveInstallToken();
+                String installToken = webshopService.retrieveInstallationToken();
                 rewardToken = DaisyPointsCrypter.encryptMessage(installToken, "Vulnerability|3");
             } catch (DaisyPointsEncryptionException | IOException ignore) {
                 // bad luck

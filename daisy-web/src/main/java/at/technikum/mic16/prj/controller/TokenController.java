@@ -33,24 +33,24 @@ public class TokenController implements Serializable {
 
     @EJB
     private WebshopService backend;
-
     @EJB
     private InitBean initBean;
+    
+    private String installationToken;
+    
 
-    private String token;
-
-    public String getToken() {
-        return token;
+    public String getInstallationToken() {
+        return installationToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setInstallationToken(String installationToken) {
+        this.installationToken = installationToken;
     }
-
+    
     @PostConstruct
     public void init() {
         try {
-            token = backend.retrieveInstallToken();
+            installationToken = backend.retrieveInstallationToken();
         } catch (FileNotFoundException e) {
             // Tokenfile not existing yet
         } catch (IOException e) {
@@ -58,16 +58,15 @@ public class TokenController implements Serializable {
             MessageUtil.putError("Error reading token file", e.getMessage());
         }
     }
-
+    
     public String commitToken() {
         try {
-            backend.persistInstallToken(token);
-            initBean.insertVulnerabilityData(token);
+            backend.persistInstallToken(installationToken);
+            initBean.setInstallationToken(installationToken);
+            initBean.insertVulnerabilityData();
             return "index.xhtml?faces-redirect=true";
         } catch (IOException ex) {
             MessageUtil.putError("Error saving token", ex.getMessage());
-        } catch (DaisyPointsEncryptionException ex) {
-            MessageUtil.putError("Error generating sample data", ex.getMessage());
         } catch (Exception ex) {
             MessageUtil.putError("Unknown exception while saving token", ex.getMessage());
             Logger.getLogger(TokenController.class.getName()).log(Level.SEVERE, "Unknown exception occured:", ex);
@@ -79,10 +78,10 @@ public class TokenController implements Serializable {
     public void deleteToken() {
         try {
             initBean.deleteVulnerabilityData();
-            token = null;
+            installationToken = null;
         } finally {
-            if (backend.deleteInstallToken()) {
-                token = null;
+            if (backend.deleteInstallationToken()) {
+                installationToken = null;
             } else {
                 MessageUtil.putError("Unable to delete token file", "");
             }

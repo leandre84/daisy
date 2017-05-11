@@ -81,7 +81,7 @@
 
     <h:body>
         
-        <p:layout fullPage="true" rendered="#{not empty tokenController.token}">
+        <p:layout fullPage="true" rendered="#{not empty tokenController.installationToken}">
             <p:layoutUnit position="north" style="border: none">
               
                 <ui:include src="menubar.xhtml" />
@@ -103,7 +103,7 @@
             -->
         </p:layout>
         
-        <p:layout fullPage="true" rendered="#{empty tokenController.token}">
+        <p:layout fullPage="true" rendered="#{empty tokenController.installationToken}">
             <p:layoutUnit position="north" style="border: none">
                 <h:form>
                 <p:menubar>

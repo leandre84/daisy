@@ -18,16 +18,16 @@
 
             <p:outputPanel autoUpdate="true">
 
-                <h:panelGroup rendered="#{empty tokenController.token}">
+                <h:panelGroup rendered="#{empty tokenController.installationToken}">
                     <!-- Token validation in backend, otherwise messages of exceptions not shown here for whatever reason -->
-                    <p:inputText id="token" value="#{tokenController.token}" required="true" placeholder="Please enter your token" size="32">
+                    <p:inputText id="token" value="#{tokenController.installationToken}" required="true" placeholder="Please enter your token" size="32">
                         <f:validateLength minimum="32" maximum="32"/>
                     </p:inputText>
                     <p:commandButton value="Submit" action="#{tokenController.commitToken()}"/>
                 </h:panelGroup>
 
-                <h:panelGroup rendered="#{not empty tokenController.token}">
-                    <h:outputText value="Token is: #{tokenController.token}"/>
+                <h:panelGroup rendered="#{not empty tokenController.installationToken}">
+                    <h:outputText value="Token is: #{tokenController.installationToken}"/>
                     <p:commandButton value="Delete" action="#{tokenController.deleteToken()}"/>
                 </h:panelGroup>
                 
@@ -37,36 +37,6 @@
         
     </p:panelGrid>
 
-
-
-    <!--
-    <div align="center">
-        <br />
-        <br />
-        <h:graphicImage value="/images/daisy_banner.jpg"/>
-        <br />
-        <br />
-        <br />
-        <h:form id="tokenform">
-            <p:outputPanel autoUpdate="true" style="border: none; ">
-                <p:messages id="msgs" showDetail="true" autoUpdate="true" closable="true" />
-                <h:panelGrid columns="1">
-                    <p:outputLabel value="#{tokenController.errorMessage}" style="color: red"/>
-                </h:panelGrid>
-                <h:panelGrid columns="2" rendered="#{empty tokenController.token}">
-                    <p:inputText id="token" value="#{tokenController.token}" size="32" required="true" placeholder="Please enter your token">
-                        <f:validateLength minimum="32" maximum="32" />
-                    </p:inputText>
-                    <p:commandButton value="Submit" action="#{tokenController.commitToken()}"/>
-                </h:panelGrid>
-                <h:panelGrid columns="1" rendered="#{not empty tokenController.token}">
-                    <p:outputLabel value="Token is: #{tokenController.token}"/>
-                    <p:commandButton value="Delete" action="#{tokenController.deleteToken()}"/>
-                </h:panelGrid>
-            </p:outputPanel>
-        </h:form>   
-    </div>
-    -->
 
 
 </ui:composition>

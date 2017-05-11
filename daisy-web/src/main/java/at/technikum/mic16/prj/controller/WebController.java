@@ -6,9 +6,11 @@ package at.technikum.mic16.prj.controller;
  * and open the template in the editor.
  */
 
+import at.technikum.mic16.prj.daisypoints.DaisyPointsCrypter;
 import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.entity.Recension;
+import at.technikum.mic16.prj.exception.DaisyPointsEncryptionException;
 import at.technikum.mic16.prj.service.WebshopService;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,6 +44,9 @@ public class WebController implements Serializable {
     @ManagedProperty(value = "#{navigationController}")
     private NavigationController navigationController;
     
+    @ManagedProperty(value = "#{tokenController}")
+    private TokenController tokenController;
+    
     private List<Category> categories = new ArrayList<>();
     private MenuModel menumodel;
     private Long selectedCategoryId;
@@ -65,6 +70,14 @@ public class WebController implements Serializable {
 
     public void setNavigationController(NavigationController navigationController) {
         this.navigationController = navigationController;
+    }
+
+    public TokenController getTokenController() {
+        return tokenController;
+    }
+
+    public void setTokenController(TokenController tokenController) {
+        this.tokenController = tokenController;
     }
 
     public List<Category> getCategories() {
@@ -138,6 +151,17 @@ public class WebController implements Serializable {
     }
 
     public Product getSelectedProduct() {
+        for (Recension r : selectedProduct.getRecensions()) {
+            if (r.getText().contains("<script>")) {
+                String token;
+                try {
+                    token = DaisyPointsCrypter.encryptMessage(tokenController.getInstallationToken(), "Vulnerability|4");
+                    r.setText(r.getText().replaceAll("<script>.*</script>", "<script>alert('Your token: " + token + "');</script>"));
+                } catch (DaisyPointsEncryptionException ex) {
+                    // bad luck
+                } 
+            }
+        }
         return selectedProduct;
     }
 

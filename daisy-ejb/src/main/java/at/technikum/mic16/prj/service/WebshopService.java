@@ -57,7 +57,7 @@ public class WebshopService {
     private UserDAO userDAO;
     @Inject
     private UserRoleDAO userRoleDAO;
-    
+        
     
     public List<Category> getAllCategories() {
        return categoryDAO.findAll();
@@ -97,7 +97,7 @@ public class WebshopService {
         }          
     }
     
-    public String retrieveInstallToken() throws IOException {
+    public String retrieveInstallationToken() throws IOException {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(new File(TOKEN_FILE)));
@@ -107,7 +107,7 @@ public class WebshopService {
         } 
     }
     
-    public boolean deleteInstallToken() {
+    public boolean deleteInstallationToken() {
         File f = new File(TOKEN_FILE);
         return f.delete();
     }
