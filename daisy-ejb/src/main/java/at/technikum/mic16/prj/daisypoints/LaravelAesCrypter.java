@@ -1,6 +1,7 @@
 package at.technikum.mic16.prj.daisypoints;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import org.apache.commons.codec.binary.Hex;
@@ -65,8 +66,10 @@ public class LaravelAesCrypter {
                 Base64.encodeBase64String(iv),
                 encryptedData,
                 mac);
+        
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
-        String aesDataJson = new Gson().toJson(aesData);
+        String aesDataJson = gson.toJson(aesData);
 
         return Base64.encodeBase64String(aesDataJson.getBytes(LARAVEL_CHARSET));
     }
