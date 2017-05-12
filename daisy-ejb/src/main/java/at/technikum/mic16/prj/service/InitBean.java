@@ -201,8 +201,7 @@ public class InitBean {
         rewardTokens = new HashMap<>();
         for (Vulnerability v : Vulnerability.values()) {
             try {
-                rewardTokens.put(v, DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|" + v.ordinal()));
-                Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, "Token for: " + v.name() + " : " + rewardTokens.get(v));
+                rewardTokens.put(v, DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|" + v.name()));
             } catch (DaisyPointsEncryptionException ex) {
                 rewardTokens = null;
                 Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, "Error generating reward tokens", ex);

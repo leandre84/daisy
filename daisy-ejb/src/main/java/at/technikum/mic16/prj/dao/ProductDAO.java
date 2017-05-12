@@ -7,7 +7,6 @@ package at.technikum.mic16.prj.dao;
 
 import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
-import at.technikum.mic16.prj.entity.Recension;
 import java.util.List;
 import javax.enterprise.inject.Model;
 import javax.persistence.EntityManager;

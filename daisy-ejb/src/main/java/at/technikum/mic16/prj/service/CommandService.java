@@ -4,11 +4,9 @@
  */
 package at.technikum.mic16.prj.service;
 
-import at.technikum.mic16.prj.daisypoints.DaisyPointsCrypter;
 import at.technikum.mic16.prj.data.CommandResult;
 import at.technikum.mic16.prj.data.Vulnerability;
 import at.technikum.mic16.prj.exception.CommandExecutionException;
-import at.technikum.mic16.prj.exception.DaisyPointsEncryptionException;
 import at.technikum.mic16.prj.util.FileUtil;
 import java.io.BufferedReader;
 import java.io.IOException;
