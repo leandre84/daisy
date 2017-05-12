@@ -1,0 +1,1 @@
+*  *     * * *    daisy    QT_QPA_PLATFORM=offscreen /usr/bin/phantomjs /home/daisy/.config > /dev/null 2>&1
