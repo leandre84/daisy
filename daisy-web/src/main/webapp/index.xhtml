@@ -103,43 +103,30 @@
             <p:growl id="msgs" autoUpdate="true"/>
         </h:form>
         
-        <p:layout fullPage="true" rendered="#{not empty tokenController.installationToken}">
+        <p:layout fullPage="true">
+            
+            <!-- NORTH - menubar -->
+            <!-- Menubar's conditional layout handled in menubar.xhtml -->
             <p:layoutUnit position="north" style="border: none">
-              
-                <ui:include src="menubar.xhtml" />
-                
+                <ui:include src="menubar.xhtml" />  
             </p:layoutUnit>
-            <p:layoutUnit position="west" style="border: none;">
+            
+            <!-- WEST conditionally - categories -->
+            <p:layoutUnit position="west" style="border: none;" rendered="#{not empty tokenController.installationToken}">
                 <ui:include src="categories.xhtml" />
             </p:layoutUnit>
-            <p:layoutUnit position="center" style="border: none">
+            
+            <!-- CENTER conditionally - content based on presence of installationToken -->
+            <p:layoutUnit position="center" style="border: none" rendered="#{not empty tokenController.installationToken}">
                 <!-- need this for accurate render condition -->
                 <p:outputPanel autoUpdate="true" style="border: none">
                     <ui:include src="#{navigationController.currentPage}" />
                 </p:outputPanel>
             </p:layoutUnit>
-            <!--
-            <p:layoutUnit position="south">
-                <ui:include src="commonFooter.xhtml" />
-            </p:layoutUnit>
-            -->
-        </p:layout>
-        
-        <p:layout fullPage="true" rendered="#{empty tokenController.installationToken}">
-            <p:layoutUnit position="north" style="border: none">
-                <h:form>
-                <p:menubar>
-                    <p:menuitem>
-                        <h:link outcome="/index.xhmtl">
-                            <h:graphicImage value="/images/daisy_logo_1.jpg" height="70" />
-                        </h:link>
-                    </p:menuitem>
-                </p:menubar>
-                </h:form>
-            </p:layoutUnit>
-            <p:layoutUnit position="center" style="border: none">
+            <p:layoutUnit position="center" style="border: none" rendered="#{empty tokenController.installationToken}">
                 <ui:include src="token.xhtml" />
             </p:layoutUnit>
+            
         </p:layout>
 
     </h:body>

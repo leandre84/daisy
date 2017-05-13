@@ -14,8 +14,9 @@
             </h:link>
         </h:panelGroup>
 
-        <!-- Float right stuff: Options -->
-        <h:panelGroup style="float: right">
+        <!-- Float right stuff: Options, render conditionally -->
+        <h:panelGroup style="float: right" rendered="#{not empty tokenController.installationToken}">
+            
             <!-- Search -->
             <h:form id="form_search" style="display: inline-block">
                 <p:outputLabel for="it_search" value="Searchtext" style="display: none"/>
@@ -25,6 +26,7 @@
                 <p:selectBooleanButton value="#{webController.exactSearch}" offLabel="fuzzy" onLabel="exact"/>
                 <p:commandButton value="Go!" action="#{webController.searchForProducts()}" style="margin-right: 10px"/>
             </h:form>
+            
             <!-- Shopping cart -->
             <h:form id="form_menubar" style="display: inline-block">
                 <p:outputPanel autoUpdate="true">
@@ -33,6 +35,7 @@
                     </p:commandButton>
                 </p:outputPanel>
             </h:form>
+            
             <!-- Menu buttons -->
             <!-- icon="fa fa-user" -->
             <h:form style="display: inline-block">
