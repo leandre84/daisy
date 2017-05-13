@@ -48,8 +48,10 @@
                 </p:menuButton>
                 <p:menuButton value="#{loginController.user.id}" icon="fa fa-user" style="margin-right: 10px" rendered="#{not empty loginController.user}">
                     <p:menuitem value="My profile" icon="fa fa-comment-o" url="show_userprofile.xhtml?id=#{loginController.user.id}" />
-                    <p:menuitem value="My orders" icon="ui-icon-folder-collapsed" />
-                    <p:menuitem value="Logout" icon="ui-icon-locked" action="#{loginController.logOut()}"/>
+                    <!-- not implemented
+                    <p:menuitem value="My orders" icon="fa fa-list" />
+                    -->
+                    <p:menuitem value="Logout" icon="fa fa-sign-out" action="#{loginController.logOut()}"/>
                 </p:menuButton>
             </h:form>
 
