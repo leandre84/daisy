@@ -9,7 +9,7 @@
     <p:panel>
 
         <f:facet name="header">
-            <p:outputLabel value="#{webController.selectedProduct.name}" style="font-size: 130% !important"/>
+            <p:outputLabel value="#{webController.selectedProduct.name}" style="font-size: 110% !important"/>
 
         </f:facet>
 
@@ -37,7 +37,7 @@
 
         <f:facet name="header">
             <p:outputLabel value="Recensions for #{webController.selectedProduct.name}" />
-            <p:commandButton value="Add/edit own recension" style="float: right" rendered="#{not empty loginController.user}">
+            <p:commandButton value="Add/edit own recension" style="float: right; font-size: 85%" rendered="#{not empty loginController.user}">
                 <f:setPropertyActionListener value="recension.xhtml" target="#{navigationController.currentPage}"/>
             </p:commandButton>
         </f:facet>
