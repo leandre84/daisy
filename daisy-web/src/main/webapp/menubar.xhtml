@@ -5,11 +5,6 @@
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:form id="msgs">
-        <p:growl id="msgs" autoUpdate="true"/>
-    </h:form>
-
-
     <h:panelGrid columns="2" width="100%" bgcolor="#1D1D1B">
 
         <!-- Float left stuff: Logo -->
@@ -22,8 +17,9 @@
         <!-- Float right stuff: Options -->
         <h:panelGroup style="float: right">
             <!-- Search -->
-            <h:form id="search" style="display: inline-block">
-                <p:inputText id="it_search" placeholder="Search for products" value="#{webController.searchText}" size="32">
+            <h:form id="form_search" style="display: inline-block">
+                <p:outputLabel for="it_search" value="Searchtext" style="display: none"/>
+                <p:inputText id="it_search" placeholder="Search for products" required="true" value="#{webController.searchText}" size="32">
                     <f:validateLength minimum="3"/>
                 </p:inputText>
                 <p:selectBooleanButton value="#{webController.exactSearch}" offLabel="fuzzy" onLabel="exact"/>
@@ -31,10 +27,11 @@
             </h:form>
             <!-- Shopping cart -->
             <h:form id="form_menubar" style="display: inline-block">
-                <!-- TODO: CHECK IF STILL VALID: autopanel with auto update breaks layout so this component is updated manually -->
-                <p:commandButton id="btn_cart" icon="fa fa-shopping-cart" value="#{webController.cartItemCount}" style="margin-right: 10px">
-                    <f:setPropertyActionListener value="cart.xhtml" target="#{navigationController.currentPage}"/>
-                </p:commandButton>
+                <p:outputPanel autoUpdate="true">
+                    <p:commandButton id="btn_cart" icon="fa fa-shopping-cart" value="#{webController.cartItemCount}" style="margin-right: 10px">
+                        <f:setPropertyActionListener value="cart.xhtml" target="#{navigationController.currentPage}"/>
+                    </p:commandButton>
+                </p:outputPanel>
             </h:form>
             <!-- Menu buttons -->
             <!-- icon="fa fa-user" -->

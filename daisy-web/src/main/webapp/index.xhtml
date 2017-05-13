@@ -10,7 +10,24 @@
     <h:head>
         <link rel="shortcut icon" type="image/x-icon" href="images/favicon1.png"/>
         
-
+        <style type="text/css">
+            
+            .ui-widget {
+                font-size: 90%;
+            }
+            
+            .ui-panelgrid td, .ui-panelgrid tr {
+                border-style: none !important
+            }
+            
+            .ui-datagrid-no-border>.ui-datagrid-content {
+                border: none !important
+            }	
+            
+        </style>
+        
+        
+        <!--
         <style>
             .ui-layout-north {
                 z-index:20 !important;
@@ -74,12 +91,17 @@
             .ui-menuitem-icon{
                 color: white !important;
             }
-            
-            
+ 
         </style>
+        -->
+        
     </h:head>
 
     <h:body>
+        
+        <h:form id="msgs">
+            <p:growl id="msgs" autoUpdate="true"/>
+        </h:form>
         
         <p:layout fullPage="true" rendered="#{not empty tokenController.installationToken}">
             <p:layoutUnit position="north" style="border: none">

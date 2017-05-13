@@ -23,7 +23,7 @@
     
     <p:panelGrid columns="1" rendered="#{not empty webController.cartEntries}">
         <p:outputLabel value="Total: #{webController.cartTotal}"/>
-        <p:commandButton value="Empty cart" action="#{webController.emptyCart()}" update="cart form_menubar:btn_cart"/>
+        <p:commandButton value="Empty cart" action="#{webController.emptyCart()}"/>
     </p:panelGrid>
 
 </ui:composition>
