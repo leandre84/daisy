@@ -42,7 +42,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>6.0</version>
+            <version>6.1</version>
         </dependency>
         <!-- use the all themes packages for now, select specific one later -->
         <dependency>  

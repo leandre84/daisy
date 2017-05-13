@@ -37,9 +37,8 @@
             </h:form>
             
             <!-- Menu buttons -->
-            <!-- icon="fa fa-user" -->
             <h:form style="display: inline-block">
-                <p:menuButton value="Guest" rendered="#{empty loginController.user}" style="margin-right: 10px">
+                <p:menuButton value="Guest" icon="fa fa-user" style="margin-right: 10px" rendered="#{empty loginController.user}">
                     <p:menuitem value="Login" icon="fa fa-user">
                         <f:setPropertyActionListener value="login.xhtml" target="#{navigationController.currentPage}"/>
                     </p:menuitem>
@@ -47,7 +46,7 @@
                         <f:setPropertyActionListener value="register.xhtml" target="#{navigationController.currentPage}"/>
                     </p:menuitem>
                 </p:menuButton>
-                <p:menuButton value="#{loginController.user.id}" rendered="#{not empty loginController.user}" style="margin-right: 10px">
+                <p:menuButton value="#{loginController.user.id}" icon="fa fa-user" style="margin-right: 10px" rendered="#{not empty loginController.user}">
                     <p:menuitem value="My profile" icon="fa fa-comment-o" url="show_userprofile.xhtml?id=#{loginController.user.id}" />
                     <p:menuitem value="My orders" icon="ui-icon-folder-collapsed" />
                     <p:menuitem value="Logout" icon="ui-icon-locked" action="#{loginController.logOut()}"/>
