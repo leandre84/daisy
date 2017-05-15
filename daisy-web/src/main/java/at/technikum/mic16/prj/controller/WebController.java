@@ -12,6 +12,7 @@ import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.exception.DaisyPointsEncryptionException;
 import at.technikum.mic16.prj.service.WebshopService;
+import at.technikum.mic16.prj.util.MessageUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -150,6 +151,11 @@ public class WebController implements Serializable {
         this.exactSearch = exactSearch;
     }
 
+    /**
+     * Gets the currently selected product which is used by product overview page
+     * also updates any exploited recensions to contain reward token
+     * @return 
+     */
     public Product getSelectedProduct() {
         for (Recension r : selectedProduct.getRecensions()) {
             if (r.getText().contains("<script>")) {
@@ -228,10 +234,16 @@ public class WebController implements Serializable {
     }
     
     public void searchForProducts() {
-        if (searchText == null || searchText.isEmpty() || searchText.replaceAll(" ", "").isEmpty()) {
-            // TODO: handle search without criteria
-            return;
+        
+        // poor man's validation
+        String[] illegal = new String[] { "'" };
+        for (String s : illegal) {
+            if (searchText.contains(s)) {
+                MessageUtil.putError("Illegal character", "Illegal character in search text: " + s);
+                return;
+            }
         }
+        
         selectedProduct = null;
         // fetch products using vulnerable routine in case of exact search mode
         if (exactSearch) {

@@ -64,13 +64,16 @@ public class ProductDAO {
     
     /**
      * Find all products - this is vulnerable to SQL injection and also unescapes input by purpose
+     * Result is also sorted independently of SQL (no order by) in order to display record with reward first (highest id, see comparator)
      * @param queryString
      * @return 
      */
     public List<Product> findByExactName(String queryString) {
         String unescaped = StringEscapeUtils.unescapeHtml4(queryString);
         Query q = em.createQuery("FROM Product p WHERE active is true AND name = '" + unescaped + "'", Product.class);
-        return q.getResultList();
+        List result = q.getResultList();
+        result.sort(null);
+        return result;
     }
     
      /**

@@ -22,6 +22,7 @@
                 <p:outputLabel for="it_search" value="Searchtext" style="display: none"/>
                 <p:inputText id="it_search" placeholder="Search for products" required="true" value="#{webController.searchText}" size="32">
                     <f:validateLength minimum="3"/>
+                    <!-- further validation in searchForProducts() -->
                 </p:inputText>
                 <p:selectBooleanButton value="#{webController.exactSearch}" offLabel="fuzzy" onLabel="exact"/>
                 <p:commandButton value="Go!" action="#{webController.searchForProducts()}" style="margin-right: 10px"/>

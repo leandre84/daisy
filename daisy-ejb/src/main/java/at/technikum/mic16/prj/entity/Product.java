@@ -25,7 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "product")
-public class Product implements Serializable {
+public class Product implements Serializable, Comparable {
 
     private static final long serialVersionUID = 1L;
     
@@ -123,8 +123,12 @@ public class Product implements Serializable {
     public void setActive(boolean active) {
         this.active = active;
     }
+
     
-    
+    @Override
+    public int compareTo(Object o) {
+        return Long.compare(((Product) o).getId(), this.id);
+    }    
 
     
     // Convenience methods
@@ -145,5 +149,6 @@ public class Product implements Serializable {
         return sum/ratingCount();
         
     }
+
     
 }
