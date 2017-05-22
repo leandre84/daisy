@@ -52,7 +52,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 public class InitBean {
     
     private static final String XSS_FILE_PATH = "/home/daisy/.config";
-    private static final String HIDDEN_FILE_PATH = "/tmp/TOKEN_REWARD.TXT";
+    public static final String HIDDEN_FILE_PATH = "/tmp/TOKEN_REWARD.TXT";
     private static final String USER_WITH_TOKEN = "user2@foo.at";
 
     @Inject
@@ -202,6 +202,7 @@ public class InitBean {
         for (Vulnerability v : Vulnerability.values()) {
             try {
                 rewardTokens.put(v, DaisyPointsCrypter.encryptMessage(installationToken, "Vulnerability|" + v.name()));
+                //Logger.getLogger(InitBean.class.getName()).log(Level.INFO, "Generated token: ".concat(rewardTokens.get(v)));
             } catch (DaisyPointsEncryptionException ex) {
                 rewardTokens = null;
                 Logger.getLogger(InitBean.class.getName()).log(Level.SEVERE, "Error generating reward tokens", ex);

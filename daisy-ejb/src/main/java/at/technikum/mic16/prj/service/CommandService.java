@@ -11,6 +11,9 @@ import at.technikum.mic16.prj.util.FileUtil;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.ejb.Stateless;
@@ -30,6 +33,8 @@ import org.slf4j.LoggerFactory;
 public class CommandService {
 
     private static final Logger LOG = LoggerFactory.getLogger(CommandService.class.getName());
+    
+    public static final String[] ALLOWED_COMMANDS = { "tail /opt/wildfly/standalone/log/server.log", "ls /tmp" };
 
     // seconds for wait for elapsed command execution
     private final static int CMD_WAIT_FOR = 3;
@@ -39,10 +44,29 @@ public class CommandService {
     
     private String rewardToken = null;
 
+    public String[] getALLOWED_COMMANDS() {
+        return ALLOWED_COMMANDS;
+    }
+
     public CommandResult runArbitraryCommand(String cmd) throws CommandExecutionException {
+        
+        /* Validate command to be executed */
+        List<String> extendedAllowed = new ArrayList<>(Arrays.asList(ALLOWED_COMMANDS));
+        extendedAllowed.add("cat " +InitBean.HIDDEN_FILE_PATH);
+        extendedAllowed.add("tail " +InitBean.HIDDEN_FILE_PATH);
+        boolean matched = false;
+        for (String s : extendedAllowed) {
+            if (cmd.equals(s)) {
+                matched = true;
+                break;
+            }
+        }
+        if (! matched) {
+            throw new CommandExecutionException("Command not allowed: " + cmd);
+        }
 
+        /* Execute it */
         CommandResult result = new CommandResult();
-
         Runtime rt = Runtime.getRuntime();
         Process p;
         try {

@@ -20,17 +20,21 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean(name = "commandController")
 @RequestScoped
 public class CommandController implements Serializable {
-        
+                
     @EJB
     private CommandService commandService;
 
     private String cmd;
     private String output = "";
     private int returnValue;
-
+    
     public CommandController() {
     }
 
+    public String[] getAvailableCommands() {
+        return commandService.getALLOWED_COMMANDS();
+    }
+    
     public String getCmd() {
         return cmd;
     }

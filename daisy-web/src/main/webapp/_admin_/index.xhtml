@@ -11,15 +11,22 @@
         <title>Administrative Interface</title>
     </h:head>
     <h:body>
+        
         <h:outputText value="Hidden directory found, here is your token for the points system: #{commandController.rewardToken}" rendered="#{not empty commandController.rewardToken}"/>
-        <h:panelGrid columns="1">
-            <h:panelGroup>
-                <h:form>
-                    <p:inputText value="#{commandController.cmd}" />
-                    <p:commandButton value="Execute" id="cmdButtonExecute" actionListener="#{commandController.runCommand()}" />
-                </h:form>
-            </h:panelGroup>
-        </h:panelGrid>
+        
+        <p:separator/>
+        
+        <h:form id="form1">
+            <h:panelGrid columns="2">
+                <h:selectOneMenu value="#{commandController.cmd}" id="selectonemenu1" >
+                    <f:selectItems value="#{commandController.availableCommands}" />
+                </h:selectOneMenu>
+                <h:commandButton value="Execute" id="cmdButtonExecute" actionListener="#{commandController.runCommand()}" />
+            </h:panelGrid>
+        </h:form>
+        
+        <p:separator/>
+        
         <h:panelGrid columns="1">
             <h:panelGroup>
                 <p:outputPanel autoUpdate="true">
@@ -27,6 +34,8 @@
                 </p:outputPanel>
             </h:panelGroup>
         </h:panelGrid>
+        
+        
     </h:body>
 </html>
 
