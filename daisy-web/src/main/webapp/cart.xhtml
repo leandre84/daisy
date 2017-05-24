@@ -13,9 +13,12 @@
             <p:outputLabel value="Your cart" />
         </f:facet>
 
-        <h:panelGrid columns="2">
+        <h:panelGrid columns="2" cellspacing="20" style="border: 1">
             <p:outputLabel value="#{item.key.name}"/>
-            <p:outputLabel value="#{item.value}"/>
+            <h:form>
+                <p:inputText placeholder="#{item.value}" binding="#{qty}" size="3" />
+                <p:commandButton value="Delete/Adjust" action="#{webController.adjustQuantityOfProductInCart(item.key, qty.value)}" style="margin-left: 36px"/>
+            </h:form>
         </h:panelGrid>
         
 
@@ -24,6 +27,12 @@
     <p:panelGrid columns="1" rendered="#{not empty webController.cartEntries}">
         <p:outputLabel value="Total: #{webController.cartTotal}"/>
         <p:commandButton value="Empty cart" action="#{webController.emptyCart()}"/>
+    </p:panelGrid>
+    
+    <p:panelGrid columns="1" rendered="#{not empty webController.cartEntries and not empty loginController.user}">
+        <p:commandButton value="Check out">
+            <f:setPropertyActionListener value="checkout.xhtml" target="#{navigationController.currentPage}"/>
+        </p:commandButton>
     </p:panelGrid>
 
 </ui:composition>

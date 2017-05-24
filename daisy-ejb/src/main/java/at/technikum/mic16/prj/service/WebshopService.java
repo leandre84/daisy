@@ -12,6 +12,8 @@ import at.technikum.mic16.prj.dao.RecensionDAO;
 import at.technikum.mic16.prj.dao.UserDAO;
 import at.technikum.mic16.prj.dao.UserRoleDAO;
 import at.technikum.mic16.prj.entity.Category;
+import at.technikum.mic16.prj.entity.OrderItem;
+import at.technikum.mic16.prj.entity.PlacedOrder;
 import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.entity.User;
@@ -149,6 +151,13 @@ public class WebshopService {
     
     public void addOrModifyRecension(Recension recension) {
         recensionDAO.merge(recension);
+    }
+    
+    public void commitOrder(PlacedOrder order) {
+        placedOrderDAO.persist(order);
+        for (OrderItem item : order.getOrderItems()) {
+            orderItemDAO.persist(item);
+        }
     }
     
 }
