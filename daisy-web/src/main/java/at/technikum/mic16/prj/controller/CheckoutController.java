@@ -10,11 +10,14 @@ import at.technikum.mic16.prj.entity.OrderItem;
 import at.technikum.mic16.prj.entity.PlacedOrder;
 import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.service.WebshopService;
+import at.technikum.mic16.prj.util.MessageUtil;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -83,9 +86,17 @@ public class CheckoutController implements Serializable {
         return new ArrayList<>(cart.entrySet());
     }
     
+    public float getCartTotal() {
+        float total = 0;
+        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+            total += entry.getKey().getPrice() * entry.getValue();
+        }
+        return total;
+    }
+    
     public void commitOrder() {
         PlacedOrder order = new PlacedOrder();
-        List<OrderItem> items = new ArrayList<>();
+        Set<OrderItem> items = new HashSet<>();
         
         for (Map.Entry<Product,Integer> entry : cart.entrySet()) {
             OrderItem item = new OrderItem();
@@ -97,12 +108,19 @@ public class CheckoutController implements Serializable {
             items.add(item);
         }
         
+        order.setOrderItems(items);
         order.updateTotal();
         order.setOrderDate(LocalDate.now());
         order.setPlacedBy(loginController.getUser());
-        order.setOrderItems(items);
         
         backend.commitOrder(order);
+        
+        webController.emptyCart();
+        cart = webController.getCart();
+        
+        MessageUtil.putInfo("Thanks for your order!", "We appreciate it, really.");
+        
+        navigationController.setCurrentPage("products_overview.xhtml");
     }
     
     
