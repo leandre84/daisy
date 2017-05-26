@@ -6,7 +6,7 @@
 package at.technikum.mic16.prj.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,7 +43,7 @@ public class Recension implements Serializable {
     private int rating;
     
     @Column(name = "creation_date", nullable = false)
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
     
     @Column(name = "img_path")
     private String imagePath;
@@ -60,7 +60,7 @@ public class Recension implements Serializable {
         
     }
 
-    public Recension(String text, int rating, LocalDate creationDate, String imagePath, Product product, User user) {
+    public Recension(String text, int rating, LocalDateTime creationDate, String imagePath, Product product, User user) {
         this.text = text;
         this.rating = rating;
         this.creationDate = creationDate;
@@ -89,11 +89,11 @@ public class Recension implements Serializable {
         this.rating = rating;
     }
 
-    public LocalDate getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

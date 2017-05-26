@@ -30,7 +30,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -180,14 +180,14 @@ public class InitBean {
                 smartphone1, smartphone2, smartphone3, smartphone4, smartphone5, smartphone6, jeans1, jeans2, jeans3, jeans4, jeans5, jeans6);
 
         Recension recension1 = new Recension();
-        recension1.setCreationDate(LocalDate.now().minusDays(14));
+        recension1.setCreationDate(LocalDateTime.now().minusDays(14));
         recension1.setProduct(phillips1);
         recension1.setRating(4);
         recension1.setUser(user1);
         recension1.setText("I like it");
 
         Recension recension2 = new Recension();
-        recension2.setCreationDate(LocalDate.now().minusDays(3));
+        recension2.setCreationDate(LocalDateTime.now().minusDays(3).minusSeconds((int) (Math.random()*1337)));
         recension2.setProduct(phillips1);
         recension2.setRating(3);
         recension2.setUser(user2);

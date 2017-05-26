@@ -49,9 +49,9 @@
                 </p:menuButton>
                 <p:menuButton value="#{loginController.user.id}" icon="fa fa-user" style="margin-right: 10px" rendered="#{not empty loginController.user}">
                     <p:menuitem value="My profile" icon="fa fa-comment-o" url="show_userprofile.xhtml?id=#{loginController.user.id}" />
-                    <!-- not implemented
-                    <p:menuitem value="My orders" icon="fa fa-list" />
-                    -->
+                    <p:menuitem value="My orders" icon="fa fa-list">
+                        <f:setPropertyActionListener value="orders.xhtml" target="#{navigationController.currentPage}"/>
+                    </p:menuitem>
                     <p:menuitem value="Logout" icon="fa fa-sign-out" action="#{loginController.logOut()}"/>
                 </p:menuButton>
             </h:form>

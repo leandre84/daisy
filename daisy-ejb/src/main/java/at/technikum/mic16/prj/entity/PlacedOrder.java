@@ -6,7 +6,7 @@
 package at.technikum.mic16.prj.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,7 +39,7 @@ public class PlacedOrder implements Serializable {
     private User placedBy;
     
     @Column(name = "order_date", nullable = false)
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
     
     @Column(nullable = false)
     private float total;
@@ -60,11 +60,11 @@ public class PlacedOrder implements Serializable {
         this.placedBy = placedBy;
     }
     
-    public LocalDate getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 

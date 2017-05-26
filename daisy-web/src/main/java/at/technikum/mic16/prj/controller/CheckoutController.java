@@ -12,7 +12,7 @@ import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.service.WebshopService;
 import at.technikum.mic16.prj.util.MessageUtil;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 
 
 /**
@@ -29,7 +29,7 @@ import javax.faces.bean.ViewScoped;
  * @author leandros
  */
 @ManagedBean(name = "checkoutController")
-@ViewScoped
+@RequestScoped
 public class CheckoutController implements Serializable {
     
     @EJB
@@ -105,7 +105,7 @@ public class CheckoutController implements Serializable {
         
         order.setOrderItems(items);
         order.updateTotal();
-        order.setOrderDate(LocalDate.now());
+        order.setOrderDate(LocalDateTime.now());
         order.setPlacedBy(loginController.getUser());
         
         backend.commitOrder(order);

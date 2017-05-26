@@ -11,7 +11,7 @@ import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.service.WebshopService;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -102,7 +102,7 @@ public class RecensionController implements Serializable {
             recension = current;
         } else {
             recension = new Recension();
-            recension.setCreationDate(LocalDate.now());
+            recension.setCreationDate(LocalDateTime.now());
             recension.setProduct(product);
             recension.setUser(user);
         }

@@ -29,8 +29,8 @@ public class PlacedOrderDAO {
     }
 
     public List<PlacedOrder> findByUser(User user) {
-        Query q = em.createQuery("SELECT p FROM PlacedOrder p WHERE User = :user", PlacedOrder.class);
-        q.setParameter("user", user);
+        Query q = em.createQuery("SELECT p FROM PlacedOrder p WHERE user_fk = :user", PlacedOrder.class);
+        q.setParameter("user", user.getId());
         return q.getResultList();
     }
     

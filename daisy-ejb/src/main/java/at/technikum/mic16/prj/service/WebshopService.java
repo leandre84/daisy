@@ -160,4 +160,8 @@ public class WebshopService {
         }
     }
     
+    public List<PlacedOrder> getOrdersOfUser(User user) {
+        return placedOrderDAO.findByUser(user);
+    }
+    
 }
