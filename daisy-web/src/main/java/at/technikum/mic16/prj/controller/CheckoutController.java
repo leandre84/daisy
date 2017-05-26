@@ -13,7 +13,6 @@ import at.technikum.mic16.prj.service.WebshopService;
 import at.technikum.mic16.prj.util.MessageUtil;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -83,15 +82,11 @@ public class CheckoutController implements Serializable {
     }
     
     public List<Map.Entry<Product, Integer>> getCartEntries() {
-        return new ArrayList<>(cart.entrySet());
+        return webController.getCartEntries();
     }
     
     public float getCartTotal() {
-        float total = 0;
-        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
-            total += entry.getKey().getPrice() * entry.getValue();
-        }
-        return total;
+        return webController.getCartTotal();
     }
     
     public void commitOrder() {
