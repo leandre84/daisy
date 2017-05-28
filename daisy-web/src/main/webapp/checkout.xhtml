@@ -13,15 +13,23 @@
             <p:outputLabel value="Your cart" />
         </f:facet>
 
-        <h:panelGrid columns="2" cellspacing="20" style="border: 1px">
-            <p:outputLabel value="#{item.key.name}"/>
-            <p:outputLabel value="#{item.value}"/>
-        </h:panelGrid>
+        <h:form>
+            <p:panelGrid columns="4" layout="grid">
+                <h:outputText value="#{item.key.name}"/>
+                <h:outputText value="#{item.key.price}"/>
+                <h:outputText value="#{item.value}"/>
+                <h:outputText value="#{item.key.price * item.value}">
+                    <f:convertNumber maxFractionDigits="2"/>
+                </h:outputText>
+            </p:panelGrid>
+        </h:form>
 
     </p:dataGrid>
     
     <p:panelGrid columns="1" rendered="#{not empty checkoutController.cartEntries}">
-        <p:outputLabel value="Total: #{checkoutController.cartTotal}"/>
+        <h:outputText value="Total: #{checkoutController.cartTotal}">
+            <f:convertNumber maxFractionDigits="2"/>
+        </h:outputText>
     </p:panelGrid>
     
     <p:panelGrid columns="2">
@@ -29,7 +37,7 @@
         <p:outputLabel value="#{checkoutController.loginController.user.friendlyName()}"/>
     </p:panelGrid>
     
-    <p:commandButton value="Buy!" action="#{checkoutController.commitOrder()}"/>
+    <p:commandButton value="Buy!" action="#{checkoutController.commitOrder()}" rendered="#{not empty checkoutController.cartEntries and not empty loginController.user}"/>
     
 
 </ui:composition>

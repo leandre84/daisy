@@ -9,9 +9,11 @@
 
         <!-- Float left stuff: Logo -->
         <h:panelGroup style="float: left">
-            <h:link outcome="index.xhmtl">
-                <h:graphicImage value="images/daisy_logo_1.jpg" height="70" />
-            </h:link>
+            <h:form id="form_logo" style="display: inline-block">
+                <h:commandLink action="#{navigationController.setCurrentPage('products_overview.xhtml')}">
+                    <h:graphicImage value="images/daisy_logo_1.jpg" height="70" />
+                </h:commandLink>    
+            </h:form>
         </h:panelGroup>
 
         <!-- Float right stuff: Options, render conditionally -->

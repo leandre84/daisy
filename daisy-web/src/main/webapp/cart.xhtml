@@ -13,19 +13,25 @@
             <p:outputLabel value="Your cart" />
         </f:facet>
 
-        <h:panelGrid columns="2" cellspacing="20" style="border: 1px">
-            <p:outputLabel value="#{item.key.name}"/>
-            <h:form>
-                <p:inputText placeholder="#{item.value}" binding="#{qty}" size="3" />
-                <p:commandButton value="Delete/Adjust" action="#{webController.adjustQuantityOfProductInCart(item.key, qty.value)}" style="margin-left: 36px"/>
-            </h:form>
-        </h:panelGrid>
+        <h:form>
+            <!-- columns=5 breaks layout for whatever reason... -->
+            <p:panelGrid columns="6" layout="grid">
+                <h:outputText value="#{item.key.name}"/>
+                <h:outputText value="#{item.key.price}"/>
+                <p:inputText placeholder="#{item.value}" binding="#{qty}" size="4"/>
+                <h:outputText value="#{item.key.price * item.value}">
+                    <f:convertNumber maxFractionDigits="2"/>
+                </h:outputText>
+                <p:commandButton value="Delete/Adjust" action="#{webController.adjustQuantityOfProductInCart(item.key, qty.value)}"/>
+            </p:panelGrid>
+        </h:form>
         
-
     </p:dataGrid>
     
     <p:panelGrid columns="1" rendered="#{not empty webController.cartEntries}">
-        <p:outputLabel value="Total: #{webController.cartTotal}"/>
+        <h:outputText value="Total: #{webController.cartTotal}">
+            <f:convertNumber maxFractionDigits="2"/>
+        </h:outputText>
         <p:commandButton value="Empty cart" action="#{webController.emptyCart()}"/>
     </p:panelGrid>
     
