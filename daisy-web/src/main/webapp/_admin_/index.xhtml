@@ -18,10 +18,11 @@
         
         <h:form id="form1">
             <h:panelGrid columns="2">
-                <h:selectOneMenu value="#{commandController.cmd}" id="selectonemenu1" >
+                <h:selectOneMenu id="selectonemenu1" >
                     <f:selectItems value="#{commandController.availableCommands}" />
                 </h:selectOneMenu>
-                <h:commandButton value="Execute" id="cmdButtonExecute" actionListener="#{commandController.runCommand()}" />
+                <!-- immediate = true as to immediately submit data and not validate input -->
+                <h:commandButton value="Execute" id="cmdButtonExecute" actionListener="#{commandController.runCommand()}" immediate="true"/>
             </h:panelGrid>
         </h:form>
         
