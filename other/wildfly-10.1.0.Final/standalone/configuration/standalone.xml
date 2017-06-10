@@ -112,12 +112,6 @@
             <logger category="sun.rmi">
                 <level name="WARN"/>
             </logger>
-            <logger category="org.hibernate.sql">
-                <level name="DEBUG"/>
-            </logger>
-            <logger category="org.hibernate.type.descriptor.sql.BasicBinder">
-                <level name="TRACE"/>
-            </logger>
             <root-logger>
                 <level name="INFO"/>
                 <handlers>
@@ -154,29 +148,9 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-                <datasource jta="true" jndi-name="java:/datasources/daisyDS" pool-name="daisyDS_Pool" enabled="true" use-java-context="true" use-ccm="true">
-                    <connection-url>jdbc:mysql://localhost:3306/daisy</connection-url>
-                    <driver>mysql</driver>
-                    <security>
-                        <user-name>daisy</user-name>
-                        <password>zeiCh7do4pae</password>
-                    </security>
-                    <timeout>
-                        <idle-timeout-minutes>0</idle-timeout-minutes>
-                        <query-timeout>600</query-timeout>
-                    </timeout>
-                    <statement>
-                        <prepared-statement-cache-size>100</prepared-statement-cache-size>
-                        <share-prepared-statements>true</share-prepared-statements>
-                    </statement>
-                </datasource>
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
-                    </driver>
-                    <driver name="mysql" module="com.mysql">
-                        <driver-class>com.mysql.jdbc.Driver</driver-class>
-                        <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
                     </driver>
                 </drivers>
             </datasources>
@@ -376,7 +350,7 @@
                 <security-domain name="daisy_db" cache-type="default">
                     <authentication>
                         <login-module code="org.jboss.security.auth.spi.DatabaseServerLoginModule" flag="optional">
-                            <module-option name="dsJndiName" value="java:/datasources/daisyDS"/>
+                            <module-option name="dsJndiName" value="java:jboss/datasources/ExampleDS"/>
                             <module-option name="principalsQuery" value="SELECT password FROM user WHERE user_id = ?"/>
                             <module-option name="rolesQuery" value="SELECT ur.user_role, 'Roles' FROM user_role ur, user u WHERE ur.user_id = u.user_id AND u.user_id = ?"/>
                             <module-option name="hashAlgorithm" value="SHA-256"/>
