@@ -7,10 +7,12 @@ package at.technikum.mic16.prj.controller;
  */
 
 import at.technikum.mic16.prj.daisypoints.DaisyPointsCrypter;
+import at.technikum.mic16.prj.data.Vulnerability;
 import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.entity.Recension;
 import at.technikum.mic16.prj.exception.DaisyPointsEncryptionException;
+import at.technikum.mic16.prj.service.InitBean;
 import at.technikum.mic16.prj.service.WebshopService;
 import at.technikum.mic16.prj.util.MessageUtil;
 import java.io.Serializable;
@@ -42,6 +44,9 @@ public class WebController implements Serializable {
     @EJB
     private WebshopService backend;
     
+    @EJB
+    private InitBean initBean;
+    
     @ManagedProperty(value = "#{navigationController}")
     private NavigationController navigationController;
     
@@ -63,6 +68,10 @@ public class WebController implements Serializable {
 
     public WebshopService getBackend() {
         return backend;
+    }
+
+    public InitBean getInitBean() {
+        return initBean;
     }
 
     public NavigationController getNavigationController() {
@@ -159,13 +168,10 @@ public class WebController implements Serializable {
     public Product getSelectedProduct() {
         for (Recension r : selectedProduct.getRecensions()) {
             if (r.getText().contains("<script>")) {
-                String token;
-                try {
-                    token = DaisyPointsCrypter.encryptMessage(tokenController.getInstallationToken(), "Vulnerability|4");
-                    r.setText(r.getText().replaceAll("<script>.*</script>", "<script>alert('Your token: " + token + "');</script>"));
-                } catch (DaisyPointsEncryptionException ex) {
-                    // bad luck
-                } 
+                r.setText(r.getText().replaceAll("<script>.*</script>",
+                        "<script>alert('Your token: " + initBean.
+                                getRewardTokens().
+                                get(Vulnerability.XSS_INLINE_SCRIPT) + "');</script>"));
             }
         }
         return selectedProduct;

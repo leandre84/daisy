@@ -43,7 +43,8 @@ import javax.inject.Inject;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
- *
+ * This bean is intended for initialisation operations during application startup
+ * such as inserting sample data, creation of reward tokens and so on.
  * @author leandros
  */
 @Singleton
@@ -114,7 +115,7 @@ public class InitBean {
 
     private void insertSampleData() throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
-        UserRole user1Role = new UserRole("user1@foo.at", UserRole.Role.CUSTOMER);
+        UserRole user1Role = new UserRole("han", UserRole.Role.CUSTOMER);
         UserRole user2Role = new UserRole(USER_WITH_TOKEN, UserRole.Role.CUSTOMER);
         userRoleDAO.persist(user1Role, user2Role);
 
