@@ -20,7 +20,8 @@ import org.apache.commons.codec.digest.DigestUtils;
  */
 public class DaisyPointsCrypter {
     
-    private static final String SHARED_SECRET = "abc";
+    /* this is shared with the points system */
+    private static final String SHARED_SECRET = "einooHaequee2mei";
     
     public static String encryptMessage(String installationToken,
             String message) throws DaisyPointsEncryptionException {

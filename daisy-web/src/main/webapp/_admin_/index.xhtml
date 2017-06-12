@@ -17,24 +17,24 @@
         <p:separator/>
         
         <h:form id="form1">
-            <p:panelGrid columns="2">
-                <p:selectOneMenu id="selectonemenu1" >
+            <h:panelGrid columns="2">
+                <h:selectOneMenu id="selectonemenu1" >
                     <f:selectItems value="#{commandController.availableCommands}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
                 <!-- immediate = true as to immediately submit data and not validate input -->
-                <p:commandButton value="Execute" id="cmdButtonExecute" actionListener="#{commandController.runCommand()}" immediate="true"/>
-            </p:panelGrid>
+                <h:commandButton value="Execute" id="cmdButtonExecute" actionListener="#{commandController.runCommand()}" immediate="true"/>
+            </h:panelGrid>
         </h:form>
         
         <p:separator/>
         
-        <p:panelGrid columns="1">
+        <h:panelGrid columns="1">
             <h:panelGroup>
                 <p:outputPanel autoUpdate="true">
                     <h:outputText id="unescaped" value="#{commandController.output}" escape="false" style="font-family:monospace" />
                 </p:outputPanel>
             </h:panelGroup>
-        </p:panelGrid>
+        </h:panelGrid>
         
         
     </h:body>
