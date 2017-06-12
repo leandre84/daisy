@@ -6,7 +6,7 @@
 package at.technikum.mic16.prj.data;
 
 /**
- *
+ * Holds command execution results
  * @author leandros
  */
 public class CommandResult {

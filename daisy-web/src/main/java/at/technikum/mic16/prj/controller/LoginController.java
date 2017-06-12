@@ -21,7 +21,7 @@ import javax.faces.context.FacesContext;
 
 
 /**
- *
+ * This bean holds the authentication state of a user's session
  * @author leandros
  */
 @ManagedBean(name = "loginController")

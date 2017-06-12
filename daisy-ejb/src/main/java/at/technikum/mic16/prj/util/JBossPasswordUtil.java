@@ -12,11 +12,17 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 
 /**
- *
+ * Helper utility for generating password hashes for jboss/wildfly database authentication
  * @author leandros
  */
 public class JBossPasswordUtil {
 
+    /**
+     * Generate password hash for clear text string (base64 encoded sha256 digest)
+     * @param password clear text password
+     * @return digested password
+     * @throws UnsupportedEncodingException 
+     */
     public static String getPasswordHash(String password) throws UnsupportedEncodingException {        
         MessageDigest sha256 = DigestUtils.getSha256Digest();
         return Base64.encodeBase64String(sha256.digest(password.getBytes()));

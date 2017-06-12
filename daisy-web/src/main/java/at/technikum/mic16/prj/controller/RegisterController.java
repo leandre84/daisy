@@ -22,7 +22,7 @@ import javax.faces.context.FacesContext;
 
 
 /**
- *
+ * Backing bean for handling registration of new users (register.xhtml)
  * @author leandros
  */
 @ManagedBean(name = "registerController")
@@ -101,7 +101,7 @@ public class RegisterController implements Serializable {
             navigationController.setCurrentPage("products_overview.xhtml");
             return "index.xhtml?faces-redirect=true";
         } catch (UnsupportedEncodingException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "This should never happen ;-) : " + ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error creating user: " + ex.getMessage()));
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (EJBTransactionRolledbackException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "User already existing: " + ex.getMessage()));

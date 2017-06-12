@@ -9,7 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 /**
- *
+ * Facilitates posting messages to the faces context
  * @author leandros
  */
 public class MessageUtil {

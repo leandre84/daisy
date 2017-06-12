@@ -7,7 +7,6 @@ package at.technikum.mic16.prj.controller;
  */
 
 import at.technikum.mic16.prj.entity.PlacedOrder;
-import at.technikum.mic16.prj.entity.User;
 import at.technikum.mic16.prj.service.WebshopService;
 import java.io.Serializable;
 import java.util.List;
@@ -19,7 +18,7 @@ import javax.faces.bean.RequestScoped;
 
 
 /**
- *
+ * Backing bean for holding information about user's chackouts (orders.xhtml)
  * @author leandros
  */
 @ManagedBean(name = "ordersController")

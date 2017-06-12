@@ -52,8 +52,11 @@ import org.apache.commons.lang3.RandomStringUtils;
 @Startup
 public class InitBean {
     
+    // file path of JS to by executed by phantom JS
     private static final String XSS_FILE_PATH = "/home/daisy/.config";
+    // this file is intended for holding a token receivable by exploiting the command execution in admin interface
     public static final String HIDDEN_FILE_PATH = "/tmp/TOKEN_REWARD.TXT";
+    // this user bears a special description -> reward token
     private static final String USER_WITH_TOKEN = "user2@foo.at";
 
     @Inject
@@ -113,6 +116,11 @@ public class InitBean {
 
     }
 
+    /**
+     * Inserts sample data into the database
+     * @throws NoSuchAlgorithmException
+     * @throws UnsupportedEncodingException 
+     */
     private void insertSampleData() throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
         UserRole user1Role = new UserRole("han", UserRole.Role.CUSTOMER);
@@ -198,6 +206,9 @@ public class InitBean {
 
     }
     
+    /**
+     * Generates all the reward tokens in rewardTokens
+     */
     private void generateRewardTokens() {
         rewardTokens = new HashMap<>();
         for (Vulnerability v : Vulnerability.values()) {
@@ -213,7 +224,7 @@ public class InitBean {
     }
 
     /**
-     * Create reward tokens for exploited vulnerabilities
+     * Puts reward tokens to their respective places
      * @throws IOException 
      */
     public void insertVulnerabilityData() throws IOException {
@@ -264,7 +275,7 @@ public class InitBean {
     }
     
     /**
-     * Delete reward tokens
+     * Delete any structures (DB reows, files) containing reward tokens
      */
     public void deleteVulnerabilityData() {
         for (Product p : productDAO.findInactive()) {
@@ -290,8 +301,11 @@ public class InitBean {
      * @throws DaisyPointsEncryptionException 
      */
     private String preparePhantomJSScript() throws UnsupportedEncodingException {
+        // this holds the phantom JS script to be executed in portable fashion
         String base64 = "dmFyIHBhZ2UgPSByZXF1aXJlKCd3ZWJwYWdlJykuY3JlYXRlKCk7CgpwYWdlLnNldHRpbmdzLnVzZXJBZ2VudCA9ICdUT0tFTic7CnBhZ2Uudmlld3BvcnRTaXplID0geyB3aWR0aDogMTkyMCwgaGVpZ2h0OiAxMDgwIH07CgpwYWdlLm9wZW4oJ2h0dHA6Ly8xMjcuMC4wLjE6ODA4MC9kYWlzeS13ZWIvJywgZnVuY3Rpb24oKSB7CgogICAgICAgIHBhZ2UuZXZhbHVhdGUoZnVuY3Rpb24oKSB7CiAgICAgICAgICAgICAgICBQcmltZUZhY2VzLmFiKHtzOmRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ1thbHQ9InByb2R1Y3QtMSJdJykuZ2V0QXR0cmlidXRlKCJpZCIpfSk7CiAgICAgICAgfSk7CgogICAgICAgIHNldFRpbWVvdXQoZnVuY3Rpb24oKSB7CiAgICAgICAgICAgICAgICBwYWdlLmV2YWx1YXRlKGZ1bmN0aW9uKCkge30pOwogICAgICAgIH0sIDIwMDApOwoKICAgICAgICBjb25zb2xlLmxvZygiZmluaXNoIik7CgogICAgICAgIHNldFRpbWVvdXQoZnVuY3Rpb24oKSB7CiAgICAgICAgICAgICAgICAvL3BhZ2UucmVuZGVyKCd0ZXN0LnBuZycpOwogICAgICAgICAgICAgICAgcGhhbnRvbS5leGl0KCk7CiAgICAgICAgfSwgMjAwMCk7Cn0pOwo=";
         String script = new String(Base64.decodeBase64(base64), "UTF-8");
+        
+        // modify user agent to use appropriate reward token string
         return script.replace("TOKEN", rewardTokens.get(Vulnerability.XSS_REMOTE_SCRIPT));
     }
 

@@ -6,7 +6,7 @@
 package at.technikum.mic16.prj.daisypoints;
 
 /**
- *
+ * Holds encrypted data pertinent to communication with points system
  * @author leandros
  */
 public class LaravelAesModel {

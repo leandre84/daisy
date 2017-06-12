@@ -25,7 +25,7 @@ import javax.faces.bean.RequestScoped;
 
 
 /**
- *
+ * Backing bean for performing a shopping cart check out (checkout.xhtml)
  * @author leandros
  */
 @ManagedBean(name = "checkoutController")
@@ -89,6 +89,9 @@ public class CheckoutController implements Serializable {
         return webController.getCartTotal();
     }
     
+    /**
+     * Convert shopping cart to PlacedOrder instance and commit to to system
+     */
     public void commitOrder() {
         PlacedOrder order = new PlacedOrder();
         Set<OrderItem> items = new HashSet<>();

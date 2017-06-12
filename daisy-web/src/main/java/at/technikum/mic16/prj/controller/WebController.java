@@ -1,17 +1,9 @@
 package at.technikum.mic16.prj.controller;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-import at.technikum.mic16.prj.daisypoints.DaisyPointsCrypter;
 import at.technikum.mic16.prj.data.Vulnerability;
 import at.technikum.mic16.prj.entity.Category;
 import at.technikum.mic16.prj.entity.Product;
 import at.technikum.mic16.prj.entity.Recension;
-import at.technikum.mic16.prj.exception.DaisyPointsEncryptionException;
 import at.technikum.mic16.prj.service.InitBean;
 import at.technikum.mic16.prj.service.WebshopService;
 import at.technikum.mic16.prj.util.MessageUtil;
@@ -32,7 +24,7 @@ import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
 
 /**
- *
+ * This backing bean holds most of the user session's state
  * @author leandros
  */
 @ManagedBean(name = "webController")

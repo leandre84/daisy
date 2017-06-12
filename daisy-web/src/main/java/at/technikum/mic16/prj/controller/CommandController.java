@@ -16,7 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Backing bean for executing commands (_admin_/index.xhtml)
  * @author leandros
  */
 @ManagedBean(name = "commandController")
@@ -66,6 +66,7 @@ public class CommandController implements Serializable {
         
         // Fetch command to execute from request parameter, setting the beans's cmd didn't work out as intended, too much validation by JSF :(
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        // ID's from _admin_/index.xhtml
         cmd = request.getParameter("form1:selectonemenu1");      
         
         try {

@@ -34,7 +34,7 @@ import javax.inject.Named;
 import javax.persistence.NoResultException;
 
 /**
- *
+ * This EJB "exports" the webshop's basic backend functionalities
  * @author leandros
  */
 @Named

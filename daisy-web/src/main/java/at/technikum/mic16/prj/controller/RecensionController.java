@@ -20,7 +20,7 @@ import javax.faces.bean.RequestScoped;
 
 
 /**
- *
+ * Backing bean for adding or modifying a product's recension related to a user (recension.xhtml)
  * @author leandros
  */
 @ManagedBean(name = "recensionController")
@@ -112,7 +112,7 @@ public class RecensionController implements Serializable {
         backend.addOrModifyRecension(recension);
         /*
         we have updated a single recension but this will not be reflected in the webController's view.
-        for sure refreshing stale entity instances could be done more elegantly than this way...
+        for sure refreshing stale entity instances could be done more elegantly than what we do next...
         */
         webController.setSelectedProduct(backend.getProductById(product.getId()));
         navigationController.setCurrentPage(navigationController.getPreviousPage());

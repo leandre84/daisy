@@ -11,7 +11,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 /**
- *
+ * Converts java.time.LocalDate to java.sql.Date transparently during DB transactions
  * @author leandros
  * @credit http://www.thoughts-on-java.org/persist-localdate-localdatetime-jpa/
  */

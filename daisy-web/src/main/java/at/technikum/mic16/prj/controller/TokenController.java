@@ -23,7 +23,7 @@ TODO: display of error messages not working yet
 */
 
 /**
- *
+ * This bean handles add or deletion of an installation's token (token.xhtml)
  * @author leandros
  */
 @ManagedBean(name = "tokenController")
